@@ -1,46 +1,49 @@
-# 永远做自己のSurager
+# Surager's blog
 
-欢迎访问我的博客！点击左上按钮打开边栏进行访问~
-
-<!-- slide -->
-
-## 我的一些联系方式
-
-- Name: Surager
-- Age: 18歳
-- Address: 杜王町東北部の別荘地一帯
-
-<!-- slide vertical=true -->
-
-- 未婚
-- Work Place: 海
-- Stand: Give the thumbs-up
+Hack for fun! CTF for fun!
 
 <!-- slide -->
 
-## 我的一些教育情况
+- 用抽屉锁住自己的秘密
+- 在喜爱的书上留下批语
+- 信投进邮箱，默默地站一会儿
+- 风中打量着行人，毫无顾忌
 
 <!-- slide vertical=true -->
 
-- Aug. 2019 Became a freasher  in OUC
+- 留意着霓虹灯闪烁的橱窗
+
+- 电话亭里投进一枚硬币
+- 问桥下钓鱼的老头要枝香烟
+- 河上的轮船拉响了空旷的汽笛
+
+<!-- slide vertical=true -->
+
+- 在剧场门口幽暗的穿衣镜前
+- 透过烟雾凝视着自己
+- 当窗帘隔绝了星海的喧嚣
+- 灯下翻开褪色的照片和字迹
 
 <!-- slide -->
 
-## 我的一些技能
+## 5ur4g3r
 
 <!-- slide vertical=true -->
 
-- Repeater
-- Pigeon
-- Deligious!
+- 我是个什么样的人？
 
 <!-- slide vertical=true -->
 
-- Actually, I'm a CTFer. Interested in pwn.
+- 我曾经做过什么？
+
+<!-- slide vertical=true -->
+
+- 我应该去做什么？
 
 <!-- slide -->
 
-## 我的一些文字
+## 我看得到的、我应该做到的
 
-- [栈溢出：靶向打击](https://surager.github.io/_posts/2020-02-18-%E6%A0%88%E6%BA%A2%E5%87%BA-%E9%9D%B6%E5%90%91%E6%89%93%E5%87%BB/)
-- [俺的选课规划](https://surager.github.io/_posts/2019-12-06-%E4%BF%BA%E7%9A%84%E8%A7%84%E5%88%92/)
+<!-- slide vertical=true -->
+
+- 成为自己、而不是别人

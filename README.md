@@ -41,8 +41,12 @@ Hack for fun! CTF for fun! Binary for fun!
 
 <!-- slide -->
 
-## 我看得到的、我应该做到的
+## 我看得到的、我应该做的
 
 <!-- slide vertical=true -->
 
 - 成为自己、而不是别人
+
+<!-- slide vertical=true -->
+
+- [返回首页](https://surager.github.io/#/)

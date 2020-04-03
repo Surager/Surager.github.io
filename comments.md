@@ -4,8 +4,11 @@ title: 留言
 ---
 
 站点名称：Surager's blog
+
 URL：https://surager.github.io
+
 图标地址：https://surager.github.io/static/assets/img/landing/avatar.png
+
 简介：Hack for fun! CTF for fun! Binary for fun!
 
 交换友链可以在评论区留言~

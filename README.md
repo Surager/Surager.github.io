@@ -1,6 +1,6 @@
 # Surager's blog
 
-Hack for fun! CTF for fun!
+Hack for fun! CTF for fun! Binary for fun!
 
 <!-- slide -->
 
@@ -12,7 +12,6 @@ Hack for fun! CTF for fun!
 <!-- slide vertical=true -->
 
 - 留意着霓虹灯闪烁的橱窗
-
 - 电话亭里投进一枚硬币
 - 问桥下钓鱼的老头要枝香烟
 - 河上的轮船拉响了空旷的汽笛

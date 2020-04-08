@@ -4,6 +4,15 @@ Hack for fun! CTF for fun! Binary for fun!
 
 <!-- slide -->
 
+## 目录
+
+- [全部博文](https://surager.github.io/archive/)
+- [标签页—按标签检索](https://surager.github.io/tags/)
+- [留言页—欢迎大家留言](https://surager.github.io/comments/)
+- [打赏页—请我喝杯奶茶](https://surager.github.io/merger/)
+
+<!-- slide -->
+
 - 用抽屉锁住自己的秘密
 - 在喜爱的书上留下批语
 - 信投进邮箱，默默地站一会儿
@@ -50,3 +59,5 @@ Hack for fun! CTF for fun! Binary for fun!
 <!-- slide vertical=true -->
 
 - [返回首页](https://surager.github.io/#/)
+
+<!-- slide -->

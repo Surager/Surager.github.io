@@ -81,10 +81,10 @@ bck->fd = bin;
 如果有了calloc函数，就可以绕过tcache直接从small bin里面取chunk。同时，tcache_puts没有什么检查机制。当Tcache存在两个以上的空位时，程序会将我们的fake chunk置入Tcache。
 
 利用思路1：
-	1. 将chunk in small bin将要放入tcache bin填到只有一个空位置。
-	2. 通过切割造出两个small bin。
-	3. 修改small bin的victim->bk->fd指向victim，修改victim->bk>bk指向任意地址准备写入。
-	4. 申请一个同大小的chunk，执行成功。
+1. 将chunk in small bin将要放入tcache bin填到只有一个空位置。
+2. 通过切割造出两个small bin。
+3. 修改small bin的victim->bk->fd指向victim，修改victim->bk>bk指向任意地址准备写入。
+4. 申请一个同大小的chunk，执行成功。
 
 **留一个空位置**是因为遍历只执行一次，保证在fuck_addr->bk不合法的情况下不进行遍历，使程序继续运行。
 
@@ -95,10 +95,11 @@ bck->fd = bin;
 我们需要能够控制fuck_addr1。由于我们修改了small bin链，第一次遍历时后进入的small chunk会进入tcache bin。第二次遍历fuck_addr1+0x10会进入tcache bin，之后可以取出它。在fuck_addr1+0x18填入fuck_addr2，执行bck->fd=bin，fuck_addr2就填入了一个libc地址。
 
 利用思路2：
- 	1. 将chunk in small bin将要放入tcache bin填到只有**两**个空位置。
- 	2. 造出两个small bin
- 	3. 修改fuck_addr1+0x18为fuck_addr2，修改bck的bk为fuck_addr1
- 	4. 申请一个同大小的chunk。执行完毕之后fuck_addr1+0x10进tcache bin，fuck_addr2+0x10写入了一个libc地址。
+
+1. 将chunk in small bin将要放入tcache bin填到只有**两**个空位置。
+2. 造出两个small bin
+3. 修改fuck_addr1+0x18为fuck_addr2，修改bck的bk为fuck_addr1
+4. 申请一个同大小的chunk。执行完毕之后fuck_addr1+0x10进tcache bin，fuck_addr2+0x10写入了一个libc地址。
 
 ## 例题分析
 
@@ -336,7 +337,7 @@ io.interactive()
 
 #### 分析
 
-```
+```sh
  line  CODE  JT   JF      K
 =================================
  0000: 0x20 0x00 0x00 0x00000004  A = arch

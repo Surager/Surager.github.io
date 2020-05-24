@@ -156,11 +156,11 @@ jekyll-theme-WuK: # 我的主题的自定义样式都在这个命名空间
             background-position: 0% 0%;
             background-repeat: no-repeat;
             background-attachment: fixed;
-            background-image: url(https://Mizuno-Ai.wu-kan.cn/pixiv/74559485_p1.webp);
+            background-image: url(https://surager.github.io/assets/image/74559485_p1.webp);
           }
           @media (min-aspect-ratio: 2400/1850) {
             .wrap {
-              background-image: url(https://Mizuno-Ai.wu-kan.cn/pixiv/71932901_p0.webp);
+              background-image: url(https://surager.github.io/assets/image/71932901_p0.webp);
             }
           }
           .sidebar-overlay #sidebar-checkbox:checked ~ .wrap {
@@ -404,21 +404,7 @@ jekyll-theme-WuK: # 我的主题的自定义样式都在这个命名空间
         - | # Copyright声明
           <div>
             <i class="fas fa-copyright fa-fw"></i>
-            2017-2020 WuK
-          </div>
-        - | # 我的备案信息，请你的网站删掉这一项。互联网非法外之地！
-          <div>
-            <i class="fas fa-info-circle fa-fw"></i>
-            <a href="http://beian.miit.gov.cn">
-              粤ICP备 20024947号
-            </a>
-          </div>
-        - | # 公安网备信息
-          <div>
-            <img src="http://www.beian.gov.cn/img/new/gongan.png" class="fa-fw"></img>
-            <a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=34070202000407">
-              皖公网安备 34070202000407号
-            </a>
+            2019-2020 Surager
           </div>
       wordcount: # 全站字数统计
         enable: false # 本地调试时建议关闭，非常影响站点生成速度（所需时间与博文数量的平方成正比）

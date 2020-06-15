@@ -40,7 +40,7 @@ jekyll-theme-WuK: # 我的主题的自定义样式都在这个命名空间
         <link
           rel="alternate"
           href="/feed.xml"
-          title="RSS"
+          title="Surager's blog"
           type="application/rss+xml"
         />
       - | # 网站小图标，可换成你自己的图片，改href中的部分即可

@@ -1,6 +1,7 @@
 ---
 layout: comments
 title: 留言
+permalink: /comments/
 ---
 
 站点名称：Surager's blog

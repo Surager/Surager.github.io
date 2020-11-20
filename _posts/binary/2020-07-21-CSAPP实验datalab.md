@@ -78,7 +78,7 @@ int bitXor(int x, int y) {
 >
 >  ** tmin - return minimum two's complement integer* 
 >
->  **  Legal ops: ! ~ & ^ | + << >>*
+>  **  Legal ops: ! ~ & ^ \| + << >>*
 >
 >  **  Max ops: 4*
 >
@@ -110,7 +110,7 @@ int tmin(void) {
 >
 >  **   and 0 otherwise* 
 >
->  **  Legal ops: ! ~ & ^ | +*
+>  **  Legal ops: ! ~ & ^ \| +*
 >
 >  **  Max ops: 10*
 >
@@ -144,7 +144,7 @@ int isTmax(int x) {
 >
 >  **  Examples allOddBits(0xFFFFFFFD) = 0, allOddBits(0xAAAAAAAA) = 1*
 >
->  **  Legal ops: ! ~ & ^ | + << >>*
+>  **  Legal ops: ! ~ & ^ \| + << >>*
 >
 >  **  Max ops: 12*
 >
@@ -178,7 +178,7 @@ int allOddBits(int x) {
 >
 >  **  Example: negate(1) = -1.*
 >
->  **  Legal ops: ! ~ & ^ | + << >>*
+>  **  Legal ops: ! ~ & ^ \| + << >>*
 >
 >  **  Max ops: 5*
 >
@@ -214,7 +214,7 @@ int negate(int x) {
 >
 >  **      isAsciiDigit(0x05) = 0.*
 >
->  **  Legal ops: ! ~ & ^ | + << >>*
+>  **  Legal ops: ! ~ & ^ \| + << >>*
 >
 >  **  Max ops: 15*
 >
@@ -255,7 +255,7 @@ int isAsciiDigit(int x) {
 >
 >  **  Example: conditional(2,4,5) = 4*
 >
->  **  Legal ops: ! ~ & ^ | + << >>*
+>  **  Legal ops: ! ~ & ^ \| + << >>*
 >
 >  **  Max ops: 16*
 >
@@ -288,7 +288,7 @@ int conditional(int x, int y, int z) {
 >
 >  **  Example: isLessOrEqual(4,5) = 1.*
 >
->  **  Legal ops: ! ~ & ^ | + << >>*
+>  *  Legal ops: ! ~ & ^ \| + << >>
 >
 >  **  Max ops: 24*
 >
@@ -324,7 +324,7 @@ int isLessOrEqual(int x, int y) {
 >
 >  **  Examples: logicalNeg(3) = 0, logicalNeg(0) = 1*
 >
->  **  Legal ops: ~ & ^ | + << >>*
+>  **  Legal ops: ~ & ^ \| + << >>*
 >
 >  **  Max ops: 12*
 >
@@ -368,7 +368,7 @@ int logicalNeg(int x) {
 >
 >  **      howManyBits(0x80000000) = 32*
 >
->  ** Legal ops: ! ~ & ^ | + << >>*
+>  ** Legal ops: ! ~ & ^ \| + << >>*
 >
 >  ** Max ops: 90*
 >
@@ -484,7 +484,7 @@ unsigned floatScale2(unsigned uf) {
 >
 >  **  0x80000000u.*
 >
->  **  Legal ops: Any integer/unsigned operations incl. ||, &&. also if, while*
+>  **  Legal ops: Any integer/unsigned operations incl. \|\|, &&. also if, while*
 >
 >  **  Max ops: 30*
 >
@@ -540,8 +540,6 @@ int floatFloat2Int(unsigned uf) {
 >
 >  **  (2.0 raised to the power x) for any 32-bit integer x.*
 >
->  ***
->
 >  **  The unsigned value that is returned should have the identical bit*
 >
 >  **  representation as the single-precision floating-point number 2.0^x.*
@@ -550,9 +548,7 @@ int floatFloat2Int(unsigned uf) {
 >
 >  **  0. If too large, return +INF.*
 >
->  ***
->
->  **  Legal ops: Any integer/unsigned operations incl. ||, &&. Also if, while* 
+>  *  Legal ops: Any integer/unsigned operations incl. \|\|, &&. Also if, while 
 >
 >  **  Max ops: 30* 
 >
@@ -605,3 +601,4 @@ unsigned floatPower2(int x) {
 本次实验就算是给自己的计算机系统学习之路开一个头吧。
 
 ![由于ubuntu虚拟机上时间限制通不过，在wsl上运行](\assets\CSAPP\QQ图片20200721133631.png)
+

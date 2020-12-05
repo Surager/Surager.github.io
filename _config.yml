@@ -10,6 +10,9 @@ description: | # 头像背后的信息（html格式），<br/>代表换行
   <a href="https://github.com/Surager">
     <i class="fab fa-github"></i>
   </a>
+  <a href="https://surager.pub/feed.xml">
+    <i class="fas fa-rss"></i>
+  </a>
   <iframe 
     frameborder="no" 
     border="0" 

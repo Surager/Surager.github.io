@@ -6,10 +6,10 @@ Hack for fun! CTF for fun! Binary for fun!
 
 ## 目录
 
-- [全部博文](https://surager.github.io/archive/)
-- [标签页—按标签检索](https://surager.github.io/tags/)
-- [留言页—欢迎大家留言](https://surager.github.io/comments/)
-- [打赏页—请我喝杯奶茶](https://surager.github.io/merger/)
+- [全部博文](/archive/)
+- [标签页—按标签检索](/tags/)
+- [留言页—欢迎大家留言](/comments/)
+- [打赏页—请我喝杯奶茶](/merger/)
 
 <!-- .slide -->
 
@@ -58,6 +58,6 @@ Hack for fun! CTF for fun! Binary for fun!
 
 <!-- .slide vertical=true -->
 
-- [返回首页](https://surager.github.io/#/)
+- [返回首页](/#/)
 
 <!-- .slide -->

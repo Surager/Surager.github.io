@@ -100,7 +100,7 @@ defaults: # 将所有配置选项使用<https://jekyllrb.com/docs/configuration/
                       "hidden": true,
                       "night": "for(let i=7; i<16; ++i) if(document.body.classList.contains(`theme-base-0`+i.toString(16))) { document.body.classList.remove(`theme-base-0`+i.toString(16)); document.body.classList.add(`theme-base-0`+((i-6)%9+7).toString(16)); break; }",
                       "content": {
-                        "link": ["https:\/\/surager.github.io"],
+                        "link": ["/#/"],
                         "skin": ["要换成我的朋友吗？", "让她放个假吧~"],
                         "hidden": true,
                         "custom": [{
@@ -498,15 +498,26 @@ defaults: # 将所有配置选项使用<https://jekyllrb.com/docs/configuration/
                   min-width: 66.6%;
                 }
               </style>
-            - | # 给文章加上磨砂背景，防止被背景影响阅读；同时加上加载动画
+            - | # 给文章加上磨砂背景，防止被背景影响阅读；同时加上加载动画 
               <style>
-                .masthead,
                 .container.content {
                   padding-top: 1rem;
                   padding-bottom: 1rem;
                   margin-bottom: 1.5rem;
-                  box-shadow: 0 0 .75rem rgba(0, 0, 0, 0.1);
-                  background-color: rgba(255,255,255,.8);
+                  border-radius:10px; 
+                  box-shadow:0px 0px 0px 3px #bb0a0a,
+                             0px 0px 0px 6px #2e56bf,
+                             0px 0px 0px 9px #ea982e;
+                  background-color: rgba(255,255,255,0.95);
+                  animation-duration: 2s;
+                  animation-name: fadeIn;
+                }
+                .masthead{
+                  padding-top: 1rem;
+                  padding-bottom: 1rem;
+                  margin-bottom: 1.5rem;
+                  box-shadow: 0 0 5rem rgba(0, 0, 0, 0.1);
+                  background-color: rgba(255,255,255,0.95);
                   animation-duration: 2s;
                   animation-name: fadeIn;
                 }

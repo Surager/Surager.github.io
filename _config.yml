@@ -56,12 +56,12 @@ defaults: # 将所有配置选项使用<https://jekyllrb.com/docs/configuration/
             - | # 网站小图标，可换成你自己的图片，改href中的部分即可
               <link
                 rel="apple-touch-icon-precomposed"
-                href="https://surager.pub/static/assets/img/landing/avatar.png"
+                href="/static/assets/img/landing/avatar.png"
               />
               <link
                 rel="shortcut
                 icon"
-                href="https://surager.pub/static/assets/img/landing/avatar.png"
+                href="/static/assets/img/landing/avatar.png"
               />
             - | # 来自lanyon的页面样式，不要改
               <link
@@ -224,7 +224,7 @@ defaults: # 将所有配置选项使用<https://jekyllrb.com/docs/configuration/
             disable: false # 是否不显示sidebar
             avatar: # 侧边栏显示的头像
               enable: true
-              img: https://surager.pub/static/assets/img/landing/avatar.png # 头像的地址
+              img: /static/assets/img/landing/avatar.png # 头像的地址
             nav: # 导航部分的内容，你也可以自己增加文字、图标（来自fontawesome）和对应的链接
               - title: '<i class="fas fa-home fa-fw"></i> 首页'
                 href: /
@@ -236,6 +236,10 @@ defaults: # 将所有配置选项使用<https://jekyllrb.com/docs/configuration/
                 href: /archive/
               - title: '<i class="fas fa-coffee fa-fw"></i> 打赏'
                 href: /merger/
+              - title: '<i class="fas fa-user-friends fa-fw"></i> 友链'
+                href: /friends/
+              - title: '<i class="fas fa-address-card fa-fw"></i> 关于'
+                href: /about/
             simple_jekyll_search: # 侧边栏的全站搜索
               enable: true
               full_text_search: false # 可能导致缓慢的搜索和加载
@@ -418,6 +422,48 @@ defaults: # 将所有配置选项使用<https://jekyllrb.com/docs/configuration/
               prepend: <i class="fas fa-user-edit fa-fw"></i>
               kilo: 千
               unit: 字
+
+        friends:
+          - |
+            <style>
+            .card{
+              position:relative;
+              display:-ms-flexbox;
+              display:flex;
+              -ms-flex-direction:column;
+              flex-direction:column;
+              min-width:0;
+              word-wrap:break-word;
+              background-color:#fff;
+              background-clip:border-box;
+              border:1px solid rgba(0,0,0,.125);
+              border-radius:.25rem}.card>hr{
+                margin-right:0;margin-left:0}
+                .card>.list-group:first-child 
+                .list-group-item:first-child{
+                  border-top-left-radius:.25rem;
+                  border-top-right-radius:.25rem}
+                  .card>.list-group:last-child 
+                  .list-group-item:last-child{
+                    border-bottom-right-radius:.25rem;
+                    border-bottom-left-radius:.25rem}
+            .card-body{
+              -ms-flex:1 1 auto;
+              flex:1 1 auto;
+              padding:1.25rem}
+            .card-title{
+              margin-bottom:.75rem}
+            .card-subtitle{
+              margin-top:-.375rem;
+              margin-bottom:0}
+            .card-text:last-child{
+              margin-bottom:0}
+            .card-link:hover{
+              text-decoration:none}
+            .card-link+.card-link{
+                margin-left:1.25rem}
+            .card-header{padding:.75rem 1.25rem;margin-bottom:0;background-color:rgba(0,0,0,.03);border-bottom:1px solid rgba(0,0,0,.125)}.card-header:first-child{border-radius:calc(.25rem - 1px) calc(.25rem - 1px) 0 0}
+            </style>
         page:
           masthead: # 显示顶栏
             enable: true
@@ -622,7 +668,7 @@ defaults: # 将所有配置选项使用<https://jekyllrb.com/docs/configuration/
                 var wechat = "wxp://f2f0eqQz33SKIPtb_kXGtvgCU9VgEdFsyqXv";
                 var alipay = "https://qr.alipay.com/fkx03749mhutwgipopbewb6";
                 var myname = "Surager";
-                var profile = "https://surager.pub/static/assets/img/landing/avatar.png";
+                var profile = "/static/assets/img/landing/avatar.png";
                 var multilingual = true;
                 var myname_hans = "Surager";
                 var myname_hant = "Surager";

@@ -56,12 +56,12 @@ defaults: # 将所有配置选项使用<https://jekyllrb.com/docs/configuration/
             - | # 网站小图标，可换成你自己的图片，改href中的部分即可
               <link
                 rel="apple-touch-icon-precomposed"
-                href="/static/assets/img/landing/avatar.png"
+                href="/static/assets/img/landing/avatar.jpg"
               />
               <link
                 rel="shortcut
                 icon"
-                href="/static/assets/img/landing/avatar.png"
+                href="/static/assets/img/landing/avatar.jpg"
               />
             - | # 来自lanyon的页面样式，不要改
               <link
@@ -224,7 +224,7 @@ defaults: # 将所有配置选项使用<https://jekyllrb.com/docs/configuration/
             disable: false # 是否不显示sidebar
             avatar: # 侧边栏显示的头像
               enable: true
-              img: /static/assets/img/landing/avatar.png # 头像的地址
+              img: /static/assets/img/landing/avatar.jpg # 头像的地址
             nav: # 导航部分的内容，你也可以自己增加文字、图标（来自fontawesome）和对应的链接
               - title: '<i class="fas fa-home fa-fw"></i> 首页'
                 href: /
@@ -234,10 +234,6 @@ defaults: # 将所有配置选项使用<https://jekyllrb.com/docs/configuration/
                 href: /tags/
               - title: '<i class="fas fa-archive fa-fw"></i> 归档'
                 href: /archive/
-              - title: '<i class="fas fa-coffee fa-fw"></i> 打赏'
-                href: /merger/
-              - title: '<i class="fas fa-user-friends fa-fw"></i> 友链'
-                href: /friends/
               - title: '<i class="fas fa-address-card fa-fw"></i> 关于'
                 href: /about/
             simple_jekyll_search: # 侧边栏的全站搜索
@@ -412,6 +408,48 @@ defaults: # 将所有配置选项使用<https://jekyllrb.com/docs/configuration/
                     jekyll-theme-WuK
                   </a>
                 </div>
+              - |
+                <div>
+                  <i class="fa fa-users fa-fw"></i>
+                  <a href="https://aidaip.github.io">
+                    AiDai
+                  </a>
+                </div>
+              - |
+                <div>
+                  <i class="fa fa-users fa-fw"></i>
+                  <a href="https://coinc1dens.github.io/">
+                    Coin哥哥
+                  </a>
+                </div>
+              - |
+                <div>
+                  <i class="fa fa-users fa-fw"></i>
+                  <a href="https://www.freejishu.com/">
+                    freejishu的美丽世界
+                  </a>
+                </div>
+              - |
+                <div>
+                  <i class="fa fa-users fa-fw"></i>
+                  <a href="https://hitcxy.com">
+                    pikachu's Blog
+                  </a>
+                </div>
+              - |
+                <div>
+                  <i class="fa fa-users fa-fw"></i>
+                  <a href="https://n0vice.gitee.io/">
+                    N0vice
+                  </a>
+                </div>
+              - |
+                <div>
+                  <i class="fa fa-users fa-fw"></i>
+                  <a href="https://phuker.github.io/">
+                    腾汛新闻
+                  </a>
+                </div>
               - | # Copyright声明
                 <div>
                   <i class="fas fa-copyright fa-fw"></i>
@@ -582,7 +620,7 @@ defaults: # 将所有配置选项使用<https://jekyllrb.com/docs/configuration/
             | # 署名 4.0 国际 (CC BY-NC 4.0)。
             <br/>
             <i class="fas fa-coffee fa-fw"></i>
-            <a href="/merger/">如果这篇博客帮助到你，可以请我喝一杯奶茶~</a>
+            <a href="/comments/">如果这篇博客帮助到你，可以留言夸夸我~</a>
             <br/>
             <i class="fab fa-creative-commons-by fa-fw"></i>
             <a
@@ -607,44 +645,6 @@ defaults: # 将所有配置选项使用<https://jekyllrb.com/docs/configuration/
           year_count: true
           toc: # 在正文里显示一个归档的目录
             enable: false
-        merger: # 打赏页，需要配置！
-          append_to_head:
-            - | # 需要配置的变量见<https://merger.justhx.com/cn/docs/configure>
-              <script>
-                var usage = "payment";
-                var wechat = "wxp://f2f0eqQz33SKIPtb_kXGtvgCU9VgEdFsyqXv";
-                var alipay = "https://qr.alipay.com/fkx03749mhutwgipopbewb6";
-                var myname = "Surager";
-                var profile = "/static/assets/img/landing/avatar.png";
-                var multilingual = true;
-                var myname_hans = "Surager";
-                var myname_hant = "Surager";
-                var myname_eng = "Surager";
-                var title = "选择你的支付方式";
-                var subtitle = "跟随进一步的指示以向" + myname + "付款";
-                var qrcodeapi = "";
-              </script>
-            - |
-              <meta
-                charset="utf-8"
-              />
-              <meta
-                name="viewport"
-                content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
-              />
-              <meta
-                http-equiv="Content-Security-Policy"
-                content="upgrade-insecure-requests"
-              />
-            - | # merger的页面样式
-              <link
-                rel="stylesheet"
-                href="https://cdn.jsdelivr.net/combine/gh/hifocus/merger@0.21.1/assets/styles/spectre.css/spectre-modified.min.css,gh/hifocus/merger@0.21.1/assets/styles/style.min.css"
-              />
-              <script
-                src='https://cdn.jsdelivr.net/combine/gh/hifocus/merger@0.21.1/assets/js/jQuery/jquery.min.js,gh/hifocus/merger@0.21.1/assets/js/jquery-qrcode/jquery-qrcode.min.js,gh/hifocus/merger@0.21.1/assets/js/JavaScript_MD5/md5.min.js,gh/hifocus/merger@0.21.1/assets/js/function.min.js,gh/hifocus/merger@0.21.1/assets/js/font_974919_xgtacm93vxp.min.js'
-                defer='defer'
-              ></script>
         home: # 展示页的配置可跳过，详见<https://revealjs.com/>
           append_to_section_tag:
             - key: data-markdown

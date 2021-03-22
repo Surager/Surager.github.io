@@ -1,7 +1,7 @@
 ---
 layout: null
 ---
-{% if site.page.sidebar.simple_jekyll_search.enable %}
+{% if page.jekyll-theme-WuK.default.sidebar.simple_jekyll_search.enable %}
 [
   {% for post in site.posts %}
     {
@@ -9,10 +9,10 @@ layout: null
       "category" : "{{ post.category }}",
       "tags"     : "{{ post.tags | join: ', ' }}",
       "date"     : "{{ post.date }}",
-      {% if site.page.sidebar.simple_jekyll_search.full_text_search %}
+      {% if page.jekyll-theme-WuK.default.sidebar.simple_jekyll_search.full_text_search %}
       "content"  : {{ post.content | jsonify }},
       {% endif %}
-      "url"      : "{{ site.baseurl }}{{ post.url }}"
+      "url"      : "{{ post.url | relative_url }}"
     } {% unless forloop.last %},{% endunless %}
   {% endfor %}
   ,
@@ -23,10 +23,10 @@ layout: null
         "category" : "{{ page.category }}",
         "tags"     : "{{ page.tags | join: ', ' }}",
         "date"     : "{{ page.date }}",
-        {% if site.page.sidebar.simple_jekyll_search.full_text_search %}
+        {% if page.jekyll-theme-WuK.default.sidebar.simple_jekyll_search.full_text_search %}
         "content"  : {{ page.content | jsonify }},
         {% endif %}
-        "url"      : "{{ site.baseurl }}{{ page.url }}"
+        "url"      : "{{ page.url | relative_url }}"
      {% endif %}
    } {% unless forloop.last %},{% endunless %}
   {% endfor %}

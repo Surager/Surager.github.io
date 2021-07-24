@@ -594,12 +594,24 @@ defaults: # 将所有配置选项使用<https://jekyllrb.com/docs/configuration/
             <script>
                 (function() { 
                 var d = document, s = d.createElement('script');
-                s.src = 'https://suragerpub.disqus.com/embed.js';
+                s.src = 'https://surager-pub.disqus.com/embed.js';
                 s.setAttribute('data-timestamp', +new Date());
                 (d.head || d.body).appendChild(s);
                 })();
             </script>
             <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+            <script>
+            (function($){
+                setInterval(() => {
+                    $.each($('iframe'), (arr,x) => {
+                        let src = $(x).attr('src');
+                        if (src && src.match(/(ads-iframe)|(disqusads)/gi)) {
+                            $(x).remove();
+                        }
+                    });
+                }, 300);
+            })(jQuery);
+            </script>
         post:
           date: # 显示博文时间
             enable: true

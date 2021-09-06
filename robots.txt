@@ -1,1 +1,1 @@
-Sitemap: https://surager.pub/sitemap.xml
+Sitemap: https://surager.github.io/sitemap.xml

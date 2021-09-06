@@ -1,0 +1,198 @@
+<!DOCTYPE html><html><head><title> 史上最骚のSTL空间分配器(续) &middot; Surager</title><!-- Begin Jekyll SEO tag v2.7.1 --><meta name="generator" content="Jekyll v4.1.1" /><meta property="og:title" content="史上最骚のSTL空间分配器(续)" /><meta property="og:locale" content="en_US" /><meta name="description" content="续集" /><meta property="og:description" content="续集" /><link rel="canonical" href="http://localhost:4000/_posts/2020-09-01-%E5%8F%B2%E4%B8%8A%E6%9C%80%E9%AA%9A%E3%81%AESTL%E7%A9%BA%E9%97%B4%E5%88%86%E9%85%8D%E5%99%A8(%E7%BB%AD)/" /><meta property="og:url" content="http://localhost:4000/_posts/2020-09-01-%E5%8F%B2%E4%B8%8A%E6%9C%80%E9%AA%9A%E3%81%AESTL%E7%A9%BA%E9%97%B4%E5%88%86%E9%85%8D%E5%99%A8(%E7%BB%AD)/" /><meta property="og:site_name" content="Surager" /><meta property="og:type" content="article" /><meta property="article:published_time" content="2020-09-01T00:00:00+08:00" /><meta name="twitter:card" content="summary" /><meta property="twitter:title" content="史上最骚のSTL空间分配器(续)" /><meta name="google-site-verification" content="YIKi1rBnyUaS-DMYiluseI5kZzTwjCkTFmKkSkMZDJk" /><meta name="baidu-site-verification" content="szbTSfUGAB" /> <script type="application/ld+json"> {"url":"http://localhost:4000/_posts/2020-09-01-%E5%8F%B2%E4%B8%8A%E6%9C%80%E9%AA%9A%E3%81%AESTL%E7%A9%BA%E9%97%B4%E5%88%86%E9%85%8D%E5%99%A8(%E7%BB%AD)/","headline":"史上最骚のSTL空间分配器(续)","datePublished":"2020-09-01T00:00:00+08:00","dateModified":"2020-09-01T00:00:00+08:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/_posts/2020-09-01-%E5%8F%B2%E4%B8%8A%E6%9C%80%E9%AA%9A%E3%81%AESTL%E7%A9%BA%E9%97%B4%E5%88%86%E9%85%8D%E5%99%A8(%E7%BB%AD)/"},"description":"续集","@type":"BlogPosting","@context":"https://schema.org"}</script> <!-- End Jekyll SEO tag --><meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1" /><meta http-equiv="content-type" content="text/html; charset=utf-8" /><link rel="alternate" href="/feed.xml" title="Surager's blog" type="application/rss+xml" /><link rel="apple-touch-icon-precomposed" href="/static/assets/img/landing/avatar.jpg" /><link rel="shortcut icon" href="/static/assets/img/landing/avatar.jpg" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/combine/gh/poole/lanyon@v1.1.0/public/css/poole.min.css,gh/poole/lanyon@v1.1.0/public/css/lanyon.min.css,gh/poole/lanyon@v1.1.0/public/css/syntax.min.css" /><link rel="stylesheet" href="/static/assets/script/admonitions.css" /> <script async="async" src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/js/all.min.js" ></script> <script src='https://zz.bdstatic.com/linksubmit/push.js' async="async" ></script><style> .wrap { transition-property: width,background-size,transform; transition-duration: .3s; transition-timing-function: ease-in-out; min-height: 100%; display: inline-block; background-size: 100% auto; background-position: 0% 0%; background-repeat: no-repeat; background-attachment: fixed; background-image: url(/assets/image/74559485_p1.webp); } @media (min-aspect-ratio: 2400/1850) { .wrap { background-image: url(/assets/image/71932901_p0.webp); } } .sidebar-overlay #sidebar-checkbox:checked ~ .wrap { width: calc(100% - 14rem); background-size: calc(100% - 14rem) auto; transform: translateX(14rem); } .layout-reverse.sidebar-overlay #sidebar-checkbox:checked ~ .wrap { transform: translateX(0); }</style><style> .sidebar, html, h1, h2, h3, h4, h5, h6 { font-family: "Fira Code", Consolas, PingFang SC, Menlo, Monaco, "Courier New", Microsoft JhengHei, monospace; }</style><style> h1, h2, h3, h4, h5, h6 { font-weight: bold; }</style><style> .post h1, .post h2, .post h3, .post h4, .post h5, .post h6 { font-weight: 550; }</style><style> img { display: inline-block; margin: 0; }</style><style> ::-webkit-scrollbar { width: 3px; height: 3px; } ::-webkit-scrollbar-thumb { background-image: linear-gradient(45deg, Cyan 0%, Magenta 50%, Yellow 100%); }</style><style> ::selection { color: White; background: Black; }</style><body class="theme-base-07 sidebar-overlay"> <!-- Target for toggling the sidebar `.sidebar-checkbox` is for regular styles, `#sidebar-checkbox` for behavior. --> <input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox" /> <!-- Toggleable sidebar --><div class="sidebar" id="sidebar"><div class="sidebar-item"><div class="effect effect-right_to_left"> <img class="effect-img" src="/static/assets/img/landing/avatar.jpg" alt="img" /><div class="effect-info"> 19计算机专业在读<br/> Blue-Whale<br/> V&N<br/> 龙鸣PWN手<br/> 希望你能在这里学到东西<br/> <a href="mailto:surager2019@gmail.com"> <i class="fas fa-envelope"></i> </a> <a href="https://github.com/Surager"> <i class="fab fa-github"></i> </a> <a href="https://surager.pub/feed.xml"> <i class="fas fa-rss"></i> </a> <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=100% height=52 src="https://music.163.com/outchain/player?type=2&id=1453894413&auto=0&height=32" ></iframe></div></div></div><nav class="sidebar-nav"> <a class="sidebar-nav-item" href="/"> <i class="fas fa-home fa-fw"></i> 首页 </a> <a class="sidebar-nav-item" href="/comments/"> <i class="fas fa-comments fa-fw"></i> 留言 </a> <a class="sidebar-nav-item" href="/tags/"> <i class="fas fa-tags fa-fw"></i> 标签 </a> <a class="sidebar-nav-item" href="/archive/"> <i class="fas fa-archive fa-fw"></i> 归档 </a> <a class="sidebar-nav-item" href="/about/"> <i class="fas fa-address-card fa-fw"></i> 关于 </a></nav><div class="sidebar-item"><style> #sidebar-search-input { background: none; border: none; color: White; width: 100%; } #sidebar-search-results-container { overflow: auto auto; max-height: 66.6vh; }</style><input id="sidebar-search-input" placeholder="搜索博文" /><ol id="sidebar-search-results-container" ></ol><script src='https://cdn.jsdelivr.net/npm/simple-jekyll-search@1.7.11/dest/simple-jekyll-search.min.js' async='async' onload=' SimpleJekyllSearch({ json: "/assets/simple-jekyll-search/search.json", searchInput: document.getElementById("sidebar-search-input"), resultsContainer: document.getElementById("sidebar-search-results-container"), searchResultTemplate: `<li><a href="{url}">{title}</a>`, limit: 999, fuzzy: true })' ></script><style> #toc { overflow: auto auto; max-height: 66.6vh; }</style><ol id="toc"><li><a href="#%E7%BB%AD%E9%9B%86">续集</a><ol><li><a href="#%E5%86%85%E5%AD%98%E6%B1%A0">内存池</a><li><a href="#%E4%BB%A3%E7%A0%81">代码</a><li><a href="#%E6%B5%8B%E8%AF%95">测试</a><li><a href="#%E6%80%BB%E7%BB%93">总结</a></ol></ol><style> .sidebar-checkbox { display: none; } .sidebar-toggle { position: fixed; }</style><style> .sidebar { overflow: scroll; min-height: 101%; }</style><style> .effect { margin: 1rem; perspective: 900px; } .effect-info { text-align: center; backface-visibility: hidden; position: absolute; top: 0; transform-style: preserve-3d; } .effect-img { z-index: 11; width: 100%; height: 100%; position: relative; transition: all 0.5s ease-in-out; } .effect-img:before { position: absolute; display: block; } .effect-right_to_left .effect-img { transform-origin: 0% 50%; } .effect-right_to_left:hover .effect-img { transform: rotate3d(0, 1, 0, -180deg); }</style><div> <i class="fas fa-cog fa-spin fa-fw"></i> <span id="run_time_day"> <i class="fas fa-spinner fa-pulse"></i> </span>天 <span id="run_time_hour"> <i class="fas fa-spinner fa-pulse"></i> </span>时 <span id="run_time_minute"> <i class="fas fa-spinner fa-pulse"></i> </span>分 <span id="run_time_second"> <i class="fas fa-spinner fa-pulse"></i> </span>秒 <script> setInterval(function (d,h,m,s,b) { function setzero(i) { return i < 10 ? "0" + i : i; } let BirthDay = new Date(b); let today = new Date(); let timeold = (today.getTime() - BirthDay.getTime()); let sectimeold = timeold / 1000; let secondsold = Math.floor(sectimeold); let msPerDay = 24 * 60 * 60 * 1000; let e_daysold = timeold / msPerDay; let daysold = Math.floor(e_daysold); let e_hrsold = (e_daysold - daysold) * 24; let hrsold = Math.floor(e_hrsold); let e_minsold = (e_hrsold - hrsold) * 60; let minsold = Math.floor((e_hrsold - hrsold) * 60); let seconds = Math.floor((e_minsold - minsold) * 60); d.textContent = daysold; h.textContent = setzero(hrsold); m.textContent = setzero(minsold); s.textContent = setzero(seconds); }, 1000, document.getElementById("run_time_day"), document.getElementById("run_time_hour"), document.getElementById("run_time_minute"), document.getElementById("run_time_second"), "10/27/2019 00:00:00")// 这是我第一篇CSDN博客的时间 </script></div><div><div> <i class="fas fa-eye fa-fw"></i> <span id="busuanzi_value_page_pv"> <i class="fas fa-spinner fa-pulse"></i> </span>次</div><div> <i class="fas fa-paw fa-fw"></i> <span id="busuanzi_value_site_pv"> <i class="fas fa-spinner fa-pulse"></i> </span>枚</div><div> <i class="fas fa-user-friends fa-fw"></i> <span id="busuanzi_value_site_uv"> <i class="fas fa-spinner fa-pulse"></i> </span>人</div><script src='https://cdn.jsdelivr.net/npm/busuanzi@2.3.0' async='async' ></script></div><div> <i class="fas fa-thumbs-up fa-fw"></i> <a href="https://jekyll-theme-WuK.wu-kan.cn"> jekyll-theme-WuK </a></div><div> <i class="fa fa-users fa-fw"></i> <a href="https://aidaip.github.io"> AiDai </a></div><div> <i class="fa fa-users fa-fw"></i> <a href="https://coinc1dens.github.io/"> Coin哥哥 </a></div><div> <i class="fa fa-users fa-fw"></i> <a href="https://www.freejishu.com/"> freejishu的美丽世界 </a></div><div> <i class="fa fa-users fa-fw"></i> <a href="https://hitcxy.com"> pikachu's Blog </a></div><div> <i class="fa fa-users fa-fw"></i> <a href="https://n0vice.gitee.io/"> N0vice </a></div><div> <i class="fa fa-users fa-fw"></i> <a href="https://phuker.github.io/"> 腾汛新闻 </a></div><div> <i class="fas fa-copyright fa-fw"></i> 2019-2021 Surager</div></div></div><!-- Wrap is the content to shift when toggling the sidebar. We wrap the content to avoid any CSS collisions with our real content. --><div class="wrap"><style> pre { max-height: 66.6vh; overflow: auto; }</style><style> .container { min-width: 66.6%; }</style><style> .container.content { padding-top: 1rem; padding-bottom: 1px; margin-top: 1.5rem; margin-bottom: 1.5rem; border-radius:10px; box-shadow:0px 0px 0px 3px #bb0a0a, 0px 0px 0px 6px #2e56bf, 0px 0px 0px 9px #ea982e; background-color: rgba(255,255,255,0.95); animation-duration: 2s; animation-name: fadeIn; } .masthead{ padding-top: 1rem; padding-bottom: 1rem; margin-bottom: 1.5rem; box-shadow: 0 0 5rem rgba(0, 0, 0, 0.1); background-color: rgba(255,255,255,0.99); animation-duration: 2s; animation-name: fadeIn; } @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }</style><div class="container content"><div class="page"><div class="post"> <span class="post-date"> <i class="fas fa-calendar-day fa-fw"></i> Time: 2020-09-01 <i class="fas fa-tag fa-fw"></i> Tags: binary <br/> <i class="fas fa-link fa-fw"></i> Link: <a href="/_posts/2020-09-01-%E5%8F%B2%E4%B8%8A%E6%9C%80%E9%AA%9A%E3%81%AESTL%E7%A9%BA%E9%97%B4%E5%88%86%E9%85%8D%E5%99%A8(%E7%BB%AD)/"> 史上最骚のSTL空间分配器(续) </a> </span><h1 id="续集">续集</h1><h2 id="内存池">内存池</h2><p>从内存池中取空间给free list用，是chunk_alloc()的工作。</p><p>如果在内存池完全充足的情况下，chunk_alloc()会直接返回空间。</p><pre><code class="language-c++">	char *result;
+  size_t total_bytes = size * nobjs;
+  size_t bytes_left = end_free - start_free;
+
+  if(bytes_left &gt; total_bytes){ // memory pool is enough.
+    result = start_free;
+    start_free += total_bytes;
+    return (result);
+  }
+</code></pre><p>如果内存不满足需求量，但是可以分配一个以上的区块时。</p><pre><code class="language-c++">else if (bytes_left &gt;= size){
+    nobjs = bytes_left / size;
+    total_bytes = size * nobjs;
+    result = start_free;
+    start_free += total_bytes;
+    return (result);
+  }
+</code></pre><p>重新调整nobjs，然后将能够返回的所有区块返回。</p><p>如果连一个区块都不能提供的话，则考虑向内存malloc一块，以补充内存池。</p><pre><code class="language-c++">else{
+  size_t bytes_to_get = 2 * total_bytes + ROUND_UP(heap_size &gt;&gt; 4);
+</code></pre><p>并且需要malloc的size应该是total_bytes的两倍。</p><p>在开始malloc之前，先对内存池中的零头进行利用。调整free list。</p><pre><code class="language-c++"> if (bytes_left &gt; 0){
+   obj *volatile *my_free_list =
+     free_list + FREELIST_INDEX(bytes_left);
+   ((obj *)start_free)-&gt;free_list_link = *my_free_list;
+   *my_free_list = (obj *)start_free;
+ }
+</code></pre><p>然后开始malloc。</p><pre><code class="language-c++">start_free = (char *)malloc(bytes_to_get);
+</code></pre><p>如果没有异常的话，可以将申请到的内存处理一下然后返回了。</p><pre><code class="language-c++">heap_size += bytes_to_get;
+end_free = start_free + bytes_to_get;
+return (chunk_alloc(size, nobjs)); // adjust nobjs
+</code></pre><p>如果对内存的申请不成功，即system heap已经耗尽，那么我们只能对我们现有的东西进行检视。</p><pre><code class="language-c++">if (start_free == 0){
+    int i;
+    obj *volatile *my_free_list, *p;
+    for (i = size; i &lt;= __MAX_BYTES;i+=__ALIGN){ // 搜寻适当的free list
+      my_free_list = free_list + FREELIST_INDEX(i);
+      p = *my_free_list;
+      if (p != 0){
+        *my_free_list = p-&gt;free_list_link;
+        start_free = (char *)p;
+        end_free = start_free + i;
+        return (chunk_alloc(size, nobjs));
+      }
+    }
+    end_free = 0; // 山穷水尽
+    start_free = (char *)malloc_alloc::allocate(bytes_to_get); // 调用第一级配置器，赌一把。
+}
+</code></pre><h2 id="代码">代码</h2><p>完整的chunk_alloc：</p><pre><code class="language-c++">template &lt;bool threads,int inst&gt;
+char *__default_alloc_template&lt;threads,inst&gt;::chunk_alloc(size_t size,int &amp;nobjs){
+    char *result;
+    size_t total_bytes = size * nobjs;
+    size_t bytes_left = end_free - start_free;
+
+    if(bytes_left &gt; total_bytes){ // memory pool is enough.
+        result = start_free;
+        start_free += total_bytes;
+        return (result);
+    }else if (bytes_left &gt;= size){
+        nobjs = bytes_left / size;
+        total_bytes = size * nobjs;
+        result = start_free;
+        start_free += total_bytes;
+        return (result);
+    }else{
+        size_t bytes_to_get = 2 * total_bytes + ROUND_UP(heap_size &gt;&gt; 4);
+        if (bytes_left &gt; 0){
+            obj *volatile *my_free_list =
+                free_list + FREELIST_INDEX(bytes_left);
+            ((obj *)start_free)-&gt;free_list_link = *my_free_list;
+            *my_free_list = (obj *)start_free;
+        }
+        start_free = (char *)malloc(bytes_to_get);
+        if (start_free == 0){
+            int i;
+            obj *volatile *my_free_list, *p;
+            for (i = size; i &lt;= __MAX_BYTES;i+=__ALIGN){
+                my_free_list = free_list + FREELIST_INDEX(i);
+                p = *my_free_list;
+                if (p != 0){
+                    *my_free_list = p-&gt;free_list_link;
+                    start_free = (char *)p;
+                    end_free = start_free + i;
+                    return (chunk_alloc(size, nobjs));
+                }
+            }
+            end_free = 0;
+            start_free = (char *)malloc_alloc::allocate(bytes_to_get);
+        }
+        heap_size += bytes_to_get;
+        end_free = start_free + bytes_to_get;
+        return (chunk_alloc(size, nobjs));
+    }
+}
+</code></pre><h2 id="测试">测试</h2><p>至此，一个史上最骚的内存池就这么诞生了。但是我们还是按照惯例来测试一下这个池子好不好使。第一次使用的时候以为是直接使用__default_alloc_template，</p><pre><code class="language-c++">#include &lt;vector&gt;
+...
+vector&lt;int,mystl::__default_alloc_template&lt;0,0&gt;&gt; iv(ia,ia+5);
+</code></pre><p>报错，报了一吨。而且是没法debug的那种。根本找不到错误在哪里。</p><p>后来找了个tinystl源码看了看，原来是需要给一层包装(allocator.h)才行。另外debug了一下，alloc.h有以下改动。</p><pre><code class="language-c++">typedef __default_alloc_template&lt;0, 0&gt; alloc;
+
+template&lt;&gt;
+char *alloc::start_free = 0;
+
+template&lt;&gt;
+char *alloc::end_free = 0;
+
+template&lt;&gt;
+size_t alloc::heap_size = 0;
+
+template&lt;&gt;
+alloc::obj *volatile alloc::free_list[__NFREELISTS] =
+    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,};
+</code></pre><p>包装用的头文件直接抄defalloc.h，然后将alloc加到模版声明中去即可。附allocator.h</p><pre><code class="language-c++">#ifndef DEFALLOC_H
+#define DEFALLOC_H
+
+#include &lt;new&gt;
+#include &lt;stddef.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;limits.h&gt;
+#include &lt;iostream&gt;
+#include &lt;algorithm&gt;
+#include "alloc.h"
+
+using namespace std;
+
+namespace mystl{
+
+template &lt;class T,class Alloc = mystl::alloc&gt;
+class allocator{
+public:
+    typedef T value_type;
+    typedef T* pointer;
+    typedef const T* const_pointer;
+    typedef T&amp; reference;
+    typedef const T&amp; const_reference;
+    typedef size_t size_type;
+    typedef ptrdiff_t difference_type;
+
+
+
+    pointer allocate(size_type size){
+        return (pointer)Alloc::allocate((difference_type)size); // 需要将指针转换一下
+    }
+
+    void deallocate(pointer p){
+        Alloc::deallocate(p,0);
+    }
+
+    void deallocate(pointer p,size_type n){
+        Alloc::deallocate(p,n);
+    }
+
+    pointer address(reference x){
+        return (pointer) &amp;x;
+    }
+
+    const_pointer const_address(const_reference x){
+        return (const_pointer) &amp;x;
+    }
+
+    size_type init_page_size(){
+        return max(size_type(1),size_type(4096/sizeof(T)));
+    }
+
+    size_type max_size(){
+        return max(size_type(1),size_type(UINT_MAX/sizeof(T)));
+    }
+
+}; // end of class allocator
+
+template&lt;&gt;
+class allocator&lt;void&gt;{
+public:
+    typedef void* pointer;
+};
+
+
+} // end of namespace
+#endif
+</code></pre><p>然后就可以愉快地使用内存池啦。</p><pre><code class="language-c++">// demo.cpp
+#include &lt;vector&gt;
+#include &lt;iostream&gt;
+#include "allocator.h"
+
+using namespace std;
+
+int main(){
+    int ia[5] = {0,1,2,3,4};
+    unsigned int i;
+    unsigned int size;
+
+    vector&lt;int,mystl::allocator&lt;int&gt;&gt; iv(ia,ia+5);
+    size = iv.size();
+    for(i=0;i&lt;size;i++){
+        cout&lt;&lt;iv[i]&lt;&lt;" ";
+    }
+    cout&lt;&lt;endl;
+    return 0;
+}
+</code></pre><pre><code class="language-shell"># surager @ ubuntu in ~/MyTinySTL [9:01:25] 
+$ cd "/home/surager/MyTinySTL/" &amp;&amp; g++ 'test.cpp' -o 'test' -Wall -g -O2 -static-libgcc -std=c++17 -fexec-charset=GBK &amp;&amp; "/home/surager/MyTinySTL/"test
+0 1 2 3 4 
+</code></pre><h2 id="总结">总结</h2><p>对stl内存分配的学习虽然不是重点，但是对于源码的理解以及对内存分配的深入还是很有意义的。这个内存池不仅让我收获了源码的逻辑严谨性，而且让我知道了数据结构在内存中所占的比较重要的地位。</p><p>另外，这只是stl学习的第一步，还需要努力。</p></div><div id="disqus_thread"></div><script> (function() { var d = document, s = d.createElement('script'); s.src = 'https://surager-pub.disqus.com/embed.js'; s.setAttribute('data-timestamp', +new Date()); (d.head || d.body).appendChild(s); })(); </script> <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript> <script> (function($){ setInterval(() => { $.each($('iframe'), (arr,x) => { let src = $(x).attr('src'); if (src && src.match(/(ads-iframe)|(disqusads)/gi)) { $(x).remove(); } }); }, 300); })(jQuery); </script> <br/> <i class="fas fa-coffee fa-fw"></i> <a href="/comments/">如果这篇博客帮助到你，可以留言夸夸我~</a> <br/> <i class="fab fa-creative-commons-by fa-fw"></i> <a href="https://creativecommons.org/licenses/by-nc/4.0/deed.zh" rel="license"> CC BY-NC 4.0 </a> （除特别声明或转载文章外）</div></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" /><style> .katex-display>.katex { white-space: normal; }</style><script src="https://cdn.jsdelivr.net/combine/npm/katex@0.12.0/dist/katex.min.js,npm/katex@0.12.0/dist/contrib/auto-render.min.js" async="async" onload='renderMathInElement(document.body, { delimiters: [{left: "$$", right: "$$", display: true}, { left: "$", right: "$", display: false }, {left: "\\(", right: "\\)", display: false}, {left: "\\[", right: "\\]", display: true}]})' ></script><style> pre.language-mermaid, code.language-mermaid { display: none; } .mermaid { overflow: auto auto; max-width: 100%; max-height: 66.6vh; }</style><script src="https://cdn.jsdelivr.net/npm/mermaid@8.8.3/dist/mermaid.min.js" async="async" onload=' for(let x of document.getElementsByClassName("language-mermaid")) if(x.nodeName=="CODE") { let m = document.createElement("div"); m.classList.add("mermaid"); m.textContent = x.textContent; x.parentNode.insertAdjacentElement("beforebegin", m); }' ></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/combine/npm/prismjs@1.21.0/plugins/line-numbers/prism-line-numbers.min.css,npm/prismjs@1.21.0/plugins/toolbar/prism-toolbar.min.css,npm/prismjs@1.21.0/plugins/match-braces/prism-match-braces.min.css,npm/prism-themes@1.4.0/themes/prism-nord.min.css" /> <script src="https://cdn.jsdelivr.net/combine/npm/prismjs@1.21.0/components/prism-core.min.js,npm/prismjs@1.21.0/plugins/autoloader/prism-autoloader.min.js,npm/prismjs@1.21.0/plugins/line-numbers/prism-line-numbers.min.js,npm/prismjs@1.21.0/plugins/toolbar/prism-toolbar.min.js,npm/prismjs@1.21.0/plugins/match-braces/prism-match-braces.min.js" async="async" data-autoloader-path="https://cdn.jsdelivr.net/npm/prismjs@1.21.0/components/" onload=' for(let x of document.getElementsByClassName("content")) x.classList.add("line-numbers","match-braces"); Prism.plugins.toolbar.registerButton("select-code", function (env) { let button = document.createElement("button"); button.textContent = "select this " + env.language; button.addEventListener("click", function () { if (document.body.createTextRange) { let range = document.body.createTextRange(); range.moveToElementText(env.element); range.select(); } else if (window.getSelection) { let selection = window.getSelection(); let range = document.createRange(); range.selectNodeContents(env.element); selection.removeAllRanges(); selection.addRange(range); } }); return button; })' ></script></div><label for="sidebar-checkbox" class="sidebar-toggle"></label>

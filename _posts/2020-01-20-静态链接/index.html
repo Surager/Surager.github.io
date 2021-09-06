@@ -1,0 +1,280 @@
+<!DOCTYPE html><html><head><title> 静态链接 &middot; Surager</title><!-- Begin Jekyll SEO tag v2.7.1 --><meta name="generator" content="Jekyll v4.1.1" /><meta property="og:title" content="静态链接" /><meta property="og:locale" content="en_US" /><meta name="description" content="链接器是个比编译器还古老的前辈。" /><meta property="og:description" content="链接器是个比编译器还古老的前辈。" /><link rel="canonical" href="http://localhost:4000/_posts/2020-01-20-%E9%9D%99%E6%80%81%E9%93%BE%E6%8E%A5/" /><meta property="og:url" content="http://localhost:4000/_posts/2020-01-20-%E9%9D%99%E6%80%81%E9%93%BE%E6%8E%A5/" /><meta property="og:site_name" content="Surager" /><meta property="og:type" content="article" /><meta property="article:published_time" content="2020-01-20T00:00:00+08:00" /><meta name="twitter:card" content="summary" /><meta property="twitter:title" content="静态链接" /><meta name="google-site-verification" content="YIKi1rBnyUaS-DMYiluseI5kZzTwjCkTFmKkSkMZDJk" /><meta name="baidu-site-verification" content="szbTSfUGAB" /> <script type="application/ld+json"> {"url":"http://localhost:4000/_posts/2020-01-20-%E9%9D%99%E6%80%81%E9%93%BE%E6%8E%A5/","headline":"静态链接","datePublished":"2020-01-20T00:00:00+08:00","dateModified":"2020-01-20T00:00:00+08:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/_posts/2020-01-20-%E9%9D%99%E6%80%81%E9%93%BE%E6%8E%A5/"},"description":"链接器是个比编译器还古老的前辈。","@type":"BlogPosting","@context":"https://schema.org"}</script> <!-- End Jekyll SEO tag --><meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1" /><meta http-equiv="content-type" content="text/html; charset=utf-8" /><link rel="alternate" href="/feed.xml" title="Surager's blog" type="application/rss+xml" /><link rel="apple-touch-icon-precomposed" href="/static/assets/img/landing/avatar.jpg" /><link rel="shortcut icon" href="/static/assets/img/landing/avatar.jpg" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/combine/gh/poole/lanyon@v1.1.0/public/css/poole.min.css,gh/poole/lanyon@v1.1.0/public/css/lanyon.min.css,gh/poole/lanyon@v1.1.0/public/css/syntax.min.css" /><link rel="stylesheet" href="/static/assets/script/admonitions.css" /> <script async="async" src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/js/all.min.js" ></script> <script src='https://zz.bdstatic.com/linksubmit/push.js' async="async" ></script><style> .wrap { transition-property: width,background-size,transform; transition-duration: .3s; transition-timing-function: ease-in-out; min-height: 100%; display: inline-block; background-size: 100% auto; background-position: 0% 0%; background-repeat: no-repeat; background-attachment: fixed; background-image: url(/assets/image/74559485_p1.webp); } @media (min-aspect-ratio: 2400/1850) { .wrap { background-image: url(/assets/image/71932901_p0.webp); } } .sidebar-overlay #sidebar-checkbox:checked ~ .wrap { width: calc(100% - 14rem); background-size: calc(100% - 14rem) auto; transform: translateX(14rem); } .layout-reverse.sidebar-overlay #sidebar-checkbox:checked ~ .wrap { transform: translateX(0); }</style><style> .sidebar, html, h1, h2, h3, h4, h5, h6 { font-family: "Fira Code", Consolas, PingFang SC, Menlo, Monaco, "Courier New", Microsoft JhengHei, monospace; }</style><style> h1, h2, h3, h4, h5, h6 { font-weight: bold; }</style><style> .post h1, .post h2, .post h3, .post h4, .post h5, .post h6 { font-weight: 550; }</style><style> img { display: inline-block; margin: 0; }</style><style> ::-webkit-scrollbar { width: 3px; height: 3px; } ::-webkit-scrollbar-thumb { background-image: linear-gradient(45deg, Cyan 0%, Magenta 50%, Yellow 100%); }</style><style> ::selection { color: White; background: Black; }</style><body class="theme-base-07 sidebar-overlay"> <!-- Target for toggling the sidebar `.sidebar-checkbox` is for regular styles, `#sidebar-checkbox` for behavior. --> <input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox" /> <!-- Toggleable sidebar --><div class="sidebar" id="sidebar"><div class="sidebar-item"><div class="effect effect-right_to_left"> <img class="effect-img" src="/static/assets/img/landing/avatar.jpg" alt="img" /><div class="effect-info"> 19计算机专业在读<br/> Blue-Whale<br/> V&N<br/> 龙鸣PWN手<br/> 希望你能在这里学到东西<br/> <a href="mailto:surager2019@gmail.com"> <i class="fas fa-envelope"></i> </a> <a href="https://github.com/Surager"> <i class="fab fa-github"></i> </a> <a href="https://surager.pub/feed.xml"> <i class="fas fa-rss"></i> </a> <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=100% height=52 src="https://music.163.com/outchain/player?type=2&id=1453894413&auto=0&height=32" ></iframe></div></div></div><nav class="sidebar-nav"> <a class="sidebar-nav-item" href="/"> <i class="fas fa-home fa-fw"></i> 首页 </a> <a class="sidebar-nav-item" href="/comments/"> <i class="fas fa-comments fa-fw"></i> 留言 </a> <a class="sidebar-nav-item" href="/tags/"> <i class="fas fa-tags fa-fw"></i> 标签 </a> <a class="sidebar-nav-item" href="/archive/"> <i class="fas fa-archive fa-fw"></i> 归档 </a> <a class="sidebar-nav-item" href="/about/"> <i class="fas fa-address-card fa-fw"></i> 关于 </a></nav><div class="sidebar-item"><style> #sidebar-search-input { background: none; border: none; color: White; width: 100%; } #sidebar-search-results-container { overflow: auto auto; max-height: 66.6vh; }</style><input id="sidebar-search-input" placeholder="搜索博文" /><ol id="sidebar-search-results-container" ></ol><script src='https://cdn.jsdelivr.net/npm/simple-jekyll-search@1.7.11/dest/simple-jekyll-search.min.js' async='async' onload=' SimpleJekyllSearch({ json: "/assets/simple-jekyll-search/search.json", searchInput: document.getElementById("sidebar-search-input"), resultsContainer: document.getElementById("sidebar-search-results-container"), searchResultTemplate: `<li><a href="{url}">{title}</a>`, limit: 999, fuzzy: true })' ></script><style> #toc { overflow: auto auto; max-height: 66.6vh; }</style><ol id="toc"><li><a href="#%E9%9D%99%E6%80%81%E9%93%BE%E6%8E%A5">静态链接</a><ol><li><a href="#%E7%9B%B8%E4%BC%BC%E6%AE%B5%E5%90%88%E5%B9%B6">相似段合并</a><li><a href="#%E7%AC%A6%E5%8F%B7%E8%A7%A3%E6%9E%90%E4%B8%8E%E9%87%8D%E5%AE%9A%E4%BD%8D">符号解析与重定位</a><ol><li><a href="#%E9%87%8D%E5%AE%9A%E4%BD%8D">重定位</a><li><a href="#%E9%87%8D%E5%AE%9A%E4%BD%8D%E8%A1%A8">重定位表</a><li><a href="#%E7%AC%A6%E5%8F%B7%E8%A7%A3%E6%9E%90">符号解析</a><li><a href="#%E6%8C%87%E4%BB%A4%E4%BF%AE%E6%AD%A3%E6%96%B9%E5%BC%8F">指令修正方式</a></ol><li><a href="#common%E5%9D%97">COMMON块</a><li><a href="#%E9%9D%99%E6%80%81%E5%BA%93%E9%93%BE%E6%8E%A5">静态库链接</a><li><a href="#%E9%93%BE%E6%8E%A5%E6%8E%A7%E5%88%B6%E8%BF%87%E7%A8%8B">链接控制过程</a><ol><li><a href="#%E6%9C%80%E5%B0%8F%E7%9A%84%E7%A8%8B%E5%BA%8F">最”小”的程序</a><li><a href="#%E4%BD%BF%E7%94%A8ld%E9%93%BE%E6%8E%A5%E8%84%9A%E6%9C%AC">使用ld链接脚本</a></ol></ol></ol><style> .sidebar-checkbox { display: none; } .sidebar-toggle { position: fixed; }</style><style> .sidebar { overflow: scroll; min-height: 101%; }</style><style> .effect { margin: 1rem; perspective: 900px; } .effect-info { text-align: center; backface-visibility: hidden; position: absolute; top: 0; transform-style: preserve-3d; } .effect-img { z-index: 11; width: 100%; height: 100%; position: relative; transition: all 0.5s ease-in-out; } .effect-img:before { position: absolute; display: block; } .effect-right_to_left .effect-img { transform-origin: 0% 50%; } .effect-right_to_left:hover .effect-img { transform: rotate3d(0, 1, 0, -180deg); }</style><div> <i class="fas fa-cog fa-spin fa-fw"></i> <span id="run_time_day"> <i class="fas fa-spinner fa-pulse"></i> </span>天 <span id="run_time_hour"> <i class="fas fa-spinner fa-pulse"></i> </span>时 <span id="run_time_minute"> <i class="fas fa-spinner fa-pulse"></i> </span>分 <span id="run_time_second"> <i class="fas fa-spinner fa-pulse"></i> </span>秒 <script> setInterval(function (d,h,m,s,b) { function setzero(i) { return i < 10 ? "0" + i : i; } let BirthDay = new Date(b); let today = new Date(); let timeold = (today.getTime() - BirthDay.getTime()); let sectimeold = timeold / 1000; let secondsold = Math.floor(sectimeold); let msPerDay = 24 * 60 * 60 * 1000; let e_daysold = timeold / msPerDay; let daysold = Math.floor(e_daysold); let e_hrsold = (e_daysold - daysold) * 24; let hrsold = Math.floor(e_hrsold); let e_minsold = (e_hrsold - hrsold) * 60; let minsold = Math.floor((e_hrsold - hrsold) * 60); let seconds = Math.floor((e_minsold - minsold) * 60); d.textContent = daysold; h.textContent = setzero(hrsold); m.textContent = setzero(minsold); s.textContent = setzero(seconds); }, 1000, document.getElementById("run_time_day"), document.getElementById("run_time_hour"), document.getElementById("run_time_minute"), document.getElementById("run_time_second"), "10/27/2019 00:00:00")// 这是我第一篇CSDN博客的时间 </script></div><div><div> <i class="fas fa-eye fa-fw"></i> <span id="busuanzi_value_page_pv"> <i class="fas fa-spinner fa-pulse"></i> </span>次</div><div> <i class="fas fa-paw fa-fw"></i> <span id="busuanzi_value_site_pv"> <i class="fas fa-spinner fa-pulse"></i> </span>枚</div><div> <i class="fas fa-user-friends fa-fw"></i> <span id="busuanzi_value_site_uv"> <i class="fas fa-spinner fa-pulse"></i> </span>人</div><script src='https://cdn.jsdelivr.net/npm/busuanzi@2.3.0' async='async' ></script></div><div> <i class="fas fa-thumbs-up fa-fw"></i> <a href="https://jekyll-theme-WuK.wu-kan.cn"> jekyll-theme-WuK </a></div><div> <i class="fa fa-users fa-fw"></i> <a href="https://aidaip.github.io"> AiDai </a></div><div> <i class="fa fa-users fa-fw"></i> <a href="https://coinc1dens.github.io/"> Coin哥哥 </a></div><div> <i class="fa fa-users fa-fw"></i> <a href="https://www.freejishu.com/"> freejishu的美丽世界 </a></div><div> <i class="fa fa-users fa-fw"></i> <a href="https://hitcxy.com"> pikachu's Blog </a></div><div> <i class="fa fa-users fa-fw"></i> <a href="https://n0vice.gitee.io/"> N0vice </a></div><div> <i class="fa fa-users fa-fw"></i> <a href="https://phuker.github.io/"> 腾汛新闻 </a></div><div> <i class="fas fa-copyright fa-fw"></i> 2019-2021 Surager</div></div></div><!-- Wrap is the content to shift when toggling the sidebar. We wrap the content to avoid any CSS collisions with our real content. --><div class="wrap"><style> pre { max-height: 66.6vh; overflow: auto; }</style><style> .container { min-width: 66.6%; }</style><style> .container.content { padding-top: 1rem; padding-bottom: 1px; margin-top: 1.5rem; margin-bottom: 1.5rem; border-radius:10px; box-shadow:0px 0px 0px 3px #bb0a0a, 0px 0px 0px 6px #2e56bf, 0px 0px 0px 9px #ea982e; background-color: rgba(255,255,255,0.95); animation-duration: 2s; animation-name: fadeIn; } .masthead{ padding-top: 1rem; padding-bottom: 1rem; margin-bottom: 1.5rem; box-shadow: 0 0 5rem rgba(0, 0, 0, 0.1); background-color: rgba(255,255,255,0.99); animation-duration: 2s; animation-name: fadeIn; } @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }</style><div class="container content"><div class="page"><div class="post"> <span class="post-date"> <i class="fas fa-calendar-day fa-fw"></i> Time: 2020-01-20 <i class="fas fa-tag fa-fw"></i> Tags: binary <br/> <i class="fas fa-link fa-fw"></i> Link: <a href="/_posts/2020-01-20-%E9%9D%99%E6%80%81%E9%93%BE%E6%8E%A5/"> 静态链接 </a> </span><blockquote><p>链接器是个比编译器还古老的前辈。</p></blockquote><h1 id="静态链接">静态链接</h1><p>我们准备两个小程序</p><p>第一个：</p><pre><code class="language-c">/* a.c */
+extern int shared;
+
+int main()
+{
+	int a=100;
+	swap( &amp;a , shared );
+}
+</code></pre><p>第二个:</p><pre><code class="language-c">/* b.c */
+int shared = 1;
+
+void swap(int* a, int* b )
+{
+	*a ^= *b ^= *a ^= *b;
+}
+</code></pre><p>然后编译成目标文件:</p><p><code>gcc -c a.c b.c</code></p><p>这样我们就得到了两个文件a.o和b.o。模块a.c里面引用到了模块b.c里面的变量shared和函数swap。</p><h2 id="相似段合并">相似段合并</h2><p>早期的链接器会直接把目标文件的各个段按照次序叠加起来，这样就造成了空间浪费的问题。</p><p>于是一个更实际的方法——相似段合并，诞生了。它的思路是将所有输入文件的”.text”段合并到输出文件的”.text”段中，接着是”.data”段、”.bss”段等。</p><p><img src="\assets\静态链接\QQ图片20200120100244.png" alt="实际的空间分配策略" /></p><p>实际上我们在谈到空间分配时只关注于虚拟空间的分配。现在的链接器基本上采用相似段合并的策略。使用这种策略一般采用一种叫做两步链接（Two-pass Linking）的方法。</p><p><strong>第一步是空间与地址分配。</strong>收集所有段的长度、属性和位置。收集符号定义和符号引用，统一放到一个全局变量表。</p><p><strong>第二步是符号解析和重定位。</strong>链接的核心，尤其是重定位过程。</p><p>接下来我们把a.o和b.o连接起来。</p><p><code>ld a.o b.o -e main -o ab</code></p><blockquote><p>-e main : 将main作为程序的入口，ld链接器默认程序入口为_start</p><p>-o ab : 链接的输出文件名为ab，默认为a.out</p></blockquote><p>之后用objdump查看各个段的属性。</p><pre><code>surager@LAPTOP-0H9RPTHA:~/linkers_loaders$ objdump -h a.o
+
+a.o:     file format elf32-i386
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .group        00000008  00000000  00000000  00000034  2**2
+                  CONTENTS, READONLY, GROUP, LINK_ONCE_DISCARD
+  1 .text         0000004a  00000000  00000000  0000003c  2**0
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+  2 .data         00000000  00000000  00000000  00000086  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  3 .bss          00000000  00000000  00000000  00000086  2**0
+                  ALLOC
+  . . .
+surager@LAPTOP-0H9RPTHA:~/linkers_loaders$ objdump -h b.o
+
+b.o:     file format elf32-i386
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .group        00000008  00000000  00000000  00000034  2**2
+                  CONTENTS, READONLY, GROUP, LINK_ONCE_DISCARD
+  1 .text         00000043  00000000  00000000  0000003c  2**0
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+  2 .data         00000004  00000000  00000000  00000080  2**2
+                  CONTENTS, ALLOC, LOAD, DATA
+  3 .bss          00000000  00000000  00000000  00000084  2**0
+                  ALLOC
+  . . .
+surager@LAPTOP-0H9RPTHA:~/linkers_loaders$ objdump -h ab
+
+ab:     file format elf32-i386
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         00000091  08049000  08049000  00001000  2**0
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  . . .
+  3 .data         00000004  0804c00c  0804c00c  0000300c  2**2
+                  CONTENTS, ALLOC, LOAD, DATA
+  . . .
+</code></pre><p>我们关心以上结果中的VMA（Virtual Memory Address，即虚拟地址）和Size。</p><p>在链接之前，目标文件所有段中的VMA都是0，因为虚拟地址没有分配，他们默认都是0。</p><p><img src="\assets\静态链接\QQ图片20200120102454.png" alt="目标文件、可执行文件与进程空间" /></p><p>（图片与内容对应有误）</p><p>当第一步完成之后，各个段在链接之后的虚拟地址就确定了。比如”.text”段起始地址为0x08049000，”.data”段起始地址为0x0804c00c。之后链接器开始计算各个符号的虚拟地址。即链接器要给每个符号加上一个偏移量，使他们能够调整到正确的虚拟地址。</p><h2 id="符号解析与重定位">符号解析与重定位</h2><h3 id="重定位">重定位</h3><p>接下来来到了链接的核心部分。</p><p>我们先用objdump来查看编译器在编译a.c成指令时如何访问外部变量的。</p><pre><code class="language-assembly">surager@LAPTOP-0H9RPTHA:~/linkers_loaders$ objdump -d a.o
+
+a.o:     file format elf32-i386
+
+
+Disassembly of section .text:
+
+00000000 &lt;main&gt;:
+   0:   8d 4c 24 04             lea    0x4(%esp),%ecx
+   4:   83 e4 f0                and    $0xfffffff0,%esp
+   7:   ff 71 fc                pushl  -0x4(%ecx)
+   a:   55                      push   %ebp
+   b:   89 e5                   mov    %esp,%ebp
+   d:   53                      push   %ebx
+   e:   51                      push   %ecx
+   f:   83 ec 10                sub    $0x10,%esp
+  12:   e8 fc ff ff ff          call   13 &lt;main+0x13&gt;
+  17:   05 01 00 00 00          add    $0x1,%eax
+  1c:   c7 45 f4 64 00 00 00    movl   $0x64,-0xc(%ebp)
+  23:   83 ec 08                sub    $0x8,%esp
+  26:   8b 90 00 00 00 00       mov    0x0(%eax),%edx    ;8b 90 00 00 00 00 四个字节为0
+  2c:   52                      push   %edx
+  2d:   8d 55 f4                lea    -0xc(%ebp),%edx
+  30:   52                      push   %edx
+  31:   89 c3                   mov    %eax,%ebx
+  33:   e8 fc ff ff ff          call   34 &lt;main+0x34&gt;    ;四个字节为-4
+  38:   83 c4 10                add    $0x10,%esp
+  3b:   b8 00 00 00 00          mov    $0x0,%eax
+  40:   8d 65 f8                lea    -0x8(%ebp),%esp
+  43:   59                      pop    %ecx
+  44:   5b                      pop    %ebx
+  45:   5d                      pop    %ebp
+  46:   8d 61 fc                lea    -0x4(%ecx),%esp
+  49:   c3                      ret
+
+. . .
+
+
+</code></pre><p>对shared的引用用到了一个”mov”指令，这个指令有6个字节，后面的 00 00 00 00 是shared的地址。因为编译器编译的时候shared定义在其他目标文件中，所以编译器暂时把地址0看成shared的地址。</p><p>另一个偏移为0x33的指令其实是对swap函数的调用。add指令的的地址为0x38，-4即 0x38 - 4 = 0x34 。</p><p>编译器暂时把地址部分用0x00000000和0xFFFFFFFC替代，剩下的工作留给了链接器。链接器已经收集了所有符号的信息了，所以可以根据符号对地址进行修正。</p><p>我们用objdump来查看修正之后的结果。</p><pre><code class="language-assembly">surager@LAPTOP-0H9RPTHA:~/linkers_loaders$ objdump -d ab
+
+ab:     file format elf32-i386
+
+
+Disassembly of section .text:
+
+08049000 &lt;main&gt;:
+ 8049000:       8d 4c 24 04             lea    0x4(%esp),%ecx
+ 8049004:       83 e4 f0                and    $0xfffffff0,%esp
+ 8049007:       ff 71 fc                pushl  -0x4(%ecx)
+ 804900a:       55                      push   %ebp
+ 804900b:       89 e5                   mov    %esp,%ebp
+ 804900d:       53                      push   %ebx
+ 804900e:       51                      push   %ecx
+ 804900f:       83 ec 10                sub    $0x10,%esp
+ 8049012:       e8 33 00 00 00          call   804904a &lt;__x86.get_pc_thunk.ax&gt;
+ 8049017:       05 e9 2f 00 00          add    $0x2fe9,%eax
+ 804901c:       c7 45 f4 64 00 00 00    movl   $0x64,-0xc(%ebp)
+ 8049023:       83 ec 08                sub    $0x8,%esp
+ 8049026:       c7 c2 0c c0 04 08       mov    $0x804c00c,%edx
+ 804902c:       52                      push   %edx
+ 804902d:       8d 55 f4                lea    -0xc(%ebp),%edx
+ 8049030:       52                      push   %edx
+ 8049031:       89 c3                   mov    %eax,%ebx
+ 8049033:       e8 16 00 00 00          call   804904e &lt;swap&gt;
+ 8049038:       83 c4 10                add    $0x10,%esp
+ 804903b:       b8 00 00 00 00          mov    $0x0,%eax
+ 8049040:       8d 65 f8                lea    -0x8(%ebp),%esp
+ 8049043:       59                      pop    %ecx
+ 8049044:       5b                      pop    %ebx
+ 8049045:       5d                      pop    %ebp
+ 8049046:       8d 61 fc                lea    -0x4(%ecx),%esp
+ 8049049:       c3                      ret
+
+0804904e &lt;swap&gt;:
+ 804904e:       55                      push   %ebp
+</code></pre><p>相对于add指令来说0x8049038 + 0x16 = 0x804904e，所以swap指令填充地址为 16 00 00 00 。</p><h3 id="重定位表">重定位表</h3><p>ld链接器通过重定位表保存与重定位相关的信息。重定位表往往是ELF中的一个段，所以重定位表也可以叫做重定位段。比如有”.text”有要被重定位的地方，那么必定有一个相对应的叫做”.rel.text”的段保存代码段的重定位信息。我们用objdump来查看目标文件的重定位表。</p><pre><code>surager@LAPTOP-0H9RPTHA:~/linkers_loaders$ objdump -r a.o
+
+a.o:     file format elf32-i386
+
+RELOCATION RECORDS FOR [.text]:
+OFFSET   TYPE              VALUE
+00000013 R_386_PC32        __x86.get_pc_thunk.ax
+00000018 R_386_GOTPC       _GLOBAL_OFFSET_TABLE_
+00000028 R_386_GOT32X      shared
+00000034 R_386_PLT32       swap
+</code></pre><p>这个0x28和0x34就是”mov”指令和”call”指令的地址部分。</p><h3 id="符号解析">符号解析</h3><p>我们用readelf查看a.o的符号表。</p><pre><code>surager@LAPTOP-0H9RPTHA:~/linkers_loaders$ readelf -s a.o
+
+Symbol table '.symtab' contains 15 entries:
+   Num:    Value  Size Type    Bind   Vis      Ndx Name
+     0: 00000000     0 NOTYPE  LOCAL  DEFAULT  UND
+     1: 00000000     0 FILE    LOCAL  DEFAULT  ABS a.c
+     2: 00000000     0 SECTION LOCAL  DEFAULT    2
+     3: 00000000     0 SECTION LOCAL  DEFAULT    4
+     4: 00000000     0 SECTION LOCAL  DEFAULT    5
+     5: 00000000     0 SECTION LOCAL  DEFAULT    6
+     6: 00000000     0 SECTION LOCAL  DEFAULT    8
+     7: 00000000     0 SECTION LOCAL  DEFAULT    9
+     8: 00000000     0 SECTION LOCAL  DEFAULT    7
+     9: 00000000     0 SECTION LOCAL  DEFAULT    1
+    10: 00000000    74 FUNC    GLOBAL DEFAULT    2 main
+    11: 00000000     0 FUNC    GLOBAL HIDDEN     6 __x86.get_pc_thunk.ax
+    12: 00000000     0 NOTYPE  GLOBAL DEFAULT  UND _GLOBAL_OFFSET_TABLE_
+    13: 00000000     0 NOTYPE  GLOBAL DEFAULT  UND shared
+    14: 00000000     0 NOTYPE  GLOBAL DEFAULT  UND swap
+</code></pre><p>UND即”undefined”未定义类型。未定义的原因即该目标文件中有关于他们的重定位项。所以链接器会屁颠屁颠来找这些UND。</p><h3 id="指令修正方式">指令修正方式</h3><p>原因：寻址模式太™多了。</p><p>x86规定了两种基本的修正方式</p><p><img src="\assets\静态链接\QQ图片20200120112236.png" alt="修正方式" /></p><p>对照前面的重定位表，我们的系统是x64，emmmm。</p><p>那翻译一下其实就解决了吧。shared的修正类型是R_386_32，swap修正类型是R_386_PC32。</p><p>我们可以假设一下。</p><p>假设ab生成之后，main的虚拟地址为0x1000，swap的虚拟地址为0x2000，shared的虚拟地址为0x3000。</p><p><strong>绝对地址修正</strong></p><p>​ S+A： S : shared的实际地址0x3000 A : 被修正位置的值，即0x00000000</p><p>所以修正以后指令变成：</p><p><code>1018:c7 c2 00 30 00 00 mov $0x3000,%edx</code></p><p><strong>相对地址修正</strong></p><p>​ S+A+-P: S：swap的实际地址0x2000 A：被修正位置的值0xFFFFFFFC P：被修正的位置即0x1000+0x34</p><p>​ 所以修正之后的地址应该是0x2000 + (-4) - (0x1000 + 0x27) = 0xFD5</p><p>所以修正后指令变成：</p><p><code>1026:e8 d5 0f 00 00 call 0xfd5 &lt;swap&gt;</code></p><p>可以看出，绝对地址修正之后的地址是该符号的实际地址，而相对地址修正之后的地址为地址差。</p><h2 id="common块">COMMON块</h2><p>由于弱符号和强符号的机制，编译器和链接器都支持COMMON块的机制来处理空间问题。</p><h2 id="静态库链接">静态库链接</h2><p>一种语言的开发环境往往会附带有语言库，这些库就是对操作系统的API的包装。比如在Linux下，printf是一个”write”的系统调用，在windows下，它是”WriteConsole”系统API。</p><p>由于目标文件的零散程度，人们使用”ar”压缩程序将目标文件压缩到了一起，使用”ar”工具可以查看文件中包含了哪些目标文件。</p><p><code>ar -t libc.a</code></p><p>下面假设我们用如下方法编译hello.c</p><p><code>gcc -c -fno-builtin hello.c</code></p><blockquote><p>-fno-builtin：禁止函数优化选项，因为gcc会把仅有字符串输出的printf替换成puts。</p><p>-c：生成.o文件</p></blockquote><p>然后用”ar”解压出printf：</p><p><code>ar -x libc.a</code></p><p>接着用ld将hello.o和printf.o链接再一起，结果是失败了。</p><p><code>printf.o:In function '_IO_printf':undefined reference to 'stdout'</code></p><p><code>printf.o:In function '_IO_printf':undefined reference to 'vfprintf'</code></p><p>很显然，printf依赖于其他文件。</p><p>实际上，人工操作一次hello.o的链接过程非常麻烦，我们用-verbose命令将整个编译链接过程打印出来：</p><pre><code>surager@LAPTOP-0H9RPTHA:~/linkers_loaders$ gcc -static --verbose -fno-builtin hello.c
+Using built-in specs.
+COLLECT_GCC=/usr/bin/gcc
+COLLECT_LTO_WRAPPER=/usr/lib/gcc/i686-linux-gnu/9/lto-wrapper
+Target: i686-linux-gnu
+Configured with: ../src/configure -v --with-pkgversion='Debian 9.2.1-21' --with-bugurl=file:///usr/share/doc/gcc-9/README.Bugs --enable-languages=c,ada,c++,go,brig,d,fortran,objc,obj-c++,gm2 --prefix=/usr --with-gcc-major-version-only --program-suffix=-9 --program-prefix=i686-linux-gnu- --enable-shared --enable-linker-build-id --libexecdir=/usr/lib --without-included-gettext --enable-threads=posix --libdir=/usr/lib --enable-nls --enable-bootstrap --enable-clocale=gnu --enable-libstdcxx-debug --enable-libstdcxx-time=yes --with-default-libstdcxx-abi=new --enable-gnu-unique-object --disable-vtable-verify --enable-plugin --enable-default-pie --with-system-zlib --with-target-system-zlib=auto --enable-objc-gc=auto --enable-targets=all --enable-multiarch --disable-werror --with-arch-32=i686 --with-multilib-list=m32,m64,mx32 --enable-multilib --with-tune=generic --enable-checking=release --build=i686-linux-gnu --host=i686-linux-gnu --target=i686-linux-gnu --with-build-config=bootstrap-lto-lean --enable-link-mutex
+Thread model: posix
+gcc version 9.2.1 20191130 (Debian 9.2.1-21)
+COLLECT_GCC_OPTIONS='-static' '-v' '-fno-builtin' '-mtune=generic' '-march=i686'
+
+-----------------------------------------------
+ /usr/lib/gcc/i686-linux-gnu/9/cc1 -quiet -v -imultiarch i386-linux-gnu hello.c -quiet -dumpbase hello.c -mtune=generic -march=i686 -auxbase hello -version -fno-builtin -fasynchronous-unwind-tables -o /tmp/ccWvkCsF.s
+----------------------------------------------- 
+ 
+GNU C17 (Debian 9.2.1-21) version 9.2.1 20191130 (i686-linux-gnu)
+        compiled by GNU C version 9.2.1 20191130, GMP version 6.1.2, MPFR version 4.0.2, MPC version 1.1.0, isl version isl-0.22-GMP
+
+GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
+ignoring nonexistent directory "/usr/local/include/i386-linux-gnu"
+ignoring nonexistent directory "/usr/lib/gcc/i686-linux-gnu/9/../../../../i686-linux-gnu/include"
+#include "..." search starts here:
+#include &lt;...&gt; search starts here:
+ /usr/lib/gcc/i686-linux-gnu/9/include
+ /usr/local/include
+ /usr/lib/gcc/i686-linux-gnu/9/include-fixed
+ /usr/include/i386-linux-gnu
+ /usr/include
+End of search list.
+GNU C17 (Debian 9.2.1-21) version 9.2.1 20191130 (i686-linux-gnu)
+        compiled by GNU C version 9.2.1 20191130, GMP version 6.1.2, MPFR version 4.0.2, MPC version 1.1.0, isl version isl-0.22-GMP
+
+GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
+Compiler executable checksum: 65914783ff6ceeacd00570e1b7ef81be
+COLLECT_GCC_OPTIONS='-static' '-v' '-fno-builtin' '-mtune=generic' '-march=i686'
+
+----------------------------------------------
+ as -v --32 -o /tmp/cc7lBA5Q.o /tmp/ccWvkCsF.s
+----------------------------------------------
+ 
+GNU assembler version 2.33.1 (i686-linux-gnu) using BFD version (GNU Binutils for Debian) 2.33.1
+COMPILER_PATH=/usr/lib/gcc/i686-linux-gnu/9/:/usr/lib/gcc/i686-linux-gnu/9/:/usr/lib/gcc/i686-linux-gnu/:/usr/lib/gcc/i686-linux-gnu/9/:/usr/lib/gcc/i686-linux-gnu/
+LIBRARY_PATH=/usr/lib/gcc/i686-linux-gnu/9/:/usr/lib/gcc/i686-linux-gnu/9/../../../i386-linux-gnu/:/usr/lib/gcc/i686-linux-gnu/9/../../../../lib/:/lib/i386-linux-gnu/:/lib/../lib/:/usr/lib/i386-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/i686-linux-gnu/9/../../../:/lib/:/usr/lib/
+COLLECT_GCC_OPTIONS='-static' '-v' '-fno-builtin' '-mtune=generic' '-march=i686'
+
+----------------------------------------
+ /usr/lib/gcc/i686-linux-gnu/9/collect2 -plugin /usr/lib/gcc/i686-linux-gnu/9/liblto_plugin.so -plugin-opt=/usr/lib/gcc/i686-linux-gnu/9/lto-wrapper -plugin-opt=-fresolution=/tmp/cc4jYbv3.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_eh -plugin-opt=-pass-through=-lc --build-id -m elf_i386 --hash-style=gnu --as-needed -static /usr/lib/gcc/i686-linux-gnu/9/../../../i386-linux-gnu/crt1.o /usr/lib/gcc/i686-linux-gnu/9/../../../i386-linux-gnu/crti.o /usr/lib/gcc/i686-linux-gnu/9/crtbeginT.o -L/usr/lib/gcc/i686-linux-gnu/9 -L/usr/lib/gcc/i686-linux-gnu/9/../../../i386-linux-gnu -L/usr/lib/gcc/i686-linux-gnu/9/../../../../lib -L/lib/i386-linux-gnu -L/lib/../lib -L/usr/lib/i386-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/i686-linux-gnu/9/../../.. /tmp/cc7lBA5Q.o --start-group -lgcc -lgcc_eh -lc --end-group /usr/lib/gcc/i686-linux-gnu/9/crtend.o /usr/lib/gcc/i686-linux-gnu/9/../../../i386-linux-gnu/crtn.o
+COLLECT_GCC_OPTIONS='-static' '-v' '-fno-builtin' '-mtune=generic' '-march=i686'
+----------------------------------------
+</code></pre><p>第一步：调用cc1程序，把hello.c编译成/tmp/ccWvkCsF.s</p><p>第二步：调用as程序，把ccWvkCsF.s汇编成cc7lBA5Q.o，这个cc7lBA5Q.o实际上就是前面的hello.o</p><p>第三步：调用collect2程序完成链接。</p><p>collect2可以看成是ld的一个包装，在这里可以把他简单地看成ld链接器。最后一步中至少有这些目标文件和库被链接入最终的可执行文件：</p><ul><li><p>crt1.o</p><li><p>crti.o</p><li><p>crtbeginT.o</p><li><p>crtend.o</p><li><p>crtn.o</p><li><p>libgcc.a</p><li><p>libgcc_eh.a</p><li><p>libc.a</p></ul><h2 id="链接控制过程">链接控制过程</h2><p>由于整个链接过程有很多内容需要确定，链接器提供了三种控制链接过程的方法。</p><ol><li>使用命令行指定参数。-o、-e就属于这类。<li>存放在目标文件中。<li>使用链接控制脚本。使用参数-T可以指定使用脚本。</ol><h3 id="最小的程序">最”小”的程序</h3><p>hello.c盲打（蒙上眼睛）也能正常运行（指鼠标精确地定位到运行的位置</p><p>但是经典的helloworld</p><ol><li>用到了printf，c语言库与hello.o链接才能生成可执行文件。<li>helloworld有main函数，程序的入口在_start处。<li>main的指令会生成.text段，字符串”Hello world!\n”会被存放在.data段或者.rodata段，还有各种c语言库生成的段，为了方便，我们把很多段放在同一个段中，即tinytext段。</ol><p>TinyHelloWorld.c的源代码如下：</p><pre><code class="language-c">char* str = "Hello world!\n";
+
+void print()
+{
+        asm("movl $13,%%edx \n\t"
+            "movl %0,%%ecx \n\t"
+            "movl $0,%%ebx \n\t"
+            "movl $4,%%eax \n\t"
+            "int $0x80     \n\t"
+            ::"r"(str):"edx","ecx","ebx");
+}
+
+void exit()
+{
+        asm("movl $42,%ebx \n\t"
+            "movl $1,%eax \n\t"
+            "int $0x80 \n\t");
+}
+
+void nomain()
+{
+        print();
+        exit();
+}
+
+
+</code></pre><p>此程序使用了gcc内嵌汇编，系统调用通过0x80中断实现，其中eax为调用号，ebx、ecx、edx等通用寄存器用来传递参数。例如WRITE调用的原型是</p><p><code>int write（int filedesc, char* buffer, int size）</code></p><ul><li>WRITE调用号为4，则执行movl $4,%%eax<li>filedesc使用ebx传参，在默认终端（stdout）输出，所以movl $0,%%ebx<li>buffer表示写入的缓冲区地址，<li>size是字节数，”Hello world!\n”有13字节。</ul><p>我们用普通命令行编译和链接</p><p><code>gcc -c -fno-builtin TinyHelloWorld.c</code></p><p><code>ld -static -e nomain -o TinyHelloWorld TinyHelloWorld.o</code></p><p>-e nomain 是指定以nomain为程序的入口函数。</p><p>程序可以正常运行。</p><pre><code>surager@LAPTOP-0H9RPTHA:~/linkers_loaders$ ./TinyHelloWorld 
+Hello world!
+</code></pre><p>我们用objdump查看这个ELF文件</p><pre><code>surager@LAPTOP-0H9RPTHA:~/linkers_loaders$ objdump -h TinyHelloWorld
+
+TinyHelloWorld:     file format elf32-i386
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         00000065  08049000  08049000  00001000  2**0
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .rodata       0000000e  0804a000  0804a000  00002000  2**0
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+  2 .eh_frame     00000090  0804a010  0804a010  00002010  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+  3 .got.plt      0000000c  0804c000  0804c000  00003000  2**2
+                  CONTENTS, ALLOC, LOAD, DATA
+  4 .data         00000004  0804c00c  0804c00c  0000300c  2**2
+                  CONTENTS, ALLOC, LOAD, DATA
+  5 .comment      00000026  00000000  00000000  00003010  2**0
+                  CONTENTS, READONLY
+</code></pre><p>接下来分析各个段</p><ul><li>.text保存指令，只读<li>.rodata保存”Hello world!\n”，只读<li>.data保存str全局变量，但是我们并没有改写此变量，所以实际也是只读的<li>.comment保存编译器和系统版本信息，可以丢弃</ul><p>据上分析，我们可以将三个段合并，将.comment段丢弃。</p><h3 id="使用ld链接脚本">使用ld链接脚本</h3><p>TinyHelloWorld.lds</p><pre><code>ENTRY(nomain)
+
+SECTIONS
+{
+    . = 0x08048000 + SIZEOF_HEADERS;
+    tinytext  : {*(.text) *(.data) *(.rodata)}
+    /DISCARD/  : { *(.comment)}
+}
+</code></pre><ul><li>ENTRY(nomain)规定了程序的入口函数为nomain()。<li>SECTIONS是链接脚本的主体。<ul><li>第一条是赋值语句，将当前虚拟地址设置成0x08048000 + SIZEOF_HEADERS<li>第二条语句是段转换规则，将”.text”、”.data”、”.rodata”合并到”tinytext”<li>第三条语句把”.comment”段丢掉。</ul></ul><p><code>gcc -c -fno-builtin TinyHelloWorld.c</code></p><p><code>ld -static -T TinyHelloWorld.lds -e nomain -o TinyHelloWorld TinyHelloWorld.o</code></p><p>用objdump查看一波</p><pre><code>surager@LAPTOP-0H9RPTHA:~/linkers_loaders$ objdump -h TinyHelloWorld
+
+TinyHelloWorld:     file format elf32-i386
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 tinytext      0000006f  08048094  08048094  00000094  2**0
+                  CONTENTS, ALLOC, LOAD, CODE
+  1 .text.__x86.get_pc_thunk.ax 00000004  08048103  08048103  00000103  2**0
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  2 .eh_frame     00000090  08048108  08048108  00000108  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+  3 .data.rel.local 00000004  08048198  08048198  00000198  2**2
+                  CONTENTS, ALLOC, LOAD, DATA
+  4 .got.plt      0000000c  0804819c  0804819c  0000019c  2**2
+                  CONTENTS, ALLOC, LOAD, DATA
+</code></pre><p>合并成功。</p></div><div id="disqus_thread"></div><script> (function() { var d = document, s = d.createElement('script'); s.src = 'https://surager-pub.disqus.com/embed.js'; s.setAttribute('data-timestamp', +new Date()); (d.head || d.body).appendChild(s); })(); </script> <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript> <script> (function($){ setInterval(() => { $.each($('iframe'), (arr,x) => { let src = $(x).attr('src'); if (src && src.match(/(ads-iframe)|(disqusads)/gi)) { $(x).remove(); } }); }, 300); })(jQuery); </script> <br/> <i class="fas fa-coffee fa-fw"></i> <a href="/comments/">如果这篇博客帮助到你，可以留言夸夸我~</a> <br/> <i class="fab fa-creative-commons-by fa-fw"></i> <a href="https://creativecommons.org/licenses/by-nc/4.0/deed.zh" rel="license"> CC BY-NC 4.0 </a> （除特别声明或转载文章外）</div></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" /><style> .katex-display>.katex { white-space: normal; }</style><script src="https://cdn.jsdelivr.net/combine/npm/katex@0.12.0/dist/katex.min.js,npm/katex@0.12.0/dist/contrib/auto-render.min.js" async="async" onload='renderMathInElement(document.body, { delimiters: [{left: "$$", right: "$$", display: true}, { left: "$", right: "$", display: false }, {left: "\\(", right: "\\)", display: false}, {left: "\\[", right: "\\]", display: true}]})' ></script><style> pre.language-mermaid, code.language-mermaid { display: none; } .mermaid { overflow: auto auto; max-width: 100%; max-height: 66.6vh; }</style><script src="https://cdn.jsdelivr.net/npm/mermaid@8.8.3/dist/mermaid.min.js" async="async" onload=' for(let x of document.getElementsByClassName("language-mermaid")) if(x.nodeName=="CODE") { let m = document.createElement("div"); m.classList.add("mermaid"); m.textContent = x.textContent; x.parentNode.insertAdjacentElement("beforebegin", m); }' ></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/combine/npm/prismjs@1.21.0/plugins/line-numbers/prism-line-numbers.min.css,npm/prismjs@1.21.0/plugins/toolbar/prism-toolbar.min.css,npm/prismjs@1.21.0/plugins/match-braces/prism-match-braces.min.css,npm/prism-themes@1.4.0/themes/prism-nord.min.css" /> <script src="https://cdn.jsdelivr.net/combine/npm/prismjs@1.21.0/components/prism-core.min.js,npm/prismjs@1.21.0/plugins/autoloader/prism-autoloader.min.js,npm/prismjs@1.21.0/plugins/line-numbers/prism-line-numbers.min.js,npm/prismjs@1.21.0/plugins/toolbar/prism-toolbar.min.js,npm/prismjs@1.21.0/plugins/match-braces/prism-match-braces.min.js" async="async" data-autoloader-path="https://cdn.jsdelivr.net/npm/prismjs@1.21.0/components/" onload=' for(let x of document.getElementsByClassName("content")) x.classList.add("line-numbers","match-braces"); Prism.plugins.toolbar.registerButton("select-code", function (env) { let button = document.createElement("button"); button.textContent = "select this " + env.language; button.addEventListener("click", function () { if (document.body.createTextRange) { let range = document.body.createTextRange(); range.moveToElementText(env.element); range.select(); } else if (window.getSelection) { let selection = window.getSelection(); let range = document.createRange(); range.selectNodeContents(env.element); selection.removeAllRanges(); selection.addRange(range); } }); return button; })' ></script></div><label for="sidebar-checkbox" class="sidebar-toggle"></label>

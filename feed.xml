@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.1.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2021-09-06T10:39:38+08:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Surager</title><subtitle>19计算机专业在读&lt;br/&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.1.1">Jekyll</generator><link href="http://surager.pub/feed.xml" rel="self" type="application/atom+xml" /><link href="http://surager.pub/" rel="alternate" type="text/html" /><updated>2021-09-06T10:39:38+08:00</updated><id>http://surager.pub/feed.xml</id><title type="html">Surager</title><subtitle>19计算机专业在读&lt;br/&gt;
 Blue-Whale&lt;br/&gt;
 V&amp;N&lt;br/&gt;
 龙鸣PWN手&lt;br/&gt;
@@ -21,7 +21,7 @@ V&amp;N&lt;br/&gt;
   height=52 
   src=&quot;https://music.163.com/outchain/player?type=2&amp;id=1453894413&amp;auto=0&amp;height=32&quot;
 &gt;&lt;/iframe&gt;
-</subtitle><entry><title type="html">x86架构下pwn题目libc版本概述</title><link href="http://localhost:4000/_posts/2021-05-11-x86%E6%9E%B6%E6%9E%84%E4%B8%8Bpwn%E9%A2%98%E7%9B%AElibc%E6%A6%82%E8%BF%B0/" rel="alternate" type="text/html" title="x86架构下pwn题目libc版本概述" /><published>2021-05-11T00:00:00+08:00</published><updated>2021-05-11T00:00:00+08:00</updated><id>http://localhost:4000/_posts/x86%E6%9E%B6%E6%9E%84%E4%B8%8Bpwn%E9%A2%98%E7%9B%AElibc%E6%A6%82%E8%BF%B0</id><content type="html" xml:base="http://localhost:4000/_posts/2021-05-11-x86%E6%9E%B6%E6%9E%84%E4%B8%8Bpwn%E9%A2%98%E7%9B%AElibc%E6%A6%82%E8%BF%B0/">&lt;h1 id=&quot;x86架构下pwn题目libc版本概述&quot;&gt;x86架构下pwn题目libc版本概述&lt;/h1&gt;
+</subtitle><entry><title type="html">x86架构下pwn题目libc版本概述</title><link href="http://surager.pub/_posts/2021-05-11-x86%E6%9E%B6%E6%9E%84%E4%B8%8Bpwn%E9%A2%98%E7%9B%AElibc%E6%A6%82%E8%BF%B0/" rel="alternate" type="text/html" title="x86架构下pwn题目libc版本概述" /><published>2021-05-11T00:00:00+08:00</published><updated>2021-05-11T00:00:00+08:00</updated><id>http://surager.pub/_posts/x86%E6%9E%B6%E6%9E%84%E4%B8%8Bpwn%E9%A2%98%E7%9B%AElibc%E6%A6%82%E8%BF%B0</id><content type="html" xml:base="http://surager.pub/_posts/2021-05-11-x86%E6%9E%B6%E6%9E%84%E4%B8%8Bpwn%E9%A2%98%E7%9B%AElibc%E6%A6%82%E8%BF%B0/">&lt;h1 id=&quot;x86架构下pwn题目libc版本概述&quot;&gt;x86架构下pwn题目libc版本概述&lt;/h1&gt;
 
 &lt;p&gt;鉴于最近关于 libc 的讨论又开始兴起，在此稍作总结。&lt;/p&gt;
 
@@ -210,7 +210,7 @@ LEGEND: STACK | HEAP | CODE | DATA | RWX | RODATA
   &lt;li&gt;题目的难度和白给程度&lt;/li&gt;
   &lt;li&gt;seccomp 设了多少&lt;/li&gt;
   &lt;li&gt;搁这挨个试&lt;/li&gt;
-&lt;/ol&gt;</content><author><name></name></author><category term="_posts" /><category term="binary" /><summary type="html">x86架构下pwn题目libc版本概述</summary></entry><entry><title type="html">shellcode 的 issue</title><link href="http://localhost:4000/_posts/2021-05-03-shellcode%E7%9A%84issue/" rel="alternate" type="text/html" title="shellcode 的 issue" /><published>2021-05-03T00:00:00+08:00</published><updated>2021-05-03T00:00:00+08:00</updated><id>http://localhost:4000/_posts/shellcode%E7%9A%84issue</id><content type="html" xml:base="http://localhost:4000/_posts/2021-05-03-shellcode%E7%9A%84issue/">&lt;blockquote&gt;
+&lt;/ol&gt;</content><author><name></name></author><category term="_posts" /><category term="binary" /><summary type="html">x86架构下pwn题目libc版本概述</summary></entry><entry><title type="html">shellcode 的 issue</title><link href="http://surager.pub/_posts/2021-05-03-shellcode%E7%9A%84issue/" rel="alternate" type="text/html" title="shellcode 的 issue" /><published>2021-05-03T00:00:00+08:00</published><updated>2021-05-03T00:00:00+08:00</updated><id>http://surager.pub/_posts/shellcode%E7%9A%84issue</id><content type="html" xml:base="http://surager.pub/_posts/2021-05-03-shellcode%E7%9A%84issue/">&lt;blockquote&gt;
   &lt;p&gt;本文章为个人笔记性质。如有错误，请多多指教。&lt;/p&gt;
 
   &lt;p&gt;谐音梗。issue──&amp;gt;艺术&lt;/p&gt;
@@ -662,7 +662,7 @@ sh.interactive()
 
 &lt;h2 id=&quot;未完&quot;&gt;未完&lt;/h2&gt;
 
-&lt;p&gt;shellcode 还有诸多用法。例如用 &lt;code&gt;mprotect&lt;/code&gt; 改写权限，利用 &lt;code&gt;sigreturn&lt;/code&gt; 构造 SROP 等。做赛题时灵活运用。&lt;/p&gt;</content><author><name></name></author><category term="_posts" /><category term="binary" /><summary type="html">本文章为个人笔记性质。如有错误，请多多指教。 谐音梗。issue──&amp;gt;艺术</summary></entry><entry><title type="html">日遇三险</title><link href="http://localhost:4000/_posts/2021-03-09-%E6%97%A5%E9%81%87%E4%B8%89%E9%99%A9/" rel="alternate" type="text/html" title="日遇三险" /><published>2021-03-09T00:00:00+08:00</published><updated>2021-03-09T00:00:00+08:00</updated><id>http://localhost:4000/_posts/%E6%97%A5%E9%81%87%E4%B8%89%E9%99%A9</id><content type="html" xml:base="http://localhost:4000/_posts/2021-03-09-%E6%97%A5%E9%81%87%E4%B8%89%E9%99%A9/">&lt;h1 id=&quot;日遇三险&quot;&gt;日遇三险&lt;/h1&gt;
+&lt;p&gt;shellcode 还有诸多用法。例如用 &lt;code&gt;mprotect&lt;/code&gt; 改写权限，利用 &lt;code&gt;sigreturn&lt;/code&gt; 构造 SROP 等。做赛题时灵活运用。&lt;/p&gt;</content><author><name></name></author><category term="_posts" /><category term="binary" /><summary type="html">本文章为个人笔记性质。如有错误，请多多指教。 谐音梗。issue──&amp;gt;艺术</summary></entry><entry><title type="html">日遇三险</title><link href="http://surager.pub/_posts/2021-03-09-%E6%97%A5%E9%81%87%E4%B8%89%E9%99%A9/" rel="alternate" type="text/html" title="日遇三险" /><published>2021-03-09T00:00:00+08:00</published><updated>2021-03-09T00:00:00+08:00</updated><id>http://surager.pub/_posts/%E6%97%A5%E9%81%87%E4%B8%89%E9%99%A9</id><content type="html" xml:base="http://surager.pub/_posts/2021-03-09-%E6%97%A5%E9%81%87%E4%B8%89%E9%99%A9/">&lt;h1 id=&quot;日遇三险&quot;&gt;日遇三险&lt;/h1&gt;
 
 &lt;h2 id=&quot;前言&quot;&gt;前言&lt;/h2&gt;
 
@@ -765,7 +765,7 @@ sh.interactive()
 
 &lt;h2 id=&quot;最新动态&quot;&gt;最新动态&lt;/h2&gt;
 
-&lt;p&gt;由于在 catalina 中出现了过几个小时自动 fork 炸系统的问题，2021.07.09 我还是升级到了 big sur。并选择妥协使用了 VMware fusion 进行虚拟机配置。&lt;/p&gt;</content><author><name></name></author><category term="_posts" /><category term="life" /><summary type="html">日遇三险</summary></entry><entry><title type="html">House of husk学习</title><link href="http://localhost:4000/_posts/2020-12-13-House_of_husk%E5%AD%A6%E4%B9%A0/" rel="alternate" type="text/html" title="House of husk学习" /><published>2020-12-13T00:00:00+08:00</published><updated>2020-12-13T00:00:00+08:00</updated><id>http://localhost:4000/_posts/House_of_husk%E5%AD%A6%E4%B9%A0</id><content type="html" xml:base="http://localhost:4000/_posts/2020-12-13-House_of_husk%E5%AD%A6%E4%B9%A0/">&lt;h1 id=&quot;house-of-husk&quot;&gt;House of husk&lt;/h1&gt;
+&lt;p&gt;由于在 catalina 中出现了过几个小时自动 fork 炸系统的问题，2021.07.09 我还是升级到了 big sur。并选择妥协使用了 VMware fusion 进行虚拟机配置。&lt;/p&gt;</content><author><name></name></author><category term="_posts" /><category term="life" /><summary type="html">日遇三险</summary></entry><entry><title type="html">House of husk学习</title><link href="http://surager.pub/_posts/2020-12-13-House_of_husk%E5%AD%A6%E4%B9%A0/" rel="alternate" type="text/html" title="House of husk学习" /><published>2020-12-13T00:00:00+08:00</published><updated>2020-12-13T00:00:00+08:00</updated><id>http://surager.pub/_posts/House_of_husk%E5%AD%A6%E4%B9%A0</id><content type="html" xml:base="http://surager.pub/_posts/2020-12-13-House_of_husk%E5%AD%A6%E4%B9%A0/">&lt;h1 id=&quot;house-of-husk&quot;&gt;House of husk&lt;/h1&gt;
 
 &lt;h2 id=&quot;开箱即用&quot;&gt;开箱即用&lt;/h2&gt;
 
@@ -1058,7 +1058,7 @@ $1 = 0x7fffffffe330 &quot;\300\t@&quot;
 
 &lt;p&gt;House of Husk &lt;a href=&quot;https://ptr-yudai.hatenablog.com/entry/2020/04/02/111507&quot;&gt;https://ptr-yudai.hatenablog.com/entry/2020/04/02/111507&lt;/a&gt;&lt;/p&gt;
 
-&lt;p&gt;house-of-husk学习笔记 &lt;a href=&quot;https://www.anquanke.com/post/id/202387&quot;&gt;https://www.anquanke.com/post/id/202387&lt;/a&gt;&lt;/p&gt;</content><author><name></name></author><category term="_posts" /><category term="binary" /><summary type="html">House of husk</summary></entry><entry><title type="html">醉饮九回潇洒去，万军从中取首级</title><link href="http://localhost:4000/_posts/2020-11-11-%E9%86%89%E9%A5%AE%E4%B9%9D%E5%9B%9E%E6%BD%87%E6%B4%92%E5%8E%BB-%E4%B8%87%E5%86%9B%E4%BB%8E%E4%B8%AD%E5%8F%96%E9%A6%96%E7%BA%A7/" rel="alternate" type="text/html" title="醉饮九回潇洒去，万军从中取首级" /><published>2020-11-11T00:00:00+08:00</published><updated>2020-11-11T00:00:00+08:00</updated><id>http://localhost:4000/_posts/%E9%86%89%E9%A5%AE%E4%B9%9D%E5%9B%9E%E6%BD%87%E6%B4%92%E5%8E%BB,%E4%B8%87%E5%86%9B%E4%BB%8E%E4%B8%AD%E5%8F%96%E9%A6%96%E7%BA%A7</id><content type="html" xml:base="http://localhost:4000/_posts/2020-11-11-%E9%86%89%E9%A5%AE%E4%B9%9D%E5%9B%9E%E6%BD%87%E6%B4%92%E5%8E%BB-%E4%B8%87%E5%86%9B%E4%BB%8E%E4%B8%AD%E5%8F%96%E9%A6%96%E7%BA%A7/">&lt;h1 id=&quot;醉饮九回潇洒去万军从中取首级2020省赛之旅&quot;&gt;醉饮九回潇洒去，万军从中取首级——2020省赛之旅&lt;/h1&gt;
+&lt;p&gt;house-of-husk学习笔记 &lt;a href=&quot;https://www.anquanke.com/post/id/202387&quot;&gt;https://www.anquanke.com/post/id/202387&lt;/a&gt;&lt;/p&gt;</content><author><name></name></author><category term="_posts" /><category term="binary" /><summary type="html">House of husk</summary></entry><entry><title type="html">醉饮九回潇洒去，万军从中取首级</title><link href="http://surager.pub/_posts/2020-11-11-%E9%86%89%E9%A5%AE%E4%B9%9D%E5%9B%9E%E6%BD%87%E6%B4%92%E5%8E%BB-%E4%B8%87%E5%86%9B%E4%BB%8E%E4%B8%AD%E5%8F%96%E9%A6%96%E7%BA%A7/" rel="alternate" type="text/html" title="醉饮九回潇洒去，万军从中取首级" /><published>2020-11-11T00:00:00+08:00</published><updated>2020-11-11T00:00:00+08:00</updated><id>http://surager.pub/_posts/%E9%86%89%E9%A5%AE%E4%B9%9D%E5%9B%9E%E6%BD%87%E6%B4%92%E5%8E%BB,%E4%B8%87%E5%86%9B%E4%BB%8E%E4%B8%AD%E5%8F%96%E9%A6%96%E7%BA%A7</id><content type="html" xml:base="http://surager.pub/_posts/2020-11-11-%E9%86%89%E9%A5%AE%E4%B9%9D%E5%9B%9E%E6%BD%87%E6%B4%92%E5%8E%BB-%E4%B8%87%E5%86%9B%E4%BB%8E%E4%B8%AD%E5%8F%96%E9%A6%96%E7%BA%A7/">&lt;h1 id=&quot;醉饮九回潇洒去万军从中取首级2020省赛之旅&quot;&gt;醉饮九回潇洒去，万军从中取首级——2020省赛之旅&lt;/h1&gt;
 
 &lt;h2 id=&quot;前言&quot;&gt;前言&lt;/h2&gt;
 
@@ -1239,7 +1239,7 @@ a.interactive()
 
 &lt;p&gt;万军从中取首级，即私抓住pwn的机会，一举拿到制胜的最关键一点。&lt;/p&gt;
 
-&lt;p&gt;虽说运气成分很大，但还是要好好努力。争取在更加大的舞台上留下👴的脚印。&lt;/p&gt;</content><author><name></name></author><category term="_posts" /><category term="life" /><summary type="html">醉饮九回潇洒去，万军从中取首级——2020省赛之旅</summary></entry><entry><title type="html">Bytectf2020pwn整理和复现</title><link href="http://localhost:4000/_posts/2020-10-29-Bytectf2020pwn%E6%95%B4%E7%90%86%E5%92%8C%E5%A4%8D%E7%8E%B0/" rel="alternate" type="text/html" title="Bytectf2020pwn整理和复现" /><published>2020-10-29T00:00:00+08:00</published><updated>2020-10-29T00:00:00+08:00</updated><id>http://localhost:4000/_posts/Bytectf2020pwn%E6%95%B4%E7%90%86%E5%92%8C%E5%A4%8D%E7%8E%B0</id><content type="html" xml:base="http://localhost:4000/_posts/2020-10-29-Bytectf2020pwn%E6%95%B4%E7%90%86%E5%92%8C%E5%A4%8D%E7%8E%B0/">&lt;h1 id=&quot;bytectf2020pwn&quot;&gt;Bytectf2020pwn&lt;/h1&gt;
+&lt;p&gt;虽说运气成分很大，但还是要好好努力。争取在更加大的舞台上留下👴的脚印。&lt;/p&gt;</content><author><name></name></author><category term="_posts" /><category term="life" /><summary type="html">醉饮九回潇洒去，万军从中取首级——2020省赛之旅</summary></entry><entry><title type="html">Bytectf2020pwn整理和复现</title><link href="http://surager.pub/_posts/2020-10-29-Bytectf2020pwn%E6%95%B4%E7%90%86%E5%92%8C%E5%A4%8D%E7%8E%B0/" rel="alternate" type="text/html" title="Bytectf2020pwn整理和复现" /><published>2020-10-29T00:00:00+08:00</published><updated>2020-10-29T00:00:00+08:00</updated><id>http://surager.pub/_posts/Bytectf2020pwn%E6%95%B4%E7%90%86%E5%92%8C%E5%A4%8D%E7%8E%B0</id><content type="html" xml:base="http://surager.pub/_posts/2020-10-29-Bytectf2020pwn%E6%95%B4%E7%90%86%E5%92%8C%E5%A4%8D%E7%8E%B0/">&lt;h1 id=&quot;bytectf2020pwn&quot;&gt;Bytectf2020pwn&lt;/h1&gt;
 
 &lt;p&gt;这次比赛差一点就进线下了呜呜呜，wtcl。两道堆题都是做到一半就被cnitlrt师傅秒了，tql。剩下的golang pwn直接看自闭了呜呜呜。整理一下几道题的思路，学习一下。&lt;/p&gt;
 
@@ -1537,7 +1537,7 @@ free(1)
 
 &lt;h2 id=&quot;总结&quot;&gt;总结&lt;/h2&gt;
 
-&lt;p&gt;学了几个gadget，认识了几个带佬，没进线下，wtcl。&lt;/p&gt;</content><author><name></name></author><category term="_posts" /><category term="binary" /><summary type="html">Bytectf2020pwn</summary></entry><entry><title type="html">2020西湖论剑线上赛及复现</title><link href="http://localhost:4000/_posts/2020-10-11-2020%E8%A5%BF%E6%B9%96%E8%AE%BA%E5%89%91%E7%BA%BF%E4%B8%8A%E8%B5%9B%E5%8F%8A%E5%A4%8D%E7%8E%B0/" rel="alternate" type="text/html" title="2020西湖论剑线上赛及复现" /><published>2020-10-11T00:00:00+08:00</published><updated>2020-10-11T00:00:00+08:00</updated><id>http://localhost:4000/_posts/2020%E8%A5%BF%E6%B9%96%E8%AE%BA%E5%89%91%E7%BA%BF%E4%B8%8A%E8%B5%9B%E5%8F%8A%E5%A4%8D%E7%8E%B0</id><content type="html" xml:base="http://localhost:4000/_posts/2020-10-11-2020%E8%A5%BF%E6%B9%96%E8%AE%BA%E5%89%91%E7%BA%BF%E4%B8%8A%E8%B5%9B%E5%8F%8A%E5%A4%8D%E7%8E%B0/">&lt;h1 id=&quot;2020西湖论剑pwn&quot;&gt;2020西湖论剑PWN&lt;/h1&gt;
+&lt;p&gt;学了几个gadget，认识了几个带佬，没进线下，wtcl。&lt;/p&gt;</content><author><name></name></author><category term="_posts" /><category term="binary" /><summary type="html">Bytectf2020pwn</summary></entry><entry><title type="html">2020西湖论剑线上赛及复现</title><link href="http://surager.pub/_posts/2020-10-11-2020%E8%A5%BF%E6%B9%96%E8%AE%BA%E5%89%91%E7%BA%BF%E4%B8%8A%E8%B5%9B%E5%8F%8A%E5%A4%8D%E7%8E%B0/" rel="alternate" type="text/html" title="2020西湖论剑线上赛及复现" /><published>2020-10-11T00:00:00+08:00</published><updated>2020-10-11T00:00:00+08:00</updated><id>http://surager.pub/_posts/2020%E8%A5%BF%E6%B9%96%E8%AE%BA%E5%89%91%E7%BA%BF%E4%B8%8A%E8%B5%9B%E5%8F%8A%E5%A4%8D%E7%8E%B0</id><content type="html" xml:base="http://surager.pub/_posts/2020-10-11-2020%E8%A5%BF%E6%B9%96%E8%AE%BA%E5%89%91%E7%BA%BF%E4%B8%8A%E8%B5%9B%E5%8F%8A%E5%A4%8D%E7%8E%B0/">&lt;h1 id=&quot;2020西湖论剑pwn&quot;&gt;2020西湖论剑PWN&lt;/h1&gt;
 
 &lt;h2 id=&quot;前言&quot;&gt;前言&lt;/h2&gt;
 
@@ -1879,7 +1879,7 @@ while True:
 
 &lt;p&gt;总起来看，这几道题都不难。&lt;/p&gt;
 
-&lt;p&gt;我tcl。&lt;/p&gt;</content><author><name></name></author><category term="_posts" /><category term="binary" /><summary type="html">2020西湖论剑PWN</summary></entry><entry><title type="html">CISCN2020游记</title><link href="http://localhost:4000/_posts/2020-09-23-CISCN2020%E6%B8%B8%E8%AE%B0/" rel="alternate" type="text/html" title="CISCN2020游记" /><published>2020-09-23T00:00:00+08:00</published><updated>2020-09-23T00:00:00+08:00</updated><id>http://localhost:4000/_posts/CISCN2020%E6%B8%B8%E8%AE%B0</id><content type="html" xml:base="http://localhost:4000/_posts/2020-09-23-CISCN2020%E6%B8%B8%E8%AE%B0/">&lt;h1 id=&quot;ciscn2020游记&quot;&gt;CISCN2020游记&lt;/h1&gt;
+&lt;p&gt;我tcl。&lt;/p&gt;</content><author><name></name></author><category term="_posts" /><category term="binary" /><summary type="html">2020西湖论剑PWN</summary></entry><entry><title type="html">CISCN2020游记</title><link href="http://surager.pub/_posts/2020-09-23-CISCN2020%E6%B8%B8%E8%AE%B0/" rel="alternate" type="text/html" title="CISCN2020游记" /><published>2020-09-23T00:00:00+08:00</published><updated>2020-09-23T00:00:00+08:00</updated><id>http://surager.pub/_posts/CISCN2020%E6%B8%B8%E8%AE%B0</id><content type="html" xml:base="http://surager.pub/_posts/2020-09-23-CISCN2020%E6%B8%B8%E8%AE%B0/">&lt;h1 id=&quot;ciscn2020游记&quot;&gt;CISCN2020游记&lt;/h1&gt;
 
 &lt;h2 id=&quot;前言&quot;&gt;前言&lt;/h2&gt;
 
@@ -2122,7 +2122,7 @@ io.interactive()
 
 &lt;p&gt;&lt;strong&gt;收获3：&lt;/strong&gt;&lt;/p&gt;
 
-&lt;p&gt;👴认识到了pwn的题目正在从glibc转移到arm，vm，kernel等等的非常规方向转移，所以说下半年的研究重点应该在非常规的pwn题目上。这也是对自己能力的一种提高吧。&lt;/p&gt;</content><author><name></name></author><category term="_posts" /><category term="life" /><category term="binary" /><summary type="html">CISCN2020游记</summary></entry><entry><title type="html">House of orange</title><link href="http://localhost:4000/_posts/2020-09-06-House-of-orange/" rel="alternate" type="text/html" title="House of orange" /><published>2020-09-06T00:00:00+08:00</published><updated>2020-09-06T00:00:00+08:00</updated><id>http://localhost:4000/_posts/House%20of%20orange</id><content type="html" xml:base="http://localhost:4000/_posts/2020-09-06-House-of-orange/">&lt;h1 id=&quot;house-of-&quot;&gt;House of 🍊&lt;/h1&gt;
+&lt;p&gt;👴认识到了pwn的题目正在从glibc转移到arm，vm，kernel等等的非常规方向转移，所以说下半年的研究重点应该在非常规的pwn题目上。这也是对自己能力的一种提高吧。&lt;/p&gt;</content><author><name></name></author><category term="_posts" /><category term="life" /><category term="binary" /><summary type="html">CISCN2020游记</summary></entry><entry><title type="html">House of orange</title><link href="http://surager.pub/_posts/2020-09-06-House-of-orange/" rel="alternate" type="text/html" title="House of orange" /><published>2020-09-06T00:00:00+08:00</published><updated>2020-09-06T00:00:00+08:00</updated><id>http://surager.pub/_posts/House%20of%20orange</id><content type="html" xml:base="http://surager.pub/_posts/2020-09-06-House-of-orange/">&lt;h1 id=&quot;house-of-&quot;&gt;House of 🍊&lt;/h1&gt;
 
 &lt;h2 id=&quot;利用原理&quot;&gt;利用原理&lt;/h2&gt;
 
@@ -2594,7 +2594,7 @@ payload += fakefile
 edit(len(payload),payload)
 io.sendline(&quot;1&quot;)
 io.interactive()
-&lt;/code&gt;&lt;/pre&gt;</content><author><name></name></author><category term="_posts" /><category term="binary" /><summary type="html">House of 🍊</summary></entry><entry><title type="html">sctf_2019_one_heap</title><link href="http://localhost:4000/_posts/2020-09-05-sctf_2019_one_heap/" rel="alternate" type="text/html" title="sctf_2019_one_heap" /><published>2020-09-05T00:00:00+08:00</published><updated>2020-09-05T00:00:00+08:00</updated><id>http://localhost:4000/_posts/sctf_2019_one_heap</id><content type="html" xml:base="http://localhost:4000/_posts/2020-09-05-sctf_2019_one_heap/">&lt;h1 id=&quot;sctf_2019_one_heap&quot;&gt;sctf_2019_one_heap&lt;/h1&gt;
+&lt;/code&gt;&lt;/pre&gt;</content><author><name></name></author><category term="_posts" /><category term="binary" /><summary type="html">House of 🍊</summary></entry><entry><title type="html">sctf_2019_one_heap</title><link href="http://surager.pub/_posts/2020-09-05-sctf_2019_one_heap/" rel="alternate" type="text/html" title="sctf_2019_one_heap" /><published>2020-09-05T00:00:00+08:00</published><updated>2020-09-05T00:00:00+08:00</updated><id>http://surager.pub/_posts/sctf_2019_one_heap</id><content type="html" xml:base="http://surager.pub/_posts/2020-09-05-sctf_2019_one_heap/">&lt;h1 id=&quot;sctf_2019_one_heap&quot;&gt;sctf_2019_one_heap&lt;/h1&gt;
 
 &lt;h2 id=&quot;写在前面&quot;&gt;写在前面&lt;/h2&gt;
 

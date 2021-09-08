@@ -4,8 +4,6 @@ tags:
   - binary
 ---
 
-# House of strom和它的前生今世
-
 ## unsorted bin attack
 
 how2heap源代码：

@@ -4,8 +4,6 @@ tags:
   - binary
 ---
 
-# House of husk
-
 ## 开箱即用
 
 ### Husk's method

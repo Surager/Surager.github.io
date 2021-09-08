@@ -4,8 +4,6 @@ tags:
   - binary
 ---
 
-# CSAPP实验
-
 ## 获取实验并使用
 
 从[http://csapp.cs.cmu.edu/3e/labs.html](http://csapp.cs.cmu.edu/3e/labs.html)获取。获取方法是`点击实验后面的Self-Study Handout`。

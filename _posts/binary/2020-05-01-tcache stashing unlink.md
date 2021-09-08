@@ -4,8 +4,6 @@ tags:
   - binary
 ---
 
-# tcache stashing unlink
-
 ## 知识分析
 
 static void * __int_malloc(mstate av, size_t bytes)中的一段代码：

@@ -77,10 +77,10 @@ defaults: # 将所有配置选项使用<https://jekyllrb.com/docs/configuration/
                 href="/static/assets/script/admonitions.css"
               />
             - | # 用js引入fontawesome图标样式，功能更丰富
-              <script
-                async="async"
-                src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/js/all.min.js"
-              ></script>
+              <link
+                rel="stylesheet"
+                href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css"
+              />
             - | # 百度爬虫推送，http站点使用 http://push.zhanzhang.baidu.com/push.js
               <script
                 src='https://zz.bdstatic.com/linksubmit/push.js'
@@ -466,6 +466,18 @@ defaults: # 将所有配置选项使用<https://jekyllrb.com/docs/configuration/
                 .container {
                   min-width: 66.6%;
                 }
+              </style>
+            - | # 标题和引用前插一个图标
+              <style>
+                h1::before,
+                blockquote::before {
+                  font-family: "Font Awesome 5 Free";
+                  font-weight: bold;
+                  font-size: smaller;
+                  margin-right: .5rem;
+                  content: "\f292";
+                }
+                blockquote::before { content: "\f10d"; }
               </style>
             - | # 给文章加上磨砂背景，防止被背景影响阅读；同时加上加载动画
               <style>

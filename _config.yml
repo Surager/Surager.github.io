@@ -365,6 +365,13 @@ defaults: # 将所有配置选项使用<https://jekyllrb.com/docs/configuration/
                   <i class="fas fa-copyright fa-fw"></i>
                   2019-2022 Surager
                 </div>
+              - |
+                <div>
+                  <i class="fas fa-info-circle fa-fw"></i>
+                  <a href="https://icp.gov.moe/?keyword=20224060" target="_blank">
+                  萌ICP备20224060号
+                  </a>
+                </div>
             wordcount: # 全站字数统计
               enable: false # 本地调试时建议关闭，非常影响站点生成速度（所需时间与博文数量的平方成正比）
               prepend: <i class="fas fa-user-edit fa-fw"></i>
@@ -523,6 +530,11 @@ defaults: # 将所有配置选项使用<https://jekyllrb.com/docs/configuration/
             ></script>
           copyright:
             | # 署名 4.0 国际 (CC BY-NC 4.0)。
+            <br/>
+            <i class="fas fa-info-circle fa-fw"></i>
+            <a href="https://icp.gov.moe/?keyword=20224060" target="_blank">
+            萌ICP备20224060号
+            </a>
             <br/>
             <i class="fas fa-coffee fa-fw"></i>
             <a href="/comments/">如果这篇博客帮助到你，可以留言夸夸我~</a>

@@ -1,7 +1,6 @@
 title: Surager # 站点标题
 description: | # 头像背后的信息（html格式），<br/>代表换行
-  那颗星星之所以<br/>闪耀着蓝色的光芒<br/>
-  是因为我曾经和你<br/>在这片蓝天之下<br/>
+  我们之间已经隔了一层<br/>可悲的厚障壁了。
   <a href="mailto:surager2019@gmail.com">
     <i class="fas fa-envelope"></i>
   </a>
@@ -96,11 +95,11 @@ defaults: # 将所有配置选项使用<https://jekyllrb.com/docs/configuration/
                   background-position: 0% 0%;
                   background-repeat: no-repeat;
                   background-attachment: fixed;
-                  background-image: url(/assets/image/74559485_p1.webp);
+                  # background-image: url(/assets/image/74559485_p1.webp);
                 }
                 @media (min-aspect-ratio: 2400/1850) {
                   .wrap {
-                    background-image: url(/assets/image/71932901_p0.webp);
+                    # background-image: url(/assets/image/71932901_p0.webp);
                   }
                 }
                 @media screen and (min-width: 28rem) {

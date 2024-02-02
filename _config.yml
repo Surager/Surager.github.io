@@ -17,7 +17,7 @@ description: | # 头像背后的信息（html格式），<br/>代表换行
     marginheight="0" 
     width=100% 
     height=52 
-    src="https://music.163.com/outchain/player?type=2&id=1453894413&auto=0&height=32"
+    src="https://music.163.com/outchain/player?type=2&id=1960380417&auto=0&height=32"
   ></iframe>
 url: https://surager.pub # 你的域名，例如 https://wu-kan.github.io
 baseurl: "" # 假如你的博客是建在某个目录下的，请在这里加上目录名，并且下面配置的所有链接里的`/assets`前也要加，即`/your_baseurl/assets`。这一项结尾不要有'/'。
@@ -187,6 +187,8 @@ defaults: # 将所有配置选项使用<https://jekyllrb.com/docs/configuration/
                 href: /archive/
               - title: '<i class="fas fa-address-card fa-fw"></i> 关于'
                 href: /about/
+              - title: '<i class="fas fa-rss fa-fw"></i> RSS'
+                href: /feed.xml
             simple_jekyll_search: # 侧边栏的全站搜索
               enable: true
               full_text_search: false # 可能导致缓慢的搜索和加载
@@ -362,7 +364,7 @@ defaults: # 将所有配置选项使用<https://jekyllrb.com/docs/configuration/
               - | # Copyright声明
                 <div>
                   <i class="fas fa-copyright fa-fw"></i>
-                  2019-2022 Surager
+                  2019-2024 Surager
                 </div>
               - |
                 <div>

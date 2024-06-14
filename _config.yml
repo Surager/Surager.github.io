@@ -1,15 +1,6 @@
 title: Surager # 站点标题
 description: | # 头像背后的信息（html格式），<br/>代表换行
-  我们之间已经隔了一层<br/>可悲的厚障壁了。<br/>
-  <a href="mailto:surager2019@gmail.com">
-    <i class="fas fa-envelope"></i>
-  </a>
-  <a href="https://github.com/Surager">
-    <i class="fab fa-github"></i>
-  </a>
-  <a href="https://surager.pub/feed.xml">
-    <i class="fas fa-rss"></i>
-  </a>
+  彩蛋：
   <iframe 
     frameborder="no" 
     border="0" 
@@ -172,6 +163,7 @@ defaults: # 将所有配置选项使用<https://jekyllrb.com/docs/configuration/
                 }
               </style>
           sidebar: # 此配置项下是一些关于侧边栏的配置
+            open: true
             disable: false # 是否不显示sidebar
             avatar: # 侧边栏显示的头像
               enable: true
@@ -189,6 +181,10 @@ defaults: # 将所有配置选项使用<https://jekyllrb.com/docs/configuration/
                 href: /about/
               - title: '<i class="fas fa-rss fa-fw"></i> RSS'
                 href: /feed.xml
+              - title: '<i class="fas fa-envelope fa-fw"></i> Email'
+                href: mailto:surager2019@gmail.com
+              - title: '<i class="fab fa-github fa-fw"></i> Github'
+                href: https://github.com/Surager
             simple_jekyll_search: # 侧边栏的全站搜索
               enable: true
               full_text_search: false # 可能导致缓慢的搜索和加载

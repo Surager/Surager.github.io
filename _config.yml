@@ -1,15 +1,8 @@
 title: Surager # 站点标题
 description: | # 头像背后的信息（html格式），<br/>代表换行
-  彩蛋：
-  <iframe 
-    frameborder="no" 
-    border="0" 
-    marginwidth="0" 
-    marginheight="0" 
-    width=100% 
-    height=52 
-    src="https://music.163.com/outchain/player?type=2&id=1960380417&auto=0&height=32"
-  ></iframe>
+  #头像下面的文字，<br/>
+  可以替换成一句很有哲理的话。<br/>
+  比如 “可以替换成一句很有哲理的话。” <br/>
 url: https://surager.pub # 你的域名，例如 https://wu-kan.github.io
 baseurl: "" # 假如你的博客是建在某个目录下的，请在这里加上目录名，并且下面配置的所有链接里的`/assets`前也要加，即`/your_baseurl/assets`。这一项结尾不要有'/'。
 
@@ -360,7 +353,7 @@ defaults: # 将所有配置选项使用<https://jekyllrb.com/docs/configuration/
               - | # Copyright声明
                 <div>
                   <i class="fas fa-copyright fa-fw"></i>
-                  2019-2024 Surager
+                  2019-2025 Surager
                 </div>
               - |
                 <div>

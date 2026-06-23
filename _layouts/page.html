@@ -1,9 +1,7 @@
 ---
 layout: default
 ---
-{% for node in page.jekyll-theme-WuK.page.prepend %}
-{{ node }}
-{% endfor %}
+{% include page-assets.html %}
 {% if page.jekyll-theme-WuK.page.masthead.enable %}
 <div class="masthead">
   <div class="container">
@@ -22,15 +20,3 @@ layout: default
     {{ content }}
   </div>
 </div>
-{% if page.jekyll-theme-WuK.page.katex.enable %}
-{{ page.jekyll-theme-WuK.page.katex.append }}
-{% endif %}
-{% if page.jekyll-theme-WuK.page.mermaid.enable %}
-{{ page.jekyll-theme-WuK.page.mermaid.append }}
-{% endif %}
-{% if page.jekyll-theme-WuK.page.prism.enable %}
-{{ page.jekyll-theme-WuK.page.prism.append }}
-{% endif %}
-{% for node in page.jekyll-theme-WuK.page.append %}
-{{ node }}
-{% endfor %}

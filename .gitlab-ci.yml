@@ -1,12 +1,12 @@
-image: ruby:latest
+image: ruby:3.4.9
 
 variables:
   JEKYLL_ENV: production
   LC_ALL: C.UTF-8
 
 before_script:
-  - gem install bundler
-  - bundle install
+  - gem install bundler -v 2.6.9
+  - bundle _2.6.9_ install
 
 test:
   stage: test

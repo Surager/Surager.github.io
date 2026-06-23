@@ -1,9 +1,9 @@
 ---
+math: true
 title: CSAPP实验datalab
 tags:
   - binary
 ---
-
 ## 获取实验并使用
 
 从[http://csapp.cs.cmu.edu/3e/labs.html](http://csapp.cs.cmu.edu/3e/labs.html)获取。获取方法是`点击实验后面的Self-Study Handout`。
@@ -598,5 +598,5 @@ unsigned floatPower2(int x) {
 
 本次实验就算是给自己的计算机系统学习之路开一个头吧。
 
-![由于ubuntu虚拟机上时间限制通不过，在wsl上运行](\assets\CSAPP\QQ图片20200721133631.png)
+![由于ubuntu虚拟机上时间限制通不过，在wsl上运行](/assets/CSAPP/QQ图片20200721133631.png)
 

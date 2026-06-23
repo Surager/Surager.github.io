@@ -1,0 +1,20 @@
+{% if sidebar.wordcount.enable %}
+<div>
+  <i class="{{ sidebar.wordcount.icon }}"></i>
+  {% assign count = 0 %}
+  {% for post in site.posts %}
+  {% assign single_count = post.content | strip_html | strip_newlines | remove: " " | size %}
+  {% assign count = count | plus: single_count %}
+  {% endfor %}
+  {% for post in site.pages %}
+  {% assign single_count = post.content | strip_html | strip_newlines | remove: " " | size %}
+  {% assign count = count | plus: single_count %}
+  {% endfor %}
+  {% if count > 1000 %}
+  {{ count | divided_by: 1000 }}{{ sidebar.wordcount.kilo }}
+  {{ count | modulo: 1000 }}{{ sidebar.wordcount.unit }}
+  {% else %}
+  {{ count }}{{ sidebar.wordcount.unit }}
+  {% endif %}
+</div>
+{% endif %}

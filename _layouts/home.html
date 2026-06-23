@@ -1,7 +1,7 @@
 ---
 layout: default
 ---
-{{ page.jekyll-theme-WuK.home.prepend }}
+{% include home-assets.html %}
 <div class="slides">
   <section
     {% for node in page.jekyll-theme-WuK.home.append_to_section_tag %}{{ node.key }}{% if node.value %}='{{ node.value|escape }}'
@@ -9,4 +9,3 @@ layout: default
     <textarea data-template>{{ content }}</textarea>
   </section>
 </div>
-{{ page.jekyll-theme-WuK.home.append }}

@@ -4,7 +4,6 @@ tags:
   - binary
   - Writesup
 ---
-
 ## seccomp禁用execve和open的情况
 
 一般会留一个5号系统调用。
@@ -301,4 +300,4 @@ io.interactive()
 
 最后，在比赛上我总是怂的一批。记住，在比赛时一定不要怂。
 
-![qinaidereaide1](\assets\CoolCode\qinaidereaide1.jpg)
+![qinaidereaide1](/assets/CoolCode/qinaidereaide1.jpg)

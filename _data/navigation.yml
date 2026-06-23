@@ -1,0 +1,24 @@
+- label: 首页
+  icon: fas fa-home fa-fw
+  href: /
+- label: 留言
+  icon: fas fa-comments fa-fw
+  href: /comments/
+- label: 标签
+  icon: fas fa-tags fa-fw
+  href: /tags/
+- label: 归档
+  icon: fas fa-archive fa-fw
+  href: /archive/
+- label: 关于
+  icon: fas fa-address-card fa-fw
+  href: /about/
+- label: RSS
+  icon: fas fa-rss fa-fw
+  href: /feed.xml
+- label: Email
+  icon: fas fa-envelope fa-fw
+  href: mailto:surager2019@gmail.com
+- label: Github
+  icon: fab fa-github fa-fw
+  href: https://github.com/Surager

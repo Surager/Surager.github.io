@@ -1,9 +1,9 @@
 ---
+math: true
 title: House of husk学习
 tags:
   - binary
 ---
-
 ## 开箱即用
 
 ### Husk's method

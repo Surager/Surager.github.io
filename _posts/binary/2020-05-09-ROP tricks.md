@@ -3,7 +3,6 @@ title: ROP tricks
 tags:
   - binary
 ---
-
 > 以前学的时候没注意到，今天补个档。算是接栈溢出《栈溢出：靶向打击》的尾了。
 
 ## ret2csu

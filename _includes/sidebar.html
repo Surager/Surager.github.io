@@ -1,0 +1,15 @@
+{% assign sidebar = site.data.sidebar %}
+{% include sidebar-avatar.html %}
+{% include sidebar-nav.html %}
+<div class="sidebar-item">
+  {% if sidebar.search.enable %}
+  {% include sidebar-search.html %}
+  {% endif %}
+  {% if sidebar.toc.enable and content contains '<h' %}
+  {% include toc.html html=content ordered=true skipNoIDs=true sanitize=true id="toc" %}
+  {% endif %}
+  {% include sidebar-runtime.html %}
+  {% include sidebar-busuanzi.html %}
+  {% include sidebar-footer.html %}
+  {% include sidebar-wordcount.html %}
+</div>

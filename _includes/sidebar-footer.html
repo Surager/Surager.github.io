@@ -1,0 +1,22 @@
+{% if sidebar.theme_credit.enable %}
+<div>
+  <i class="fas fa-thumbs-up fa-fw"></i>
+  <a href="{{ sidebar.theme_credit.url }}">
+    {{ sidebar.theme_credit.label }}
+  </a>
+</div>
+{% endif %}
+{% if sidebar.copyright.enable %}
+<div>
+  <i class="fas fa-copyright fa-fw"></i>
+  {{ sidebar.copyright.text }}
+</div>
+{% endif %}
+{% if sidebar.icp.enable %}
+<div>
+  <i class="fas fa-info-circle fa-fw"></i>
+  <a href="{{ sidebar.icp.url }}" target="_blank">
+    {{ sidebar.icp.label }}
+  </a>
+</div>
+{% endif %}

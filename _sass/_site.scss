@@ -1,0 +1,142 @@
+.wrap {
+  transition-property: width, background-size, transform;
+  transition-duration: .3s;
+  transition-timing-function: ease-in-out;
+  min-height: 100%;
+  display: inline-block;
+  background-size: 100% auto;
+  background-position: 0% 0%;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+@media screen and (min-width: 28rem) {
+  .sidebar-overlay #sidebar-checkbox:checked ~ .wrap {
+    width: calc(100% - 14rem);
+    background-size: calc(100% - 14rem) auto;
+    transform: translateX(14rem);
+  }
+
+  .layout-reverse.sidebar-overlay #sidebar-checkbox:checked ~ .wrap {
+    transform: translateX(0);
+  }
+}
+
+.sidebar,
+html,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Fira Code", Andale Mono, Consolas, PingFang SC, Menlo, Monaco,
+    "Courier New", Microsoft JhengHei, monospace;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: bold;
+}
+
+.post h1,
+.post h2,
+.post h3,
+.post h4,
+.post h5,
+.post h6 {
+  font-weight: 550;
+}
+
+img {
+  display: inline-block;
+  margin: 0;
+  height: auto;
+}
+
+picture {
+  display: inline-block;
+  max-width: 100%;
+}
+
+picture > img {
+  max-width: 100%;
+}
+
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-image: linear-gradient(45deg, Cyan 0%, Magenta 50%, Yellow 100%);
+}
+
+::selection {
+  color: White;
+  background: Black;
+}
+
+#sidebar-search-input {
+  background: none;
+  border: none;
+  color: White;
+  width: 100%;
+}
+
+#sidebar-search-results-container,
+#toc {
+  overflow: auto auto;
+  max-height: 66.6vh;
+}
+
+.sidebar-checkbox {
+  display: none;
+}
+
+.sidebar-toggle {
+  position: fixed;
+}
+
+.sidebar {
+  overflow: scroll;
+  min-height: 101%;
+}
+
+.effect {
+  margin: 1rem;
+  perspective: 900px;
+}
+
+.effect-info {
+  text-align: center;
+  backface-visibility: hidden;
+  position: absolute;
+  top: 0;
+  transform-style: preserve-3d;
+}
+
+.effect-img {
+  z-index: 11;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transition: all 0.5s ease-in-out;
+}
+
+.effect-img::before {
+  position: absolute;
+  display: block;
+}
+
+.effect-right_to_left .effect-img {
+  transform-origin: 0% 50%;
+}
+
+.effect-right_to_left:hover .effect-img {
+  transform: rotate3d(0, 1, 0, -180deg);
+}

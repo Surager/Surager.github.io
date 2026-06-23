@@ -3,7 +3,6 @@ title: House of orange
 tags:
   - binary
 ---
-
 ## 利用原理
 
 🍊的**利用背景**：程序根本没有free函数。

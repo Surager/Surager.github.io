@@ -1,0 +1,21 @@
+{% if sidebar.runtime.enable %}
+<div data-runtime data-start="{{ sidebar.runtime.start }}">
+  <i class="fas fa-cog fa-spin fa-fw"></i>
+  <span data-runtime-day>
+    <i class="fas fa-spinner fa-pulse"></i>
+  </span>天
+  <span data-runtime-hour>
+    <i class="fas fa-spinner fa-pulse"></i>
+  </span>时
+  <span data-runtime-minute>
+    <i class="fas fa-spinner fa-pulse"></i>
+  </span>分
+  <span data-runtime-second>
+    <i class="fas fa-spinner fa-pulse"></i>
+  </span>秒
+</div>
+<script
+  src="{{ '/static/assets/script/runtime.js' | relative_url }}"
+  defer="defer"
+></script>
+{% endif %}

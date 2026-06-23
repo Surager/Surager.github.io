@@ -1,0 +1,7 @@
+<nav class="sidebar-nav">
+  {% for node in site.data.navigation %}
+  <a class="sidebar-nav-item{% if page.url == node.href %} active{% endif %}" href="{{ node.href }}">
+    <i class="{{ node.icon }}"></i> {{ node.label }}
+  </a>
+  {% endfor %}
+</nav>

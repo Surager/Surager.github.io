@@ -1,0 +1,31 @@
+open: true
+disable: false
+avatar:
+  enable: true
+  img: /static/assets/img/landing/avatar.jpg
+search:
+  enable: true
+  full_text_search: false
+toc:
+  enable: true
+runtime:
+  enable: true
+  start: "10/27/2019 00:00:00"
+busuanzi:
+  enable: true
+theme_credit:
+  enable: true
+  label: jekyll-theme-WuK
+  url: https://jekyll-theme-WuK.wu-kan.cn
+copyright:
+  enable: true
+  text: 2019-2025 Surager
+icp:
+  enable: true
+  label: 萌ICP备20224060号
+  url: https://icp.gov.moe/?keyword=20224060
+wordcount:
+  enable: false
+  icon: fas fa-user-edit fa-fw
+  kilo: 千
+  unit: 字

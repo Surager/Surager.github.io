@@ -5,25 +5,25 @@ layout: comments
   <h1 style="margin-top:0;">{{ page.title }}</h1>
   <span class="post-date">
     {% if page.jekyll-theme-WuK.post.date.enable %}
-    {{ page.jekyll-theme-WuK.post.date.prepend }}
+    <i class="fas fa-calendar-day fa-fw"></i>
     Time: {{ page.date | date: "%Y-%m-%d" }} 
     {% endif %}
     {% if page.jekyll-theme-WuK.post.wordcount.enable %}
-    {{ page.jekyll-theme-WuK.post.wordcount.prepend }}
+    <i class="fas fa-file-word fa-fw"></i>
     {{ page.content | strip_html | strip_newlines | remove: " " | size }}{{ page.jekyll-theme-WuK.post.wordcount.unit }}
     {% endif %}
     {% if page.jekyll-theme-WuK.post.readtime.enable %}
-    {{ page.jekyll-theme-WuK.post.readtime.prepend }}
+    <i class="fas fa-clock fa-fw"></i>
     {{ page.content | strip_html | strip_newlines | remove: " " | size | divided_by:
     page.jekyll-theme-WuK.post.readtime.divided_by | plus: 1 }}{{ page.jekyll-theme-WuK.post.readtime.unit }}
     {% endif %}
     {% if page.jekyll-theme-WuK.post.tags.enable %}
     {% if page.tags.size > 0 %}
-    {{ page.jekyll-theme-WuK.post.tags.prepend }}
+    <i class="fas fa-tag fa-fw"></i>
     Tags: {{ page.tags | array_to_sentence_string }}
     {% endif %}
     <br/>
-    {{ page.jekyll-theme-WuK.post.link.prepend }}
+    <i class="fas fa-link fa-fw"></i>
     Link: <a href="{{ site.baseurl }}{{ page.url }}">
       {{ page.title }}
     </a>

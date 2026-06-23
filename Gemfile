@@ -21,5 +21,6 @@ end
 gem "webrick", "~> 1.9"
 
 group :development do
+  gem "minitest", "~> 5.25"
   gem "rake", "~> 13.4"
 end

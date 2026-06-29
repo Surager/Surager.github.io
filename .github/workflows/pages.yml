@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - master
+  repository_dispatch:
+    types:
+      - holywater-updated
   workflow_dispatch:
 
 permissions:
@@ -21,6 +24,32 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Checkout Holy Water
+        uses: actions/checkout@v4
+        with:
+          repository: Surager/holywater
+          path: holywater
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+
+      - name: Build Holy Water
+        run: |
+          mkdir -p HolyWater
+          cd holywater
+          uv sync
+          uv run holywater build --output ../HolyWater/index.html
+          {
+            echo "---"
+            echo "layout: null"
+            echo "permalink: /HolyWater/"
+            echo "---"
+            cat ../HolyWater/index.html
+          } > ../HolyWater/index.html.tmp
+          mv ../HolyWater/index.html.tmp ../HolyWater/index.html
 
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
